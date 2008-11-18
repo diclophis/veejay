@@ -27,7 +27,7 @@
       <% cloud_classes.each_with_index { |cloud_class, i| %>
         .<%=cloud_class%> { font-size: <%=(Math.log((i+1)*5) * 42)%>%; }
       <% } %>
-      .completions { border: 0.25em solid #c3c3c3; background: white; }
+      .completions { border: 0.25em solid #c3c3c3; background: black; }
       .completions li { padding: 0.25em; } 
       .selected { background-color: #c3c3c3; }
       .tag { padding: 0.25em; }
@@ -41,11 +41,14 @@
       #sidebar { padding: 1em; width: 37em; float: left; background: #E4844A no-repeat 1em 1em; }
       #people { margin: 0 0 0em 14em; }
       #ads { margin: 1em 0 0 0; }
-      #content { background-color: white; padding: 2em 0em 1em 4em; width: 58em; float: left; }
-      #content p { margin-right: 4em; }
+      #content { background-color: black; padding: 2em 0em 1em 4em; width: 58em; float: left; }
+      #content p, #content label { color: white; margin-right: 4em; }
+      #content a { color: yellow; }
       #footer { padding: 0.5em; clear: both; width: 100em; }
       #footer p { text-align: right; padding: 0.25em; }
       #current_persons_tags li { display: inline; }
+      #videos li { display: inline; }
+      #videos li img { margin: 2em; vertical-align: middle; }
       .pagination { }
       .pagination a, .pagination span { font-size: 1.5em; display: block; float: left; padding: 0.25em; }
       .pagination span.disabled { }
@@ -109,8 +112,11 @@
     </div>
     <div id="footer">
       <p>
-        &copy; 2008 <%=link_to("Land of the Rising Code", "http://risingcode.com")%>
+        &copy; 2008
       </p>
     </div>
+    <%= render :partial => "shared/swfobject" %>
+    <%= render :partial => "shared/uservoice" %>
+    <%= render :partial => "shared/urchin" %>
   </body>
 </html>

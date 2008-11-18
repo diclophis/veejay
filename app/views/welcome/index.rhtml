@@ -1,6 +1,24 @@
 <% content_for :tagline do %>
-  <%=link_to(:VeeJay, root_url)%>
+  Be your own <%=link_to(:VeeJay, root_url)%>
 <% end %>
+<div id="uvp_fop_container" style="width:512px;height:322px;">
+  <a href="http://www.adobe.com/products/flashplayer/">Please Install Flash</a>
+</div>
+<ul id="videos">
+  <% @popular_videos[0, 9].each { |video| %>
+    <li class="video" id="video_<%=video.id%>">
+      <%=link_to(image_tag(video.images.first.url, {:width => "120"}), "#", {:title => video.title})%>
+    </li>
+  <% } %>
+</ul>
+<p>
+  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+  Donec odio. Quisque volutpat mattis eros.
+  Nullam malesuada erat ut turpis.
+  Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.
+  Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci.
+  Aenean dignissim pellentesque felis.
+</p>
 <p>
   Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
   Donec odio. Quisque volutpat mattis eros.

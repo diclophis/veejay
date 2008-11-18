@@ -1,5 +1,6 @@
 config/database.yml
 config/gmail.rb
+config/music.rb
 tmp/*
 log/*.log
 db/schema.rb
