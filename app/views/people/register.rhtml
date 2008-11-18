@@ -1,0 +1,32 @@
+<% content_for :tagline do %>
+  <%=link_to(:VeeJay, root_url)%>
+<% end %>
+<% form_tag(:register) do %>
+  <p>
+    Enter your OpenID credentials below.
+  </p>
+  <%=error_messages_for(:person)%>
+  <ul>
+  <% fields_for(:person) { |person| %>
+    <li>
+      <%=person.label(:identity_url)%>
+      <%=person.text_field(:identity_url, {:id => :openid_identifier})%>
+    </li>
+    <li>
+      <%=person.label(:email)%>
+      <%=person.text_field(:email)%>
+    </li>
+    <li>
+      <%=person.label(:nickname)%>
+      <%=person.text_field(:nickname)%>
+    </li>
+  <% } %>
+  <li>
+    <%= submit_tag(:submit)%>
+    or
+    <%=link_to(:return, root_url)%>
+    or
+    <%=link_to(:login, login_url)%>
+  </li>
+<% end %>
+<%=render :partial => "shared/openid_selector"%>

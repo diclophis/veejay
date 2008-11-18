@@ -1,0 +1,7 @@
+<div id="flash">
+  <% self.flash.each { |type, message| %>
+    <div class="<%=type%>">
+      <%=message%>
+    </div>
+  <% } %>
+</div>

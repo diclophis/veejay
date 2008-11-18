@@ -1,0 +1,23 @@
+<% content_for :tagline do %>
+  <%=link_to(:VeeJay, root_url)%>
+<% end %>
+<% form_tag do %>
+  <p>
+    Enter your OpenID credentials below.
+  </p>
+  <%=error_messages_for(:person)%>
+  <ul>
+  <% fields_for(:person) { |person| %>
+    <li>
+      <%=person.label(:nickname)%>
+      <%=person.text_field(:nickname)%>
+    </li>
+  <% } %>
+  <li>
+    <%=submit_tag(:submit)%>
+    or
+    <%=link_to(:return, root_url)%>
+    or
+    <%=link_to(:register, register_url)%>
+  </li>
+<% end %>

@@ -1,0 +1,10 @@
+<% content_for :tagline do %>
+  <%=link_to(@feeder.nickname + "'s feed", feed_url(:nickname => @feeder))%>
+<% end %>
+<ul class="findings">
+  <% @feeder.findings.each { |finding| %>
+    <li>
+      <%=link_to(image_tag(finding.image.icon_permalink), image_url(finding.image.permalink))%>
+    </li>
+  <% } %>
+</ul>

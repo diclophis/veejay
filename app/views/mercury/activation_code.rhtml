@@ -1,0 +1,5 @@
+Hello <%=@person.nickname%>,
+
+Please finish your registration by following this link:
+
+<%=url_for({:only_path => false, :controller => :people, :action => :activate, :id => @person.activation_code}) %>
