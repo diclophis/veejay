@@ -1,0 +1,22 @@
+<% content_for :tagline do %>
+  Watching
+  <%=link_to(@episode.title, episode_url(@episode))%>
+  by
+  <%=link_to(@episode.person.nickname, profile_url(@episode.person))%>
+<% end %>
+<% content_for :sidebar do %>
+  <% form_tag(:pop, {:id => "pop_form"}) do %>
+    <%=hidden_field_tag(:video_id)%>
+    <div id="pop_container">
+    </div>
+  <% end %>
+<% end %>
+<div id="uvp_fop_container" style="width:512px;height:322px;">
+</div>
+<ul id="videos">
+  <% @episode.videos.each { |video| %>
+    <li class="video" id="video_<%=video.yahoo_video.id%>">
+      <%=link_to(image_tag(video.yahoo_video.images.first.url, {:width => "120"}), "#", {:title => video.yahoo_video.title})%>
+    </li>
+  <% } %>
+</ul>

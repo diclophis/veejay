@@ -78,7 +78,11 @@ module Yahoo
         def published(*args)
           options = args.extract_options!
           xml = fetch_and_parse(api_path(self.name, nil, :published, options[:id] || :popular, args.join(',')), options)
-          puts xml
+          return xml.search(self.name).collect{|elem| self.new(elem)}
+        end
+        def item(*args)
+          options = args.extract_options!
+          xml = fetch_and_parse(api_path(self.name, nil, nil, options[:id], args.join(',')), options)
           return xml.search(self.name).collect{|elem| self.new(elem)}
         end
       end
@@ -149,6 +153,7 @@ module Yahoo
     class Review     < Base; end
     class Track     < Base; end
     class Video     < Base
+
       def formatted_duration
       seconds = self.duration
 

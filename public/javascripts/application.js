@@ -3,9 +3,25 @@
 var sc;
 
 y_up_eventHandler = function( pType, pItem ) {
+  //alert(pType);
+  //alert(Object.toJSON(pItem));
+  //{"type": "S_AD", "clipid": "v2140336", "spaceId": "396500312"}
+  //{"type": "S_AD", "clipid": "v2140336", "spaceId": "396500312"}
+  //{"type": "S_STREAM", "clipid": "v2140336", "spaceId": "396500312"}
   switch (pType){
     case "init":            // thrown when the player has been initialized and the flash external API is ready to be accessed
     case "itemBegin":       // thrown when a video starts playing for the first time
+      switch(pItem.type) {
+        case "S_STREAM":
+          $('video_id').value = pItem.clipid.sub('v', '', 1);
+          new Ajax.Updater('pop_container', $('pop_form').action, {
+            parameters : Form.serialize($('pop_form')),
+            onComplete : function () {
+            }
+          });
+        break;
+      }
+    break;
     case "itemEnd":         // thrown when a video has played for its total duration
     case "done":            // thrown when all videos have played
 
@@ -38,8 +54,6 @@ Event.observe(window, 'load', function () {
           videos = $A(right_side.concat(left_side)).join(",");
         }
         $('uvp_fop').playID(videos);
-        //alert(videos.indexOf("v" + this.parentNode.id.replace("video_", "")));
-        //$('uvp_fop').playID("v" + this.parentNode.id.replace("video_", ""));
       });
     });
 
@@ -61,11 +75,36 @@ Event.observe(window, 'load', function () {
   $$('form#search').each(function(search_form) {
     Event.observe(search_form, 'submit', function(submitted) {
       Event.stop(submitted);
-      new Ajax.Updater('results', search_form.action, {
-        parameters : Form.serialize(search_form)
+      new Ajax.Updater('results_container', search_form.action, {
+        parameters : Form.serialize(search_form),
+        onComplete : function () {
+          $$('form ul#results li').each(function(video_li) {
+            new Draggable(video_li.id, {
+              scroll: window
+            });
+          });
+        }
       });
     });
+    Droppables.add('drop', {
+      accept: 'video',
+      hoverclass: 'hover',
+      onDrop: function(draggable, droppable, dragged) {
+        html = draggable.innerHTML;
+        draggable.remove();
+        droppable.insert(html);
+      }
+    });
   });
+
+  /*
+  $$('form#create').each(function(create_form) {
+    Event.observe(create_form, 'submit', function(submitted) {
+     
+    });
+  });
+  */
+
 
   //Sortable.create('videos', {constraint:null,ghosting:true});
   /*

@@ -6,23 +6,38 @@
     <%=label_tag(:search)%>
     <%=text_field_tag(:artist_or_song)%>
     <%=submit_tag(:go)%>
+    <div id="results_container">
+    </div>
   <% end %>
-  <div id="results">
-  </div>
 <% end %>
-  <% form_tag(:create) do %>
-    <p>
-    </p>
-    <%=error_messages_for(:episode)%>
-    <ul>
-    <% fields_for(:episode) { |episode| %>
-      <li>
-        <%=episode.label(:title)%>
-        <%=episode.text_field(:title)%>
-      </li>
-      <li>
-        <%=episode.label(:description)%>
-        <%=episode.text_area(:description, {:rows => 5})%>
+<% form_tag(:create, {:id => "create"}) do %>
+  <p>
+  </p>
+  <%=error_messages_for(:episode)%>
+  <ul>
+  <% fields_for(:episode) { |episode| %>
+    <li>
+      <%=episode.label(:title)%>
+      <%=episode.text_field(:title)%>
+    </li>
+    <li>
+      <%=episode.label(:description)%>
+      <%=episode.text_area(:description, {:rows => 5})%>
+    </li>
+  <% } %>
+  <ul id="drop">
+    <% @videos.each { |video| %>
+      <li class="video" id="video_<%=video.id%>">
+        <%=hidden_field_tag("episode[video_ids][]", video.id, {:id => nil})%>
+        <%=link_to(image_tag(video.images.first.url, {:width => "120"}), "#", {:title => video.title})%>
+        <p>
+          "<%=video.title%>"
+          -
+          <%=video.artists.first.name%>
+          <%=video.formatted_duration%>
+        </p>
       </li>
     <% } %>
-  <% end %>
+  </ul>
+  <%=submit_tag(:go)%>
+<% end %>

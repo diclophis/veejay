@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
       session[:remembered_params] = params
     end
     def remembered_params
-      remembered = session[:remembered_params] || {:controller => :welcome, :action => :index}
+      remembered = session[:remembered_params] || {:controller => :profile, :action => :index}
       session[:remembered_params] = nil
       remembered
     end

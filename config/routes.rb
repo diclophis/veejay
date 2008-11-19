@@ -48,6 +48,8 @@ ActionController::Routing::Routes.draw do |map|
   map.profile '/profile/:nickname', :controller => "profile", :action => "index"
   map.create '/create', :controller => "profile", :action => "create"
   map.search '/search', :controller => "profile", :action => "search"
+  map.pop '/pop', :controller => "episode", :action => "pop"
+  map.episode '/episode/:id', :controller => "episode", :action => "watch"
   #map.rss_feed '/rss/:nickname', :controller => "welcome", :action => "feed", :format => "rss"
 
   # See how all your routes lay out with "rake routes"

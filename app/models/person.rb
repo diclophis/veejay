@@ -39,4 +39,8 @@ class Person < ActiveRecord::Base
   def to_param
     nickname
   end
+  def gravatar_url
+    hash = MD5::md5(self.email)
+    "http://www.gravatar.com/avatar/#{hash}"
+  end
 end

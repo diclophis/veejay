@@ -80,6 +80,7 @@ require 'RMagick'
 require 'xmlrpc/client'
 require 'hpricot'
 require 'iconv'
+require 'yaml'
 
 require 'validates_as_uri'
 require 'validates_as_email'
@@ -90,5 +91,16 @@ require 'plist'
 require 'has_ratings'
 require 'rss'
 
+ActiveRecord::Base.store_full_sti_class = true
 Fast::Cache.enable!
 TagList.delimiter = " "
+
+class Yahoo::Music::Video
+  yaml_as "tag:ruby.yaml.org,2002:Yahoo::Music::Video"
+end
+class Yahoo::Music::Artist
+  yaml_as "tag:ruby.yaml.org,2002:Yahoo::Music::Artist"
+end
+class Yahoo::Music::Image
+  yaml_as "tag:ruby.yaml.org,2002:Yahoo::Music::Image"
+end

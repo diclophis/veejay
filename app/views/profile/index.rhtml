@@ -2,10 +2,22 @@
   <%=link_to(@person.nickname, profile_url(@person)) %> is a <%=link_to(:VeeJay, root_url)%>
 <% end %>
 <% content_for :sidebar do %>
-  <%=link_to("Create New Episode", create_url)%>
+  <%=image_tag(@person.gravatar_url)%>
+  <% if current_person then %>
+    <%=link_to("Create New Episode", create_url)%>
+  <% end %>
 <% end %>
-
-<ul>
-  <% @episodes.each { |episode| %>
-  <% } %>
-</ul>
+<% if @episodes.empty? then %>
+  <p>
+    No Episodes
+  </p>
+<% else %>
+  <ul>
+    <% @episodes.each { |episode| %>
+      <li>
+        <%=image_tag(episode.videos.first.yahoo_video.images.first.url, {:width => 120})%>
+        <%=link_to(episode.title, episode_url(episode))%>
+      </li>
+    <% } %>
+  </ul>
+<% end %>

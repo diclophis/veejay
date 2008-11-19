@@ -28,6 +28,7 @@ module Yahoo
       attribute :copyright_year, Integer, :matcher => "copyrightYear"      
       attribute :type_id,   String
 
+      attribute :artists,    Artist
       attribute :images,    Image
 
     end
