@@ -13,9 +13,6 @@
   <% end %>
 <% end %>
 <% form_tag(:create, {:id => "create"}) do %>
-  <p>
-    lorem ipsum
-  </p>
   <%=error_messages_for(:episode)%>
   <ul>
   <% fields_for(:episode) { |episode| %>

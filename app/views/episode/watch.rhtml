@@ -8,12 +8,15 @@
   <% form_tag(:pop, {:id => "pop_form"}) do %>
     <%=hidden_field_tag(:video_id)%>
     <div id="pop_container">
+      <h2>
+        Enjoy the ads...
+      </h2>
     </div>
   <% end %>
 <% end %>
 <div id="uvp_fop_container" style="width:512px;height:322px;">
 </div>
-<ul id="videos">
+<ul class="grid">
   <% @episode.videos.each { |video| %>
     <li class="video" id="video_<%=video.yahoo_video.id%>">
       <%=link_to(image_tag(video.yahoo_video.images.first.url, {:width => "120"}), "#", {:title => video.yahoo_video.title})%>

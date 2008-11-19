@@ -3,10 +3,11 @@ a { text-decoration: none; outline: none; }
 */
 
 a:active { outline: none; }
-div,li,h1,h2,h3,h4,h5,h6,p,a { font-family: sans-serif; margin: 0; padding: 0; }
+form,div,li,h1,h2,h3,h4,h5,h6,p,a { font-family: sans-serif; margin: 0; padding: 0; }
 ul { list-style: none; margin: 0 0 0 0; padding: 0; }
 h1, h2, h3, li, p { font-size: 1em; }
-h1 { font-size: 2em; }
+h1 { font-size: 3em; }
+h2 { font-size: 2em; }
 img { border: 0; }
 label { margin: 1em 0 0.5em 0; clear: right; display: block; font-weight: bold; }
 body { font-size: 62.5%; width: 101em; margin: 0; padding: 0.5em; -webkit-text-size-adjust: none; }
@@ -18,8 +19,8 @@ li input[type="submit"] { margin: 1em 0 -0.5em 0; }
 .errorExplanation h2 { color: maroon; margin: 0; }
 .errorExplanation ul li { list-style: square; margin: 0 0 0 2em; }
 .fieldWithErrors input[type="text"], .fieldWithErrors input[type="password"] { background-color: yellow; }
-.success { border: 0.25em solid green; background-color: #ccffcc; padding: 0.5em; margin: 0.5em 4em 0.5em 0; }
-.notice { border: 0.25em solid gold; background-color: yellow; padding: 0.5em; margin: 0.5em 4em 0.5em 0; }
+.success { border: 0.25em solid green; background-color: #ccffcc; padding: 0.5em; }
+.notice { border: 0.25em solid gold; background-color: yellow; padding: 0.5em; }
 
 #logo { width: 10em; float: left; }
 #header { padding: 0.5em; width: 90em; float: left; height: 7.7em; }
@@ -28,6 +29,9 @@ li input[type="submit"] { margin: 1em 0 -0.5em 0; }
 
 #sidebar { padding: 1em; width: 37em; float: left; }
 #content { padding: 2em; width: 58em; float: left; }
+ul.grid { margin: 3.5em; }
+ul.grid li { display: inline; }
+ul.grid li img { margin: 2.25em; vertical-align: middle; }
 
 #drop { min-height: 7.5em; }
 

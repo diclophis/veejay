@@ -1,50 +1,35 @@
 <% content_for :tagline do %>
-  Be your own <%=link_to(:VeeJay, root_url)%>
+  VeeJay killed the TV star...
 <% end %>
 <% content_for :sidebar do %>
+  <h2>
+    Recently Created
+  </h2>
   <ul>
     <% @recent_episodes.each { |episode| %>
       <li>
-        <%=image_tag(episode.videos.first.yahoo_video.images.first.url, {:width => 120})%>
-        <%=link_to(episode.title, episode_url(episode))%>
-        by
-        <%=link_to(episode.person.nickname, profile_url(episode.person))%>
+        <table>
+          <tr>
+            <td>
+              <%=image_tag(episode.videos.first.yahoo_video.images.first.url, {:width => 120})%>
+            </td>
+            <td>
+              <%=link_to(episode.title, episode_url(episode))%>
+              by
+              <%=link_to(episode.person.nickname, profile_url(episode.person))%>
+            </td>
+          </tr>
+        </table>
       </li>
     <% } %>
   </ul>
 <% end %>
-<!--
-if current_person then
-  my favorits
-  my episodes
-  my friends
-else
-  New episodes
-
-end
--->
 <div id="uvp_fop_container" style="width:512px;height:322px;">
 </div>
-<ul id="videos">
+<ul class="grid">
   <% @popular_videos[0, 9].each { |video| %>
     <li class="video" id="video_<%=video.id%>">
       <%=link_to(image_tag(video.images.first.url, {:width => "120"}), "#", {:title => video.title})%>
     </li>
   <% } %>
 </ul>
-<p>
-  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-  Donec odio. Quisque volutpat mattis eros.
-  Nullam malesuada erat ut turpis.
-  Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.
-  Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci.
-  Aenean dignissim pellentesque felis.
-</p>
-<p>
-  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-  Donec odio. Quisque volutpat mattis eros.
-  Nullam malesuada erat ut turpis.
-  Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.
-  Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci.
-  Aenean dignissim pellentesque felis.
-</p>
