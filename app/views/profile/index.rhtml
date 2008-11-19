@@ -1,0 +1,11 @@
+<% content_for :tagline do %>
+  <%=link_to(@person.nickname, profile_url(@person)) %> is a <%=link_to(:VeeJay, root_url)%>
+<% end %>
+<% content_for :sidebar do %>
+  <%=link_to("Create New Episode", create_url)%>
+<% end %>
+
+<ul>
+  <% @episodes.each { |episode| %>
+  <% } %>
+</ul>

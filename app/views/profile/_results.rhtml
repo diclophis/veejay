@@ -1,0 +1,14 @@
+<ul>
+  <% @videos.each { |video| %>
+    <li class="video" id="video_<%=video.id%>">
+      <%=link_to(image_tag(video.images.first.url, {:width => "120"}), "#", {:title => video.title})%>
+      <p>
+        <%=video.title%>
+        <%=video.formatted_duration%>
+      </p>
+    </li>
+  <% } %>
+</ul>
+<!--
+<%=debug(@videos)%>
+-->
