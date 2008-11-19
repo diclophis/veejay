@@ -1,4 +1,6 @@
-// Copyright (c) 2005-2008 Thomas Fuchs (http://script.aculo.us, http://mir.aculo.us)
+// script.aculo.us dragdrop.js v1.8.1, Thu Jan 03 22:07:12 -0500 2008
+
+// Copyright (c) 2005-2007 Thomas Fuchs (http://script.aculo.us, http://mir.aculo.us)
 //           (c) 2005-2007 Sammi Williams (http://www.oriontransfer.co.nz, sammi@oriontransfer.co.nz)
 // 
 // script.aculo.us is freely distributable under the terms of an MIT-style license.
@@ -331,8 +333,8 @@ var Draggable = Class.create({
     
     if(this.options.ghosting) {
       this._clone = this.element.cloneNode(true);
-      this.element._originallyAbsolute = (this.element.getStyle('position') == 'absolute');
-      if (!this.element._originallyAbsolute)
+      this._originallyAbsolute = (this.element.getStyle('position') == 'absolute');
+      if (!this._originallyAbsolute) 
         Position.absolutize(this.element);
       this.element.parentNode.insertBefore(this._clone, this.element);
     }
@@ -403,9 +405,9 @@ var Draggable = Class.create({
     }
 
     if(this.options.ghosting) {
-      if (!this.element._originallyAbsolute)
+      if (!this._originallyAbsolute)
         Position.relativize(this.element);
-      delete this.element._originallyAbsolute;
+      delete this._originallyAbsolute;
       Element.remove(this._clone);
       this._clone = null;
     }
@@ -646,6 +648,12 @@ var Sortable = {
       elements:    false,
       handles:     false,
       
+	  // patched by Tankut Koray (tankut@gmail.com)
+	  markDropZone: true,
+	  
+	  /* patched by Gavin Dibley (gavin@gigastorm.net) */
+	  dropZoneCss: 'emptyPlaceMarker',
+	  
       onChange:    Prototype.emptyFunction,
       onUpdate:    Prototype.emptyFunction
     }, arguments[1] || { });
@@ -750,6 +758,9 @@ var Sortable = {
   onHover: function(element, dropon, overlap) {
     if(Element.isParent(dropon, element)) return;
 
+	var sortable = Sortable.options(dropon);
+	var isghosting = sortable && sortable.ghosting;
+	
     if(overlap > .33 && overlap < .66 && Sortable.options(dropon).tree) {
       return;
     } else if(overlap>0.5) {
@@ -757,7 +768,15 @@ var Sortable = {
       if(dropon.previousSibling != element) {
         var oldParentNode = element.parentNode;
         element.style.visibility = "hidden"; // fix gecko rendering
-        dropon.parentNode.insertBefore(element, dropon);
+	    /* Patched by Tankut Koray (tankut@gmail.com) */
+        Sortable.createGuide(element);
+        /* } */ 
+		dropon.parentNode.insertBefore(element, dropon);
+   	    /* Patched by Tankut Koray (tankut@gmail.com) {*/
+		dropon.parentNode.insertBefore(Sortable._guide, element);
+		
+        Sortable.markEmptyPlace(element, isghosting);
+        /* } */ 
         if(dropon.parentNode!=oldParentNode) 
           Sortable.options(oldParentNode).onChange(element);
         Sortable.options(dropon.parentNode).onChange(element);
@@ -768,9 +787,17 @@ var Sortable = {
       if(nextElement != element) {
         var oldParentNode = element.parentNode;
         element.style.visibility = "hidden"; // fix gecko rendering
+	    /* Patched by Tankut Koray (tankut@gmail.com) */
+        Sortable.createGuide(element);
+        /* } */ 
         dropon.parentNode.insertBefore(element, nextElement);
-        if(dropon.parentNode!=oldParentNode) 
-          Sortable.options(oldParentNode).onChange(element);
+        /* Patched by Tankut Koray (tankut@gmail.com) {*/
+		dropon.parentNode.insertBefore(Sortable._guide, element);
+
+        Sortable.markEmptyPlace(element, isghosting);
+        /* } */ 
+	    if(dropon.parentNode!=oldParentNode) 
+           Sortable.options(oldParentNode).onChange(element);
         Sortable.options(dropon.parentNode).onChange(element);
       }
     }
@@ -783,6 +810,9 @@ var Sortable = {
     if(!Element.isParent(dropon, element)) {
       var index;
       
+	  var sortable = Sortable.options(dropon);
+	  var isghosting = sortable && sortable.ghosting;
+	
       var children = Sortable.findElements(dropon, {tag: droponOptions.tag, only: droponOptions.only});
       var child = null;
             
@@ -801,16 +831,87 @@ var Sortable = {
           }
         }
       }
-      
-      dropon.insertBefore(element, child);
-      
+      /* Patched by Tankut Koray (tankut@gmail.com) {*/        
+  	  Sortable.createGuide(element);
+	  /* } */
+	  dropon.insertBefore(element, child);
+      /* Patched by Tankut Koray (tankut@gmail.com) {*/        
+	  dropon.insertBefore(Sortable._guide, element);
+      Sortable.markEmptyPlace(element,isghosting);
+      /* } */
       Sortable.options(oldParentNode).onChange(element);
       droponOptions.onChange(element);
     }
   },
+  /* Patched by Tankut Koray (tankut@gmail.com) {*/        
+  createGuide : function (element) {
+    if(!Sortable._guide) {
+		Sortable._guide = $('_guide') || document.createElement('DIV');
+		Sortable._guide.style.position = 'relative';
+		Sortable._guide.style.width = '1px';
+		Sortable._guide.style.height = '0px';
+		Sortable._guide.style.cssFloat = 'left';
+		Sortable._guide.id = 'guide';
+
+		document.getElementsByTagName("body").item(0).appendChild(Sortable._guide);
+    }
+    
+  },
+  
+  markEmptyPlace: function(element, isghosting) {
+
+    if(!Sortable._emptyPlaceMarker) {
+ 	  /* patched  by Gavin Dibley (gavin@gigastorm.net) */
+      Sortable._emptyPlaceMarker = $(Sortable.options(element).dropZoneCss) || document.createElement('DIV');
+
+	  Element.hide(Sortable._emptyPlaceMarker);
+	  
+	  /* patched  by Gavin Dibley (gavin@gigastorm.net) */
+      Element.addClassName(Sortable._emptyPlaceMarker, Sortable.options(element).dropZoneCss);
+	  
+      Sortable._emptyPlaceMarker.style.position = 'absolute';
+      document.getElementsByTagName("body").item(0).appendChild(Sortable._emptyPlaceMarker);
+    } else {
+	  // reset emptyPlaceMarker margins
+	  Sortable._emptyPlaceMarker.style.margin = '';
+	}
+
+	if(isghosting && Sortable._guide.previousSibling != null) {
+		var pos = Position.cumulativeOffset(Sortable._guide.previousSibling);
+		
+		// as we use previous sibling as guide and previous sibling is in the right position 
+		// we dont need to copy margin info 
+	} else {
+		var pos = Position.cumulativeOffset(Sortable._guide);
+		var md = Element.getStyle(element, 'margin');
+		// TODO burada butun margin ve padding elemanlarini kopyala
+		// TODO bununu icin prototype da method var mi var.
+		if(md != null) 
+			Sortable._emptyPlaceMarker.style.margin = md;
+	}
+
+	Sortable._emptyPlaceMarker.style.left = (pos[0]) + 'px';
+	Sortable._emptyPlaceMarker.style.top = (pos[1]) + 'px';
+
+    var d = {};
+    d.width = (Element.getDimensions(element).width) + 'px';
+    d.height = (Element.getDimensions(element).height) + 'px';
+
+    Sortable._emptyPlaceMarker.setStyle(d);
+	
+	if(Sortable.options(element).markDropZone)
+	    Element.show(Sortable._emptyPlaceMarker);
+  },
+  /* } */
 
   unmark: function() {
     if(Sortable._marker) Sortable._marker.hide();
+    /* Patched by Tankut Koray (tankut@gmail.com) {*/        
+    if(Sortable._guide && Sortable._guide.parentNode){
+        Sortable._guide.parentNode.removeChild(Sortable._guide);
+    }
+    if(Sortable._emptyPlaceMarker) Sortable._emptyPlaceMarker.hide();
+    /* } */
   },
 
   mark: function(dropon, position) {

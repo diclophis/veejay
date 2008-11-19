@@ -13,12 +13,14 @@ y_up_eventHandler = function( pType, pItem ) {
     case "itemBegin":       // thrown when a video starts playing for the first time
       switch(pItem.type) {
         case "S_STREAM":
-          $('video_id').value = pItem.clipid.sub('v', '', 1);
-          new Ajax.Updater('pop_container', $('pop_form').action, {
-            parameters : Form.serialize($('pop_form')),
-            onComplete : function () {
-            }
-          });
+          if ($('pop_form')) {
+            $('video_id').value = pItem.clipid.sub('v', '', 1);
+            new Ajax.Updater('pop_container', $('pop_form').action, {
+              parameters : Form.serialize($('pop_form')),
+              onComplete : function () {
+              }
+            });
+          }
         break;
       }
     break;
@@ -57,7 +59,7 @@ Event.observe(window, 'load', function () {
       });
     });
 
-    so = new SWFObject('http://d.yimg.com/cosmos.bcst.yahoo.com/up/fop/embedflv/swf/fop.swf', 'uvp_fop', '512', '322', '9', '#ffffff');
+    so = new SWFObject('http://d.yimg.com/cosmos.bcst.yahoo.com/up/fop/embedflv/swf/fop.swf', 'uvp_fop', '580', '322', '9', '#ffffff');
     so.addVariable('id', videos.join(','));
     so.addVariable('eID', '1301797');    // NEEDS TO CHANGE DEPENDING ON LOCALE
     so.addVariable('ympsc', '4195351');  // NEEDS TO CHANGE DEPENDING ON LOCALE
@@ -78,23 +80,43 @@ Event.observe(window, 'load', function () {
       new Ajax.Updater('results_container', search_form.action, {
         parameters : Form.serialize(search_form),
         onComplete : function () {
+          Sortable.create('results',{containment: ['results', 'drop'], dropOnEmpty: true, constraint: false, revert: false});
+          Sortable.create('drop',{containment: ['results', 'drop'], dropOnEmpty: true, constraint: false});
+          /*
           $$('form ul#results li').each(function(video_li) {
             new Draggable(video_li.id, {
+              endeffect: function(element){
+                new Effect.Opacity(element, {from:0, to:1.0, duration:2});
+              },
+              ghosting: true,
               scroll: window
             });
           });
+          */
         }
       });
+      alert('wtf');
+      r = Sortable.create('drop',{containment: ['results', 'drop'], dropOnEmpty:true, constraint:false});
+      alert(r);
     });
-    Droppables.add('drop', {
+    /*
+    Droppables.add('content', {
       accept: 'video',
       hoverclass: 'hover',
       onDrop: function(draggable, droppable, dragged) {
-        html = draggable.innerHTML;
-        draggable.remove();
-        droppable.insert(html);
+        //html = draggable.innerHTML;
+        //draggable.remove();
+        //droppable.insert(html);
+        //Sortable.destroy('drop');
+        $('drop').insert(draggable.remove());
+        Droppables.remove('content');
+        alert('wtf');
+        //Sortable.create('drop');
+        //droppable.addClassName('videos');
       }
     });
+    */
+    //Sortable.create('drop');
   });
 
   /*

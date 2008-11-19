@@ -3,56 +3,7 @@
   <head>
     <meta name="viewport" content="width=1010" />
     <title>VeeJay.tv</title>
-    <style type="text/css">
-      a { text-decoration: none; outline: none; }
-      a:active { outline: none; }
-      div,li,h1,h2,h3,h4,h5,h6,p,a { font-family: sans-serif; margin: 0; padding: 0; }
-      ul { list-style: none; margin: 0 0 0 0; padding: 0; }
-      img { border: 0; }
-      label { clear: right; display: block; }
-      body { font-size: 62.5%; width: 101em; margin: 0; padding: 0.5em; -webkit-text-size-adjust: none; }
-      li, p { margin: 0 0 0.5em 0; }
-      p { font-size: 1.25em; }
-      .errorExplanation { margin: 0 4em 1em 0; background-color:#ffcccc; border: 0.25em solid red; vertical-align:top; padding: 1em; }
-      .errorExplanation h2 { color: maroon; margin: 0; }
-      .errorExplanation ul li { list-style: square; margin: 0 0 0 1em; }
-      .fieldWithErrors input[type="text"], .fieldWithErrors input[type="password"] { background-color: yellow; }
-      .success { border: 0.25em solid green; background-color: #ccffcc; padding: 0.5em; margin: 0.5em 4em 0.5em 0; }
-      .notice { border: 0.25em solid gold; background-color: yellow; padding: 0.5em; margin: 0.5em 4em 0.5em 0; }
-
-      #header { padding: 0.5em 0.5em 0.5em 0.5em; width: 100em; }
-      #header ul { float: right; margin: 0 0 0 0; }
-      #header li { display: inline; }
-
-      #sidebar { padding: 1em; width: 37em; float: left; }
-      #results { margin: 1em; }
-      #lryics { margin: 1em; }
-
-      #people { margin: 0 0 0em 14em; }
-
-      #content { padding: 2em 2em 2em 2em; width: 58em; float: left; }
-      #drop { margin: 1em; height: 20em; border: 1px solid blue; }
-
-      #footer { padding: 0.5em; clear: both; width: 100em; }
-      #footer p { text-align: right; padding: 0.25em; }
-
-      /*
-      #videos li { display: inline; }
-      #videos li img { margin: 2em; vertical-align: middle; }
-      */
-
-      /*
-      .pagination { }
-      .pagination a, .pagination span { font-size: 1.5em; display: block; float: left; padding: 0.25em; }
-      .pagination span.disabled { }
-      .pagination span.current { font-weight: bold; color: red; }
-      .pagination a { text-decoration: none; }
-      .pagination a:hover, .pagination a:focus { }
-      .pagination:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-      * html .pagination { height: 1%; }
-      *:first-child+html .pagination { overflow: hidden; }
-      */
-    </style>
+    <%= stylesheet_link_tag "application" %>
     <%=javascript_include_tag(:defaults)%>
     <%=auto_discovery_link_tag(:rss, rss_feed_url(@feeder)) if @feeder%>
   </head>

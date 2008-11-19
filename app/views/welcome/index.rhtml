@@ -1,6 +1,19 @@
 <% content_for :tagline do %>
   Be your own <%=link_to(:VeeJay, root_url)%>
 <% end %>
+<% content_for :sidebar do %>
+  <ul>
+    <% @recent_episodes.each { |episode| %>
+      <li>
+        <%=image_tag(episode.videos.first.yahoo_video.images.first.url, {:width => 120})%>
+        <%=link_to(episode.title, episode_url(episode))%>
+        by
+        <%=link_to(episode.person.nickname, profile_url(episode.person))%>
+      </li>
+    <% } %>
+  </ul>
+<% end %>
+<!--
 if current_person then
   my favorits
   my episodes
@@ -9,6 +22,7 @@ else
   New episodes
 
 end
+-->
 <div id="uvp_fop_container" style="width:512px;height:322px;">
 </div>
 <ul id="videos">

@@ -3,11 +3,22 @@
     "<%=@video.title%>"
   </li>
   <li>
-    <%=@video.artists.first.name%>
+    <%=link_to(@artist.name, @artist.website)%>
   </li>
   <li>
     <% if @lyrics then %>
       <pre id="lyrics"><%=@lyrics%></pre>
     <% end %>
+  </li>
+  <li>
+    last release
+    "<%=@last_release.title%>"
+    on
+    <%=@last_release.released_on%>
+  </li>
+  <li>
+    <% @artist.categories.each { |category| %>
+      <%=category.name %>
+    <% } %>
   </li>
 </ul>

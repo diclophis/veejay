@@ -27,6 +27,7 @@ Rails::Initializer.run do |config|
   # config.gem "aws-s3", :lib => "aws/s3"
   #config.gem "ruby-openid"
   config.gem "yahoo-music"
+  #config.gem "mtv-music"
 
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.
@@ -92,6 +93,7 @@ require 'plist'
 require 'has_ratings'
 require 'rss'
 require 'lyrics'
+require '/root/ruby-oembed/lib/oembed'
 
 ActiveRecord::Base.store_full_sti_class = true
 Fast::Cache.enable!

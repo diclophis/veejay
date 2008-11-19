@@ -156,6 +156,7 @@ module Yahoo
 
       def formatted_duration
       seconds = self.duration
+      return "" if seconds == 0
 
       m = (seconds/60).floor
       s = (seconds - (m * 60)).round

@@ -4,6 +4,7 @@ class WelcomeController < ApplicationController
   def index
     @popular_videos = Yahoo::Music::Video.published
     @popular_videos.delete_if { |video| video.id.blank? or video.id == 0 }
+    @recent_episodes = Episode.find(:all, :order => "created_at desc")
   end
   def feed
     respond_to { |format|
