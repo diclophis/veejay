@@ -30,7 +30,8 @@ li input[type="submit"] { margin: 1em 0 -0.5em 0; }
 #header li { display: inline; }
 
 #sidebar { padding: 1em; width: 37em; float: left; }
-#content { padding: 2em; width: 58em; float: left; }
+#content { padding: 1em 2em 2em 2em; width: 58em; float: left; }
+#xresults_container { height: 50em; overflow: scroll; }
 ul.grid { margin: 3.5em; }
 ul.grid li { display: inline; }
 ul.grid li img { margin: 2.25em; vertical-align: middle; }

@@ -5,10 +5,15 @@
   Something
 <% end %>
 <% if @episodes.empty? then %>
-  <p>
-    No Episodes
-  </p>
+  <h2>
+    No Sets... why don't you
+    <%=link_to("create", create_url)%>
+    one already!
+  </h2>
 <% else %>
+  <h2>
+    My Sets
+  </h2>
   <ul>
     <% @episodes.each { |episode| %>
       <li>

@@ -35,12 +35,12 @@ class PeopleController < ApplicationController
       if pending_person.valid? then
         begin
           response = openid_consumer.begin(pending_person.identity_url)
-          if Person.exists?(:identity_url => pending_person.normalize_identity_url) then
-            redirect_url = response.redirect_url(root_url, url_for(:login))
-          else
+          #if Person.exists?(:identity_url => pending_person.normalize_identity_url) then
+          #  redirect_url = response.redirect_url(root_url, url_for(:login))
+          #else
             remember_pending_person
             redirect_url = response.redirect_url(root_url, url_for(:register))
-          end
+          #end
           return redirect_to redirect_url
         rescue => problem
           pending_person.errors.add(:identity_url, problem)
@@ -57,6 +57,7 @@ class PeopleController < ApplicationController
 #TODO: double check against current_person?
       return redirect_to(bookmarklet_url)
     rescue => problem
+      raise problem
       logger.debug(problem)
       flash[:notice] = "There was a problem activating your account"
       return redirect_to(root_url)
@@ -70,6 +71,7 @@ class PeopleController < ApplicationController
           @person.identity_url = params[:person][:identity_url]
           @person.nickname = params[:person][:nickname]
           @person.email = params[:person][:email]
+          @person.biography = ""
         end
         @person.identity_url = params["openid.identity"] if @person.identity_url.blank?
       end
