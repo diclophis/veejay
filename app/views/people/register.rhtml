@@ -2,9 +2,6 @@
   <%=link_to(:VeeJay, root_url)%>
 <% end %>
 <% form_tag(:register) do %>
-  <p>
-    Enter your OpenID credentials below.
-  </p>
   <%=error_messages_for(:person)%>
   <ul>
   <% fields_for(:person) { |person| %>

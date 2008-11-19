@@ -22,8 +22,8 @@ li input[type="submit"] { margin: 1em 0 -0.5em 0; }
 .success { border: 0.25em solid green; background-color: #ccffcc; padding: 0.5em; }
 .notice { border: 0.25em solid gold; background-color: yellow; padding: 0.5em; }
 
-#logo { width: 10em; float: left; }
-#header { padding: 0.5em; width: 90em; float: left; height: 7.7em; }
+#logo { width: 10em; height: 10em; float: left; }
+#header { padding: 1em; width: 89em; float: left; height: 8em; }
 #header ul { float: right; margin: 0 0 0 0; }
 #header li { display: inline; }
 
@@ -37,7 +37,6 @@ ul.grid li img { margin: 2.25em; vertical-align: middle; }
 
 #footer { padding: 0.5em; clear: both; width: 100em; }
 #footer p { text-align: right; padding: 0.25em; }
-#uvp_fop_container { background-color: red; }
 
 a { color: #001155; }
 body { background-color: #A9ADD1; }

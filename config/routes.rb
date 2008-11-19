@@ -45,6 +45,7 @@ ActionController::Routing::Routes.draw do |map|
   #map.findings '/findings', :controller => "welcome", :action => "findings"
   #map.image '/image/:permalink', :controller => "welcome", :action => "image"
   #map.similarities '/similarities/:permalink', :controller => "welcome", :action => "similarities"
+  map.dashboard '/dashboard', :controller => "dashboard", :action => "index"
   map.profile '/profile/:nickname', :controller => "profile", :action => "index"
   map.create '/create', :controller => "profile", :action => "create"
   map.search '/search', :controller => "profile", :action => "search"

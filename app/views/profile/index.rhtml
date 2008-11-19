@@ -1,11 +1,12 @@
 <% content_for :tagline do %>
-  <%=link_to(@person.nickname, profile_url(@person)) %> is a <%=link_to(:VeeJay, root_url)%>
+  <%=link_to(@person.nickname, profile_url(@person)) %>
 <% end %>
 <% content_for :sidebar do %>
-  <%=image_tag(@person.gravatar_url)%>
-  <% if current_person then %>
-    <%=link_to("Create New Episode", create_url)%>
-  <% end %>
+  <ul>
+    <li>
+      <%=image_tag(@person.gravatar_url)%>
+    </li>
+  </ul>
 <% end %>
 <% if @episodes.empty? then %>
   <p>
@@ -15,8 +16,16 @@
   <ul>
     <% @episodes.each { |episode| %>
       <li>
-        <%=image_tag(episode.videos.first.yahoo_video.images.first.url, {:width => 120})%>
-        <%=link_to(episode.title, episode_url(episode))%>
+        <table>
+          <tr>
+            <td>
+              <%=image_tag(episode.videos.first.yahoo_video.images.first.url, {:width => 120})%>
+            </td>
+            <td>
+              <%=link_to(episode.title, episode_url(episode))%>
+            </td>
+          </tr>
+        </table>
       </li>
     <% } %>
   </ul>

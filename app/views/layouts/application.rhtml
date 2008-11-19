@@ -13,16 +13,16 @@
       <% if current_person then %>
         <ul>
           <li>
-            your
+            you can
           </li>
           <li>
-            <%=link_to(:feed, root_url(:nickname => current_person))%>
+            <%=link_to(:create, create_url)%>
           </li>
           <li>
-            and
+            a new episode or view your
           </li>
           <li>
-            <%=link_to(:episodes, root_url)%>
+            <%=link_to(:profile, profile_url(current_person))%>
           </li>
         </ul>
       <% else %>

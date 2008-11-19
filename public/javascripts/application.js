@@ -16,6 +16,7 @@ y_up_eventHandler = function( pType, pItem ) {
             new Ajax.Updater('pop_container', $('pop_form').action, {
               parameters : Form.serialize($('pop_form')),
               onComplete : function () {
+                $('pause_button').show();
               }
             });
           }
@@ -39,6 +40,25 @@ Event.observe(window, 'load', function () {
   $$("#person_nickname").each(function(element) {
     element.focus();
   });
+  if (pause_button = $('pause_button')) {
+    Event.observe(pause_button, 'click', function (pause) {
+      Event.stop(pause);
+      $('uvp_fop').vidPause();
+      play_button.show();
+      pause_button.hide();
+    });
+    pause_button.hide();
+  }
+  if (play_button = $('play_button')) {
+    Event.observe(play_button, 'click', function (play) {
+      Event.stop(play);
+      $('uvp_fop').vidPlay();
+      play_button.hide();
+      pause_button.show();
+    });
+    play_button.hide();
+  }
+
   if ($('uvp_fop_container')) {
     videos = $$('li.video').collect(function(video) { return 'v' + video.id.replace("video_", ""); });
     $$('li.video a').each(function(link_to_video) {
@@ -62,7 +82,7 @@ Event.observe(window, 'load', function () {
     so.addVariable('shareEnable', '0');
     so.addParam("allowFullScreen", "true");
     so.addVariable('enableFullScreen', '1');
-    so.addVariable('autoStart', '1');
+    so.addVariable('autoStart', '0');
     so.addVariable('controlsEnable', '0');
     so.addVariable('eh', 'y_up_eventHandler');
     so.addParam("allowScriptAccess", "always");  // for scripting access
