@@ -76,6 +76,8 @@ module HasManyFriends
       # associated with both users.
       def friendship(friend)
         Friendship.find(:first, :conditions => ['(person_id = ? AND friend_id = ?) OR (friend_id = ? AND person_id = ?)', self.id, friend.id, self.id, friend.id])
+        #Friendship.find(:first, :conditions => ['(person_id = ? AND friend_id = ?)', self.id, friend.id])
+        #Friendship.find(:first, :conditions => ['(friend_id = ? AND person_id = ?)', self.id, friend.id])
       end
       
       # Accepts a user object and returns true if both users are
@@ -119,15 +121,15 @@ module HasManyFriends
       # users. This method bypasses the request stage and makes both
       # users friends without needing to be accepted.
       def become_friends_with(friend)
-        unless self.is_friends_with?(friend)
+        #unless self.is_friends_with?(friend)
           unless self.is_pending_friends_with?(friend)
             Friendship.create!(:friendshipped_by_me => self, :friendshipped_for_me => friend, :accepted_at => Time.now)
           else
             self.friendship(friend).update_attribute(:accepted_at, Time.now)
           end
-        else
-          self.friendship(friend)
-        end
+        #else
+        #  self.friendship(friend)
+        #end
       end
       
     end  

@@ -4,11 +4,19 @@
   <%=link_to(@episode.person.nickname, profile_url(@episode.person))%>
 <% end %>
 <% content_for :sidebar do %>
+  <h2>
+    Background on Set
+  </h2>
+  <p>
+    <%=h(@episode.description)%>
+    <br/>
+    <br/>
+    -<%=@episode.person.nickname%>
+  </p>
   <% form_tag(:pop, {:id => "pop_form"}) do %>
     <%=hidden_field_tag(:video_id)%>
     <div id="pop_container">
       <h2>
-        Enjoy the ads...
       </h2>
     </div>
   <% end %>

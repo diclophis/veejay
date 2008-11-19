@@ -13,6 +13,12 @@
       <% if current_person then %>
         <ul>
           <li>
+            Hello
+          </li>
+          <li>
+            <%=link_to(current_person.nickname, profile_url(current_person))%>
+          </li>
+          <li>
             you can
           </li>
           <li>
@@ -20,12 +26,6 @@
           </li>
           <li>
             a new episode or view your
-          </li>
-          <li>
-            <%=link_to(:profile, profile_url(current_person))%>
-          </li>
-          <li>
-            or
           </li>
           <li>
             <%=link_to(:dashboard, dashboard_url)%>
@@ -47,6 +47,9 @@
       <h1>
         <%= yield :tagline %>
       </h1>
+      <p>
+        <%= yield :instructions %>
+      </p>
     </div>
     <div id="sidebar">
       <%= yield :sidebar %>
