@@ -81,6 +81,7 @@ require 'xmlrpc/client'
 require 'hpricot'
 require 'iconv'
 require 'yaml'
+require 'soap/wsdlDriver' 
 
 require 'validates_as_uri'
 require 'validates_as_email'
@@ -90,6 +91,7 @@ require 'music'
 require 'plist'
 require 'has_ratings'
 require 'rss'
+require 'lyrics'
 
 ActiveRecord::Base.store_full_sti_class = true
 Fast::Cache.enable!

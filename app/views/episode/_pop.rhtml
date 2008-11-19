@@ -5,4 +5,9 @@
   <li>
     <%=@video.artists.first.name%>
   </li>
+  <li>
+    <% if @lyrics then %>
+      <pre id="lyrics"><%=@lyrics%></pre>
+    <% end %>
+  </li>
 </ul>
