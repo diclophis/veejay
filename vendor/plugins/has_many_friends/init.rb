@@ -1,1 +1,1 @@
-ActiveRecord::Base.send( :include, HasManyFriends::UserExtensions )
+ActiveRecord::Base.send( :include, HasManyFriends::PersonExtensions )

@@ -4,7 +4,16 @@
 <% content_for :sidebar do %>
   <ul>
     <li>
-      <%=image_tag(@person.gravatar_url)%>
+      <table>
+        <tr>
+          <td>
+            <%=image_tag(@person.gravatar_url)%>
+          </td>
+          <td>
+            <%=link_to(:subscribe, subscribe_url(@person))%>
+          </td>
+        </tr>
+      </table>
     </li>
   </ul>
 <% end %>

@@ -5,6 +5,14 @@ class DashboardController < ApplicationController
   def index
     @episodes = Episode.paginate(:page => current_page, :conditions => ["person_id = ?", current_person.id])
   end
+  def subscribe
+    friend = Person.find_by_nickname(params[:id])
+    raise unless friend
+    raise if friend.id == current_person.id
+    current_person.become_friends_with(friend) 
+    flash[:success] = "Subscribed!"
+    return redirect_to(profile_url(friend))
+  end
   def edit
     @episode = Episode.find_by_id(params[:id])
     @videos = @episode.videos.collect { |video| video.yahoo_video }

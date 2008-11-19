@@ -2,7 +2,25 @@
   Dashboard
 <% end %>
 <% content_for :sidebar do %>
-  Something
+  <h2>
+    Subscriptions
+  </h2>
+  <ul>
+    <li>
+      <% current_person.friends.each { |friend| %>
+        <table>
+          <tr>
+            <td>
+              <%=image_tag(friend.gravatar_url)%>
+            </td>
+            <td>
+              <%=link_to(friend.nickname, profile_url(friend))%>
+            </td>
+          </tr>
+        </table>
+      <% } %>
+    </li>
+  </ul>
 <% end %>
 <% if @episodes.empty? then %>
   <h2>

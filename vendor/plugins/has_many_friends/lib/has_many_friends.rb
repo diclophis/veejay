@@ -1,6 +1,6 @@
 module HasManyFriends
 
-  module UserExtensions
+  module PersonExtensions
   
     def self.included( recipient )
       recipient.extend( ClassMethods )
@@ -9,7 +9,7 @@ module HasManyFriends
     module ClassMethods
       def has_many_friends(options={})
         has_many :friendships_by_me,
-                 :foreign_key => 'user_id',
+                 :foreign_key => 'person_id',
                  :class_name => 'Friendship'
         
         has_many :friendships_for_me,
@@ -44,7 +44,7 @@ module HasManyFriends
                  :source => :friendshipped_by_me,
                  :conditions => 'accepted_at IS NULL'
         
-        include HasManyFriends::UserExtensions::InstanceMethods
+        include HasManyFriends::PersonExtensions::InstanceMethods
       end
     end
     
@@ -75,7 +75,7 @@ module HasManyFriends
       # Accepts a user object and returns the friendship object 
       # associated with both users.
       def friendship(friend)
-        Friendship.find(:first, :conditions => ['(user_id = ? AND friend_id = ?) OR (friend_id = ? AND user_id = ?)', self.id, friend.id, self.id, friend.id])
+        Friendship.find(:first, :conditions => ['(person_id = ? AND friend_id = ?) OR (friend_id = ? AND person_id = ?)', self.id, friend.id, self.id, friend.id])
       end
       
       # Accepts a user object and returns true if both users are
