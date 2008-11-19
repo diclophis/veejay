@@ -1,0 +1,55 @@
+/*
+a { text-decoration: none; outline: none; }
+*/
+
+a:active { outline: none; }
+div,li,h1,h2,h3,h4,h5,h6,p,a { font-family: sans-serif; margin: 0; padding: 0; }
+ul { list-style: none; margin: 0 0 0 0; padding: 0; }
+h1, h2, h3, li, p { font-size: 1em; }
+h1 { font-size: 2em; }
+img { border: 0; }
+label { margin: 1em 0 0.5em 0; clear: right; display: block; font-weight: bold; }
+body { font-size: 62.5%; width: 101em; margin: 0; padding: 0.5em; -webkit-text-size-adjust: none; }
+input, textarea { width: 75%; }
+input[type="submit"] { width: 22%; }
+li input[type="submit"] { margin: 1em 0 -0.5em 0; }
+.emptyPlaceMarker { border: 1px dashed red; }
+.errorExplanation { background-color:#ffcccc; border: 0.25em solid red; vertical-align:top; padding: 1em; }
+.errorExplanation h2 { color: maroon; margin: 0; }
+.errorExplanation ul li { list-style: square; margin: 0 0 0 2em; }
+.fieldWithErrors input[type="text"], .fieldWithErrors input[type="password"] { background-color: yellow; }
+.success { border: 0.25em solid green; background-color: #ccffcc; padding: 0.5em; margin: 0.5em 4em 0.5em 0; }
+.notice { border: 0.25em solid gold; background-color: yellow; padding: 0.5em; margin: 0.5em 4em 0.5em 0; }
+
+#logo { width: 10em; float: left; }
+#header { padding: 0.5em; width: 90em; float: left; height: 7.7em; }
+#header ul { float: right; margin: 0 0 0 0; }
+#header li { display: inline; }
+
+#sidebar { padding: 1em; width: 37em; float: left; }
+#content { padding: 2em; width: 58em; float: left; }
+
+#drop { min-height: 7.5em; }
+
+#footer { padding: 0.5em; clear: both; width: 100em; }
+#footer p { text-align: right; padding: 0.25em; }
+#uvp_fop_container { background-color: red; }
+
+a { color: #001155; }
+body { background-color: #A9ADD1; }
+#header { background-color: #e0e0e0; }
+#sidebar { background-color: #FBFAE9; }
+#content { background-color: #CED1EB; }
+#footer { background-color: #ababab; }
+
+/*
+.pagination { }
+.pagination a, .pagination span { font-size: 1.5em; display: block; float: left; padding: 0.25em; }
+.pagination span.disabled { }
+.pagination span.current { font-weight: bold; color: red; }
+.pagination a { text-decoration: none; }
+.pagination a:hover, .pagination a:focus { }
+.pagination:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+* html .pagination { height: 1%; }
+*:first-child+html .pagination { overflow: hidden; }
+*/
