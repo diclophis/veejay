@@ -8,7 +8,7 @@ class Lyrics
   end
   def self.for(artist, song)
     lyrics = self.instance.driver.getSong(artist, song).lyrics
-    if lyrics == "Not Found" then
+    if lyrics == "Not found" then
       nil
     else
       lyrics

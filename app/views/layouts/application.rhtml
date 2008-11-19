@@ -8,6 +8,7 @@
     <%=auto_discovery_link_tag(:rss, rss_feed_url(@feeder)) if @feeder%>
   </head>
   <body>
+    <%=link_to(image_tag("/images/logo.png", {:id => :logo}), root_url)%>
     <div id="header">
       <% if current_person then %>
         <ul>

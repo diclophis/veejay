@@ -1,9 +1,12 @@
 <% if @videos.empty? then %>
-  <p>
+  <h3>
     Sorry please try again
     <%=debug(@videos)%>
-  </p>
+  </h3>
 <% else %>
+  <h3>
+    X results found
+  </h3>
   <ul id="results">
     <% @videos.each { |video| %>
       <li class="video" id="video_<%=video.id%>">

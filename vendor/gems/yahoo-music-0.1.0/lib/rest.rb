@@ -27,6 +27,8 @@ module REST
 				url.query = args.map { |k,v| "%s=%s" % [URI.encode(k), URI.encode(v)] }.join("&")
 			end
 ActiveRecord::Base.logger.debug(url.inspect)
+      Fast.fetch(url.to_s)
+=begin
 			case method
 			when "get"
 				req = Net::HTTP::Get.new(url.request_uri)
@@ -43,6 +45,7 @@ ActiveRecord::Base.logger.debug(url.inspect)
 
 			res = http.start() { |conn| conn.request(req) }
 			res.body
+=end
 		end
 	end
 end
