@@ -21,16 +21,18 @@ class ProfileController < ApplicationController
     if request.post? then
       begin
         Person.transaction do
-          params[:episode][:video_ids].each { |video_id|
-            video = Yahoo::Music::Video.item(video_id).first
-            @episode.videos << Video.create({
-              :yahoo_id => video.id,
-              :yahoo_title => video.title,
-              :yahoo_duration => video.duration,
-              :yahoo_video => video
-            })
-            @videos << video
-          }
+          if params[:episode][:video_ids] then
+            params[:episode][:video_ids].each { |video_id|
+              video = Yahoo::Music::Video.item(video_id).first
+              @episode.videos << Video.create({
+                :yahoo_id => video.id,
+                :yahoo_title => video.title,
+                :yahoo_duration => video.duration,
+                :yahoo_video => video
+              })
+              @videos << video
+            }
+          end
           @episode.title = params[:episode][:title]
           @episode.description = params[:episode][:description]
           current_person.episodes << @episode

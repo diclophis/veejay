@@ -3,8 +3,6 @@
 var sc;
 
 y_up_eventHandler = function( pType, pItem ) {
-  //alert(pType);
-  //alert(Object.toJSON(pItem));
   //{"type": "S_AD", "clipid": "v2140336", "spaceId": "396500312"}
   //{"type": "S_AD", "clipid": "v2140336", "spaceId": "396500312"}
   //{"type": "S_STREAM", "clipid": "v2140336", "spaceId": "396500312"}
@@ -26,8 +24,6 @@ y_up_eventHandler = function( pType, pItem ) {
     break;
     case "itemEnd":         // thrown when a video has played for its total duration
     case "done":            // thrown when all videos have played
-
-
     case "streamPlay":      // thrown anytime a video begins to play
     case "streamPause":     // thrown when vidPause() is requested and completed
     case "streamStop":      // thrown when playback has stopped for whatever reason (not the same as itemEnd)
@@ -58,7 +54,6 @@ Event.observe(window, 'load', function () {
         $('uvp_fop').playID(videos);
       });
     });
-
     so = new SWFObject('http://d.yimg.com/cosmos.bcst.yahoo.com/up/fop/embedflv/swf/fop.swf', 'uvp_fop', '580', '322', '9', '#ffffff');
     so.addVariable('id', videos.join(','));
     so.addVariable('eID', '1301797');    // NEEDS TO CHANGE DEPENDING ON LOCALE
@@ -80,69 +75,13 @@ Event.observe(window, 'load', function () {
       new Ajax.Updater('results_container', search_form.action, {
         parameters : Form.serialize(search_form),
         onComplete : function () {
+          Sortable.destroy('results');
+          Sortable.destroy('drop');
           Sortable.create('results',{containment: ['results', 'drop'], dropOnEmpty: true, constraint: false, revert: false});
           Sortable.create('drop',{containment: ['results', 'drop'], dropOnEmpty: true, constraint: false});
-          /*
-          $$('form ul#results li').each(function(video_li) {
-            new Draggable(video_li.id, {
-              endeffect: function(element){
-                new Effect.Opacity(element, {from:0, to:1.0, duration:2});
-              },
-              ghosting: true,
-              scroll: window
-            });
-          });
-          */
         }
       });
-      alert('wtf');
-      r = Sortable.create('drop',{containment: ['results', 'drop'], dropOnEmpty:true, constraint:false});
-      alert(r);
     });
-    /*
-    Droppables.add('content', {
-      accept: 'video',
-      hoverclass: 'hover',
-      onDrop: function(draggable, droppable, dragged) {
-        //html = draggable.innerHTML;
-        //draggable.remove();
-        //droppable.insert(html);
-        //Sortable.destroy('drop');
-        $('drop').insert(draggable.remove());
-        Droppables.remove('content');
-        alert('wtf');
-        //Sortable.create('drop');
-        //droppable.addClassName('videos');
-      }
-    });
-    */
-    //Sortable.create('drop');
+    Sortable.create('drop',{containment: ['results', 'drop'], dropOnEmpty:true, constraint:false});
   });
-
-  /*
-  $$('form#create').each(function(create_form) {
-    Event.observe(create_form, 'submit', function(submitted) {
-     
-    });
-  });
-  */
-
-
-  //Sortable.create('videos', {constraint:null,ghosting:true});
-  /*
-autoStart   0|1 (default: 0)  Used to auto start the video on player load.
-bw  integer   Used to force a bandwidth; if bw is not specified the player will attempt to determine the best video bitrate quality for the user.
-eh  string  Callback event handler that the player should make calls to.
-lang  string (default: "en")  Language to use w/in player. See Supported Locales for possible values.
-closeEnable   0|1 (default: 0)  Sets visibility of the close button; button action will throw a callback event of type "close".
-controlsEnable  0|1 (default: 1)  Enables the player controls.
-enableFullScreen  0|1 (default: 0)  Displays/hides fullscreen button (requires allowFullScreen param to be set - see embed example above).
-infoEnable  0|1 (default: 1)  Sets visibility of the "more info" button.
-nowplayingEnable  0|1 (default: 1)  Enables the intro "Now Playing: ..." component during the first few seconds of playback.
-postpanelEnable   0|1 (default: 1)  Enables the post panel; displayed after a clip completes playback.
-prepanelEnable  0|1 (default: 1)  Enables the pre meta panel on player initialization when autoStart is false and a valid id has been passed into the player.
-shareEnable   0|1 (default: 0)  Enables the Share panel.
-
-
-   */
 });
