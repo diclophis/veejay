@@ -49,6 +49,7 @@
       #current_persons_tags li { display: inline; }
       #videos li { display: inline; }
       #videos li img { margin: 2em; vertical-align: middle; }
+      #results { margin: 1em; height: 10em; overflow: auto; }
       .pagination { }
       .pagination a, .pagination span { font-size: 1.5em; display: block; float: left; padding: 0.25em; }
       .pagination span.disabled { }
@@ -97,14 +98,7 @@
       </h1>
     </div>
     <div id="sidebar">
-      <p>
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-        Donec odio. Quisque volutpat mattis eros.
-        Nullam malesuada erat ut turpis.
-        Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.
-        Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci.
-        Aenean dignissim pellentesque felis.
-      </p>
+      <%= yield :sidebar %>
     </div>
     <div id="content">
       <%=render :partial => 'shared/flash' %>

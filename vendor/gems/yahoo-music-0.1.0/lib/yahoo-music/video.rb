@@ -26,9 +26,10 @@ module Yahoo
       attribute :explicit,  Boolean
       
       attribute :copyright_year, Integer, :matcher => "copyrightYear"      
-      attribute :typeID,   String
+      attribute :type_id,   String
 
       attribute :images,    Image
+
     end
   end
 end

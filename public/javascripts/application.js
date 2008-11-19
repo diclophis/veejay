@@ -25,36 +25,47 @@ Event.observe(window, 'load', function () {
   $$("#person_nickname").each(function(element) {
     element.focus();
   });
-  videos = $$('li.video').collect(function(video) { return 'v' + video.id.replace("video_", ""); });
-  $$('li.video a').each(function(link_to_video) {
-    Event.observe(link_to_video, 'click', function(clicked) {
-      Event.stop(clicked);
-      selected_video = "v" + this.parentNode.id.replace("video_", "");
-      selected_video_index = videos.indexOf(selected_video);
-      if (selected_video_index > 0) {
-        left_side = videos.slice(0, selected_video_index - 1);
-        right_side = videos.slice(selected_video_index);
-        videos = $A(right_side.concat(left_side)).join(",");
-      }
-      $('uvp_fop').playID(videos);
-      //alert(videos.indexOf("v" + this.parentNode.id.replace("video_", "")));
-      //$('uvp_fop').playID("v" + this.parentNode.id.replace("video_", ""));
+  if ($('uvp_fop_container')) {
+    videos = $$('li.video').collect(function(video) { return 'v' + video.id.replace("video_", ""); });
+    $$('li.video a').each(function(link_to_video) {
+      Event.observe(link_to_video, 'click', function(clicked) {
+        Event.stop(clicked);
+        selected_video = "v" + this.parentNode.id.replace("video_", "");
+        selected_video_index = videos.indexOf(selected_video);
+        if (selected_video_index > 0) {
+          left_side = videos.slice(0, selected_video_index - 1);
+          right_side = videos.slice(selected_video_index);
+          videos = $A(right_side.concat(left_side)).join(",");
+        }
+        $('uvp_fop').playID(videos);
+        //alert(videos.indexOf("v" + this.parentNode.id.replace("video_", "")));
+        //$('uvp_fop').playID("v" + this.parentNode.id.replace("video_", ""));
+      });
+    });
+
+    so = new SWFObject('http://d.yimg.com/cosmos.bcst.yahoo.com/up/fop/embedflv/swf/fop.swf', 'uvp_fop', '512', '322', '9', '#ffffff');
+    so.addVariable('id', videos.join(','));
+    so.addVariable('eID', '1301797');    // NEEDS TO CHANGE DEPENDING ON LOCALE
+    so.addVariable('ympsc', '4195351');  // NEEDS TO CHANGE DEPENDING ON LOCALE
+    so.addVariable('lang', 'en');        // NEEDS TO CHANGE DEPENDING ON LOCALE
+    so.addVariable('shareEnable', '0');
+    so.addParam("allowFullScreen", "true");
+    so.addVariable('enableFullScreen', '1');
+    so.addVariable('autoStart', '1');
+    so.addVariable('controlsEnable', '0');
+    so.addVariable('eh', 'y_up_eventHandler');
+    so.addParam("allowScriptAccess", "always");  // for scripting access
+    so.write('uvp_fop_container');
+  }
+
+  $$('form#search').each(function(search_form) {
+    Event.observe(search_form, 'submit', function(submitted) {
+      Event.stop(submitted);
+      new Ajax.Updater('results', search_form.action, {
+        parameters : Form.serialize(search_form)
+      });
     });
   });
-
-  so = new SWFObject('http://d.yimg.com/cosmos.bcst.yahoo.com/up/fop/embedflv/swf/fop.swf', 'uvp_fop', '512', '322', '9', '#ffffff');
-  so.addVariable('id', videos.join(','));
-  so.addVariable('eID', '1301797');    // NEEDS TO CHANGE DEPENDING ON LOCALE
-  so.addVariable('ympsc', '4195351');  // NEEDS TO CHANGE DEPENDING ON LOCALE
-  so.addVariable('lang', 'en');        // NEEDS TO CHANGE DEPENDING ON LOCALE
-  so.addVariable('shareEnable', '0');
-  so.addParam("allowFullScreen", "true");
-  so.addVariable('enableFullScreen', '1');
-  so.addVariable('autoStart', '1');
-  so.addVariable('controlsEnable', '0');
-  so.addVariable('eh', 'y_up_eventHandler');
-  so.addParam("allowScriptAccess", "always");  // for scripting access
-  so.write('uvp_fop_container');
 
   //Sortable.create('videos', {constraint:null,ghosting:true});
   /*

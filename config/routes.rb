@@ -45,7 +45,9 @@ ActionController::Routing::Routes.draw do |map|
   #map.findings '/findings', :controller => "welcome", :action => "findings"
   #map.image '/image/:permalink', :controller => "welcome", :action => "image"
   #map.similarities '/similarities/:permalink', :controller => "welcome", :action => "similarities"
-  #map.feed '/feeds/:nickname', :controller => "welcome", :action => "feed"
+  map.profile '/profile/:nickname', :controller => "profile", :action => "index"
+  map.create '/create', :controller => "profile", :action => "create"
+  map.search '/search', :controller => "profile", :action => "search"
   #map.rss_feed '/rss/:nickname', :controller => "welcome", :action => "feed", :format => "rss"
 
   # See how all your routes lay out with "rake routes"
