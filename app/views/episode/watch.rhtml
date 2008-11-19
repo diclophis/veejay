@@ -13,13 +13,7 @@
     </div>
   <% end %>
 <% end %>
-<div id="uvp_fop_container" style="width:512px;height:322px;">
-</div>
-<span id="controls">
-  <%=link_to(:pause, "#", {:id => :pause_button})%>
-  <%=link_to(:play, "#", {:id => :play_button})%>
-  &nbsp;
-</span>
+<%=render({:partial => "shared/player"})%>
 <ul class="grid">
   <% @episode.videos.each { |video| %>
     <li class="video" id="video_<%=video.yahoo_video.id%>">

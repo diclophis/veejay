@@ -12,4 +12,8 @@ class EpisodeController < ApplicationController
     @lyrics = Lyrics.for(@video.artists.first.name, @video.title)
     render :partial => "episode/pop"
   end
+  def preview
+    @videos = Yahoo::Music::Video.item(params[:id])
+    render :layout => "vanilla"
+  end
 end

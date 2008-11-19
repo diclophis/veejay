@@ -92,6 +92,8 @@ Event.observe(window, 'load', function () {
   $$('form#search').each(function(search_form) {
     Event.observe(search_form, 'submit', function(submitted) {
       Event.stop(submitted);
+      $('search_button').disable();
+      $('artist_or_song').addClassName('spinning');
       new Ajax.Updater('results_container', search_form.action, {
         parameters : Form.serialize(search_form),
         onComplete : function () {
@@ -99,6 +101,8 @@ Event.observe(window, 'load', function () {
           Sortable.destroy('drop');
           Sortable.create('results',{containment: ['results', 'drop'], dropOnEmpty: true, constraint: false, revert: false});
           Sortable.create('drop',{containment: ['results', 'drop'], dropOnEmpty: true, constraint: false});
+          $('search_button').enable();
+          $('artist_or_song').removeClassName('spinning');
         }
       });
     });

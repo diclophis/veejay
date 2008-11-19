@@ -4,4 +4,25 @@
 <% content_for :sidebar do %>
   Something
 <% end %>
-  Something else
+<% if @episodes.empty? then %>
+  <p>
+    No Episodes
+  </p>
+<% else %>
+  <ul>
+    <% @episodes.each { |episode| %>
+      <li>
+        <table>
+          <tr>
+            <td>
+              <%=image_tag(episode.videos.first.yahoo_video.images.first.url, {:width => 120})%>
+            </td>
+            <td>
+              <%=link_to(episode.title, edit_url(episode))%>
+            </td>
+          </tr>
+        </table>
+      </li>
+    <% } %>
+  </ul>
+<% end %>

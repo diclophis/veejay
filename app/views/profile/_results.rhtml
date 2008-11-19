@@ -5,7 +5,7 @@
   </h3>
 <% else %>
   <h3>
-    X results found
+    <%=@videos.length%> videos found
   </h3>
   <ul id="results">
     <% @videos.each { |video| %>
@@ -17,7 +17,7 @@
             </td>
             <td>
               <p>
-                "<%=link_to(video.title, "#")%>"
+                "<%=link_to(video.title, preview_url(video.id), {:target => :_blank})%>"
                 -
                 <%=video.artists.first.name%>
                 <%=video.formatted_duration%>

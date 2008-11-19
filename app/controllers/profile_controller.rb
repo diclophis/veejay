@@ -37,6 +37,7 @@ class ProfileController < ApplicationController
           @episode.description = params[:episode][:description]
           current_person.episodes << @episode
           @episode.save!
+          flash[:success] = "Saved!"
           return redirect_to(profile_url(current_person))
         end
       rescue => problem

@@ -5,7 +5,7 @@
   <% form_tag(:search, {:id => "search"}) do %>
     <%=label_tag(:search)%>
     <%=text_field_tag(:artist_or_song)%>
-    <%=submit_tag(:go)%>
+    <%=submit_tag(:go, {:id => :search_button})%>
     <div id="results_container">
       <ul id="results">
       </ul>
