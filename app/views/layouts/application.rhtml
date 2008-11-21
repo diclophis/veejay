@@ -11,28 +11,7 @@
   <body>
     <%=link_to(image_tag("/images/logo.png", {:id => :logo}), root_url)%>
     <div id="header">
-      <% if current_person then %>
-        <ul>
-          <li>
-            Hello
-          </li>
-          <li>
-            <%=link_to(current_person.nickname, profile_url(current_person))%>
-          </li>
-          <li>
-            you can
-          </li>
-          <li>
-            <%=link_to(:create, create_url)%>
-          </li>
-          <li>
-            a new episode or view your
-          </li>
-          <li>
-            <%=link_to(:dashboard, dashboard_url)%>
-          </li>
-        </ul>
-      <% else %>
+      <div id="personal_header" class="edge" style="display: none;">
         <ul>
           <li>
             <%=link_to(:login, login_url)%>
@@ -44,7 +23,7 @@
             <%=link_to(:register, register_url)%>
           </li>
         </ul>
-      <% end %>
+      </div>
       <h1>
         <%= yield :tagline %>
       </h1>

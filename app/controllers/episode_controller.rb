@@ -1,6 +1,8 @@
 #
 
 class EpisodeController < ApplicationController
+  caches_page :watch
+  protect_from_forgery :except => :pop
   def watch
     @episode = Episode.find(:first, :include => :person, :conditions => ["people.nickname = ? and slug = ?", params[:nickname], params[:slug]])
   end

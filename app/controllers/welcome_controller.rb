@@ -1,6 +1,7 @@
 #
 
 class WelcomeController < ApplicationController
+  caches_page :index
   def index
     @popular_videos = Yahoo::Music::Video.published
     @popular_videos.delete_if { |video| video.id.blank? or video.id == 0 }
@@ -13,12 +14,5 @@ class WelcomeController < ApplicationController
     }
   end
   def about
-  end
-  def bookmarklet
-    new_findings_url = url_for({:controller => :findings, :action => :new})
-    @js = render_to_string(:inline => "
-    window.open('#{new_findings_url}?bookmarklet=1&finding[tag_list]=&image[src]='+encodeURIComponent(window.location)+'&image[title]='+encodeURIComponent(document.title),'_blank');
-    ").gsub!("\n", "")
-    @js = "javascript:(function(){#{@js}})()"
   end
 end

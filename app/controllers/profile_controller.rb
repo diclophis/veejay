@@ -42,6 +42,7 @@ class ProfileController < ApplicationController
               @videos << video
             }
           end
+          @episode.total_duration = 0
           @episode.title = params[:episode][:title]
           @episode.description = params[:episode][:description]
           current_person.episodes << @episode
@@ -50,6 +51,7 @@ class ProfileController < ApplicationController
           return redirect_to(profile_url(current_person))
         end
       rescue => problem
+        logger.debug(problem)
       end
     end
   end

@@ -13,7 +13,7 @@
     </div>
   <% end %>
 <% end %>
-<% form_tag(edit_url(@episode)) do %>
+<% form_tag(edit_url(@episode.id)) do %>
   <%=error_messages_for(:episode)%>
   <ul>
   <% fields_for(:episode) { |episode| %>

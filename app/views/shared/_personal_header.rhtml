@@ -1,0 +1,20 @@
+<ul>
+  <li>
+    Hello
+  </li>
+  <li>
+    <%=link_to(current_person.nickname, profile_url(current_person))%>
+  </li>
+  <li>
+    you can
+  </li>
+  <li>
+    <%=link_to("create a new episode", create_url)%>
+  </li>
+  <li>
+    or view your
+  </li>
+  <li>
+    <%=link_to(:dashboard, dashboard_url)%>
+  </li>
+</ul>

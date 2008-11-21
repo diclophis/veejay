@@ -1,17 +1,46 @@
 <% content_for :tagline do %>
+  About Us
 <% end %>
 <% content_for :instructions do %>
 <% end %>
 <% content_for :sidebar do %>
 <% end %>
+<h2>
+  Background
+</h2>
 <p>
-  Lorem ipsum
+  VeeJay.tv was created by two music fans that also spend a lot of time on the interwebs.
+  Jon and Drew met at a previous startup in San Francisco, and joined forces again at Mashup Camp 2008.
+  Veejay.tv was one of Jon's many project ideas, and Jon and Drew decided to work on it during Mashup Camp.
+  They bought the domain on Monday, and immediately got to work designing and building out the site.
+  After two sleep-deprived nights, they demo'd the site on Wednesday at Mashup Camp. 
+</p>
+<p>
+  This is technically a side project, but it takes up most of their time.
+  They plan to continue their work on the service, and are already working on some cool new features - check back often to see what's been added.
 </p>
 <ul>
   <li>
-    Drew Garcia
+    <h3>
+      Jon Bardin a.k.a. <%=link_to("diclophis", profile_url("diclophis"))%>
+    </h3>
+    <p>
+      Jon is a software developer, living on <%=link_to("Treasure Island", "http://maps.google.com/maps?f=q&hl=en&geocode=&q=treasure+island,+san+francisco,+ca&sll=37.0625,-95.677068&sspn=33.710275,58.183594&ie=UTF8&ll=37.82443,-122.369843&spn=0.065628,0.11364&z=13")%> (seriously).
+      Most recently, Jon has been focused on Ruby on Rails web apps and building iPhone apps.
+      Jon is the kind of guy that spent his youth playing with Linux, while his friends played video games.
+      Jon puts in a hard day of work, then goes home to work on his other side projects, pushing the bounds of the latest technology.
+      You can learn more about Jon at <%=link_to("The Land of the Rising Code", "http://risingcode.com/")%>.
+    </p>
   </li>
   <li>
-    Jon Bardin
+    <h3>
+      Drew Garcia a.k.a. <%=link_to("backspin", profile_url("backspin"))%>
+    </h3>
+    <p>
+      Drew is an experienced product manager, living in San Francisco.
+      Most recently, Drew worked for a startup, TimeBridge, and before that, Yahoo.
+      Drew's goal is to make products that he and his friends will actually use and enjoy.
+      Drew is interested in social media, social networking, location-based services, and personal productivity apps... And long walks on the beach..
+    </p>
   </li>
 </ul>

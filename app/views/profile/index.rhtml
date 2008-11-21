@@ -16,7 +16,7 @@
             <p>
               <%=h(@person.biography)%>
               <br/>
-              <%=link_to(:subscribe, subscribe_url(@person)) unless @person.friendship(current_person) %>
+              <%=link_to(:subscribe, subscribe_url(@person)) unless (@person == current_person or @person.friendship(current_person)) %>
             </p>
           </td>
         </tr>
@@ -26,7 +26,7 @@
 <% end %>
 <% if @episodes.empty? then %>
   <h2>
-    No Episodes
+    No Sets
   </h2>
 <% else %>
   <ul>

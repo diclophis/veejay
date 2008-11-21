@@ -14,6 +14,9 @@ class Person < ActiveRecord::Base
   validates_presence_of :email
   validates_presence_of :nickname
   validates_format_of :nickname, :with => /^[a-zA-Z0-9]+$/
+  validates_each :nickname do |record, key, value|
+    record.errors.add(key, "is reserved") if %w{pop activate stylesheets images javascripts dashboard register login about page update edit subscribe sets rss create search}.include?(value)
+  end
   validates_uniqueness_of :nickname
   validates_presence_of :activation_code
   def assign_activation_code

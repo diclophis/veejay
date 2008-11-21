@@ -7,6 +7,7 @@ class PeopleController < ApplicationController
       pending_person.errors.add(:nickname, "OpenID Failure, please retry") and return render unless response.status == :success
       flash[:notice] = "Please register first..." and return redirect_to({:action => :register, :person => pending_person.attributes}) unless Person.exists?(:nickname => pending_person.nickname)
       authenticate(Person.find_by_nickname(pending_person.nickname))
+      cookies[:personal_header] = render_to_string({:partial => "shared/personal_header"})
       return redirect_to(remembered_params)
     elsif request.post? then
       begin

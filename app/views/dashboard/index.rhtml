@@ -19,25 +19,27 @@
       </li>
     </ul>
   <% end %>
-  <h3>
-    Subscriptions
-  </h3>
-  <ul>
-    <li>
-      <% current_person.friends_by_me.each { |friend| %>
-        <table>
-          <tr>
-            <td>
-              <%=image_tag(friend.gravatar_url)%>
-            </td>
-            <td>
-              <%=link_to(friend.nickname, profile_url(friend))%>
-            </td>
-          </tr>
-        </table>
-      <% } %>
-    </li>
-  </ul>
+  <% unless current_person.friends_by_me.empty? %>
+    <h3>
+      Subscriptions
+    </h3>
+    <ul>
+      <li>
+        <% current_person.friends_by_me.each { |friend| %>
+          <table>
+            <tr>
+              <td>
+                <%=image_tag(friend.gravatar_url)%>
+              </td>
+              <td>
+                <%=link_to(friend.nickname, profile_url(friend))%>
+              </td>
+            </tr>
+          </table>
+        <% } %>
+      </li>
+    </ul>
+  <% end %>
 <% end %>
 <% if @episodes.empty? then %>
   <h2>
@@ -58,7 +60,7 @@
               <%=image_tag(episode.videos.first.yahoo_video.images.first.url, {:width => 120})%>
             </td>
             <td>
-              <%=link_to(episode.title, edit_url(episode))%>
+              <%=link_to(episode.title, edit_url(episode.id))%>
             </td>
           </tr>
         </table>
