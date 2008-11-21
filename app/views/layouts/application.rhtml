@@ -40,8 +40,9 @@
     </div>
     <div id="footer">
       <p>
-        &copy; 2008
+        <%=link_to(:faq, faq_url)%>
         <%=link_to(:about, about_url)%>
+        &copy; 2008
       </p>
     </div>
     <%= render :partial => "shared/swfobject" %>

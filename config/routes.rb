@@ -40,6 +40,7 @@ ActionController::Routing::Routes.draw do |map|
   map.login '/login', :controller => "people", :action => "login"
   map.register '/register', :controller => "people", :action => "register"
   map.about '/about', :controller => "welcome", :action => "about"
+  map.faq '/faq', :controller => "welcome", :action => "faq"
 
 
   #map.cloud '/cloud', :controller => "welcome", :action => "cloud"
