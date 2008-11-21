@@ -56,7 +56,7 @@ class ProfileController < ApplicationController
   def search
     @videos = []
     unless params[:artist_or_song].blank?
-      @videos = Yahoo::Music::Video.search(params[:artist_or_song], {"count" => "50"})
+      @videos = Yahoo::Music::Video.search(params[:artist_or_song], {"count" => "20"})
       @videos.delete_if { |video| video.id.blank? or video.id == 0 or video.images.first.nil? }
     end
     render :partial => "profile/results"
