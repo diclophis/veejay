@@ -34,9 +34,14 @@ ActionController::Routing::Routes.draw do |map|
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
   map.root :controller => "welcome"
 
+  map.episode "/:nickname/watch/:slug", :controller => "episode", :action => "watch"
+
   map.login '/login', :controller => "people", :action => "login"
   map.register '/register', :controller => "people", :action => "register"
   map.bookmarklet '/bookmarklet', :controller => "welcome", :action => "bookmarklet"
+  map.about '/about', :controller => "welcome", :action => "about"
+
+
   #map.cloud '/cloud', :controller => "welcome", :action => "cloud"
   #map.random '/random', :controller => "welcome", :action => "random"
   #map.random '/plist_of_images_to_rate', :controller => "welcome", :action => "plist_of_images_to_rate"
@@ -46,20 +51,22 @@ ActionController::Routing::Routes.draw do |map|
   #map.image '/image/:permalink', :controller => "welcome", :action => "image"
   #map.similarities '/similarities/:permalink', :controller => "welcome", :action => "similarities"
   map.dashboard '/dashboard', :controller => "dashboard", :action => "index"
+  map.update '/update', :controller => "dashboard", :action => "update"
   map.edit '/edit/:id', :controller => "dashboard", :action => "edit"
   map.subscribe '/subscribe/:id', :controller => "dashboard", :action => "subscribe"
-  map.profile '/profile/:nickname', :controller => "profile", :action => "index"
+  map.sets '/sets/:nickname', :controller => "profile", :action => "index", :format => "rss"
   map.create '/create', :controller => "profile", :action => "create"
   map.search '/search', :controller => "profile", :action => "search"
   map.pop '/pop', :controller => "episode", :action => "pop"
   map.preview '/preview/:id', :controller => "episode", :action => "preview"
-  map.episode '/watch/:id', :controller => "episode", :action => "watch"
-  #map.rss_feed '/rss/:nickname', :controller => "welcome", :action => "feed", :format => "rss"
+  map.rss '/rss', :controller => "welcome", :action => "index", :format => "rss"
+  map.activate '/activate/:id', :controller => "people", :action => "activate"
 
   # See how all your routes lay out with "rake routes"
   # Install the default routes as the lowest priority.
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing the them or commenting them out if you're using named routes and resources.
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
+  #map.connect ':controller/:action/:id'
+  #map.connect ':controller/:action/:id.:format'
+  map.profile '/:nickname', :controller => "profile", :action => "index"
 end

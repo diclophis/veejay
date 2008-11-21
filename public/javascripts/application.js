@@ -40,23 +40,25 @@ Event.observe(window, 'load', function () {
   $$("#person_nickname").each(function(element) {
     element.focus();
   });
-  if (pause_button = $('pause_button')) {
-    Event.observe(pause_button, 'click', function (pause) {
+  if ($('pause_button')) {
+    Event.observe($('pause_button'), 'click', function (pause) {
       Event.stop(pause);
       $('uvp_fop').vidPause();
-      play_button.show();
-      pause_button.hide();
+      $('play_button').show();
+      $('pause_button').hide();
     });
-    pause_button.hide();
+    $('pause_button').hide();
   }
-  if (play_button = $('play_button')) {
-    Event.observe(play_button, 'click', function (play) {
+
+  if ($('play_button')) {
+    Event.observe($('play_button'), 'click', function (play) {
       Event.stop(play);
+      //$('uvp_fop').setVidHeight("1000");
       $('uvp_fop').vidPlay();
-      play_button.hide();
-      pause_button.show();
+      $('play_button').hide();
+      $('pause_button').show();
     });
-    play_button.hide();
+    $('play_button').hide();
   }
 
   if ($('uvp_fop_container')) {

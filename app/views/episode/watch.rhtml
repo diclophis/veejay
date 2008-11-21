@@ -1,18 +1,24 @@
 <% content_for :tagline do %>
-  <%=link_to(@episode.title, episode_url(@episode))%>
+  <%=link_to(@episode.title, episode_url(*@episode.to_param))%>
   by
   <%=link_to(@episode.person.nickname, profile_url(@episode.person))%>
 <% end %>
 <% content_for :sidebar do %>
-  <h2>
-    Background on Set
-  </h2>
-  <p>
-    <%=h(@episode.description)%>
-    <br/>
-    <br/>
-    -<%=@episode.person.nickname%>
-  </p>
+  <% if @episode.description.blank? then %>
+    <h2>
+      Details
+    </h2>
+  <% else %>
+    <h2>
+      Background on Set
+    </h2>
+    <p>
+      <%=h(@episode.description)%>
+      <br/>
+      <br/>
+      -<%=@episode.person.nickname%>
+    </p>
+  <% end %>
   <% form_tag(:pop, {:id => "pop_form"}) do %>
     <%=hidden_field_tag(:video_id)%>
     <div id="pop_container">

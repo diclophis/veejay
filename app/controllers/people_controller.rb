@@ -55,10 +55,8 @@ class PeopleController < ApplicationController
       person_to_activate = Person.find_by_activation_code(params[:id])
       person_to_activate.activate!
 #TODO: double check against current_person?
-      return redirect_to(bookmarklet_url)
+      return redirect_to(dashboard_url)
     rescue => problem
-      raise problem
-      logger.debug(problem)
       flash[:notice] = "There was a problem activating your account"
       return redirect_to(root_url)
     end

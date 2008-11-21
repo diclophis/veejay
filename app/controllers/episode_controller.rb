@@ -2,7 +2,7 @@
 
 class EpisodeController < ApplicationController
   def watch
-    @episode = Episode.find_by_id(params[:id])
+    @episode = Episode.find(:first, :include => :person, :conditions => ["people.nickname = ? and slug = ?", params[:nickname], params[:slug]])
   end
   def pop
     @video = Yahoo::Music::Video.item(params[:video_id]).first

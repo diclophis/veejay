@@ -13,7 +13,11 @@
             <%=image_tag(@person.gravatar_url)%>
           </td>
           <td>
-            <%=link_to(:subscribe, subscribe_url(@person))%>
+            <p>
+              <%=h(@person.biography)%>
+              <br/>
+              <%=link_to(:subscribe, subscribe_url(@person)) unless @person.friendship(current_person) %>
+            </p>
           </td>
         </tr>
       </table>
@@ -34,7 +38,7 @@
               <%=image_tag(episode.videos.first.yahoo_video.images.first.url, {:width => 120})%>
             </td>
             <td>
-              <%=link_to(episode.title, episode_url(episode))%>
+              <%=link_to(episode.title, episode_url(*episode.to_param))%>
             </td>
           </tr>
         </table>

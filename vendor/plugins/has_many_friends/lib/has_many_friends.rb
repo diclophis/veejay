@@ -75,6 +75,7 @@ module HasManyFriends
       # Accepts a user object and returns the friendship object 
       # associated with both users.
       def friendship(friend)
+        return false if friend.nil?
         Friendship.find(:first, :conditions => ['(person_id = ? AND friend_id = ?) OR (friend_id = ? AND person_id = ?)', self.id, friend.id, self.id, friend.id])
         #Friendship.find(:first, :conditions => ['(person_id = ? AND friend_id = ?)', self.id, friend.id])
         #Friendship.find(:first, :conditions => ['(friend_id = ? AND person_id = ?)', self.id, friend.id])

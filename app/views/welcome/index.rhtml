@@ -20,7 +20,7 @@
             <td>
               <ul>
                 <li>
-                  Set: <%=link_to(episode.title, episode_url(episode))%>
+                  Set: <%=link_to(episode.title, episode_url(*episode.to_param))%>
                 </li>
                 <li>
                   VeeJay: <%=link_to(episode.person.nickname, profile_url(episode.person))%>
@@ -31,6 +31,9 @@
         </table>
       </li>
     <% } %>
+    <li>
+      <%=will_paginate(@recent_episodes)%>
+    </li>
   </ul>
 <% end %>
 <h2>

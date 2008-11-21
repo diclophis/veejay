@@ -52,7 +52,7 @@ class ApplicationController < ActionController::Base
     end
     helper_method :current_per_page
     def current_per_page
-      5
+      10
     end
     helper_method :recent_people
     def recent_people

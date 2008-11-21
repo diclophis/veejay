@@ -3,8 +3,25 @@
 <% end %>
 <% content_for :sidebar do %>
   <h2>
-    Subscriptions
+    My Info
   </h2>
+  <% form_tag do %>
+    <%=error_messages_for(:current_person)%>
+    <ul>
+      <% fields_for(:current_person) { |person| %>
+        <li>
+          <%=person.label(:biography)%>
+          <%=person.text_area(:biography, {:rows => 5})%>
+        </li>
+      <% } %>
+      <li>
+        <%= submit_tag(:go)%>
+      </li>
+    </ul>
+  <% end %>
+  <h3>
+    Subscriptions
+  </h3>
   <ul>
     <li>
       <% current_person.friends_by_me.each { |friend| %>

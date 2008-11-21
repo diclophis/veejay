@@ -93,6 +93,7 @@ require 'plist'
 require 'has_ratings'
 require 'rss'
 require 'lyrics'
+require 'slugalizer'
 require '/root/ruby-oembed/lib/oembed'
 
 ActiveRecord::Base.store_full_sti_class = true

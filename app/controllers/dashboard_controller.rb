@@ -4,6 +4,19 @@ class DashboardController < ApplicationController
   before_filter :require_person
   def index
     @episodes = Episode.paginate(:page => current_page, :conditions => ["person_id = ?", current_person.id])
+    if request.post? then
+      Person.transaction do
+        begin
+          current_person.biography = params[:current_person][:biography]
+          current_person.save!
+        rescue => problem
+        end
+      end
+    end
+    respond_to { |format|
+      format.html
+      format.rss
+    }
   end
   def subscribe
     friend = Person.find_by_nickname(params[:id])

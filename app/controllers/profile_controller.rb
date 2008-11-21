@@ -13,7 +13,16 @@ class ProfileController < ApplicationController
         return redirect_to(login_url)
       end
     end
-    @episodes = Episode.paginate(:page => current_page, :conditions => ["person_id = ?", @person.id])
+    @episodes = Episode.paginate(
+      :page => current_page, 
+      :per_page => current_per_page, 
+      :conditions => ["person_id = ?", @person.id], 
+      :order => "created_at desc"
+    )
+    respond_to { |format|
+      format.html
+      format.rss
+    }
   end
   def create
     @episode = Episode.new
