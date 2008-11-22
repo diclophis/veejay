@@ -73,9 +73,15 @@ class DashboardController < ApplicationController
           logger.debug(@bad_emails.inspect)
           raise if @good_emails.empty?
           raise unless @bad_emails.empty?
-          current_person.email_autocompletions ||= []
-          current_person.email_autocompletions += @good_emails
+          current_person.email_autocompletions = []
+          current_person.email_autocompletions += @good_emails.collect { |email_autocomplete|
+            "#{email_autocomplete.name} #{email_autocomplete.address}".strip!
+          }
+          current_person.email_autocompletions.uniq!
           current_person.save!
+          @good_emails.each { |good_email|
+            Mercury.deliver_share_redirect(good_email, params[:message], "wang-chung")
+          }
           flash[:success] = render_to_string({:partial => "shared/shared_set"}) 
           return redirect_to(dashboard_url)
         end
@@ -92,8 +98,8 @@ class DashboardController < ApplicationController
     email_autocompletions = current_person.email_autocompletions || []
     render :text => email_autocompletions.collect { |email_autocomplete|
       {
-        :value => "#{email_autocomplete.name} #{email_autocomplete.address}",
-        :caption => "#{email_autocomplete.name} #{email_autocomplete.address}"
+        :value => "#{email_autocomplete}",
+        :caption => "#{email_autocomplete}"
       }
     }.to_json
   end

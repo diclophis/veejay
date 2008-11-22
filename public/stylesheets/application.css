@@ -40,6 +40,10 @@ ul.grid { margin: 3.5em; }
 ul.grid li { display: inline; }
 ul.grid li img { margin: 2.25em; vertical-align: middle; }
 
+ul.tabs { }
+ul.tabs li { display: inline; }
+ul.tabs li a { }
+
 #drop { min-height: 7.5em; border: 1px dashed black; }
 
 #footer { padding: 0.5em; clear: both; width: 100em; }
@@ -47,7 +51,7 @@ ul.grid li img { margin: 2.25em; vertical-align: middle; }
 /*
 a { color: #001155; }
 */
-a { color: #308000; }
+a { color: blue; }
 body { background-color: #A9ADD1; }
 #header { background-color: #e0e0e0; }
 #sidebar { background-color: #FBFAE9; }

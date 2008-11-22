@@ -27,6 +27,7 @@ class EmailParser
     bad = []
     split_emails = emails.split(",")
     split_emails.each { |email|
+      email.strip!
       begin
         parsed = TMail::Address.parse(email)
         self.sanity_check(parsed)

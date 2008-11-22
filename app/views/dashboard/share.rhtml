@@ -7,16 +7,30 @@
 <% end %>
 <% content_for :sidebar do %>
   <% form_tag(:share) do %>
-    <ul>
-      <li>
-        <%=label_tag("url of set")%>
-        <%=text_area_tag(:share, episode_url(*@episode.to_param), {:rows => 3, :class => "copypaste"})%>
-      </li>
-      <li>
-        <%=label_tag("widget embed code")%>
-        <%=text_area_tag(:share, h("<script>coming soon...</script>"), {:rows => 5, :class => "copypaste"})%>
-      </li>
-    </ul>
+    <ul id="share_tabs" class="tabs">  
+      <li class="tab">
+        <a href="#one">Basic</a>
+      </li>  
+      <li class="tab">
+        <a href="#two">Advanced</a>
+      </li>  
+    </ul>  
+    <div id="one">
+      <ul>
+        <li>
+          <%=label_tag("url of set")%>
+          <%=text_area_tag(:share, episode_url(*@episode.to_param), {:rows => 3, :class => "copypaste"})%>
+        </li>
+      <ul>
+    </div>  
+    <div id="two">
+      <ul>
+        <li>
+          <%=label_tag("widget embed code")%>
+          <%=text_area_tag(:share, h("<script>coming soon...</script>"), {:rows => 5, :class => "copypaste"})%>
+        </li>
+      </ul>
+    </div>  
   <% end %>
 <% end %>
 <% form_tag(:share, {:id => :share_form}) do %>

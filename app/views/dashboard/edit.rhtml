@@ -60,6 +60,9 @@
     </li>
     <li>
       <%=submit_tag("Update Set")%>
+      or <%=link_to(:return, dashboard_url)%>
+      or <%=link_to("share", share_url(*@episode.to_param))%>
+      or <%=link_to("delete", "#")%>
     </li>
   </ul>
 <% end %>

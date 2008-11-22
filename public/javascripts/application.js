@@ -151,6 +151,9 @@ Event.observe(window, 'load', function () {
       list.update();
       return true;
     });
-    $('emails').focus();
   }
+
+  $$('.tabs').each(function(tab_group){  
+    new Control.Tabs(tab_group);  
+  });  
 });
