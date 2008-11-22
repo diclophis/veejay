@@ -16,7 +16,7 @@
             <p>
               <%=h(@person.biography)%>
               <br/>
-              <%=link_to(:subscribe, subscribe_url(@person)) unless (@person == current_person or @person.friendship(current_person)) %>
+              <%=link_to(:subscribe, subscribe_url(@person)) %>
             </p>
           </td>
         </tr>

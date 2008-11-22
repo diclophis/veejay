@@ -1,0 +1,8 @@
+#!/bin/sh
+
+rm -Rf /tmp/dustpan
+mkdir /tmp/dustpan
+mv /var/www/veejay/public/index.html /tmp/dustpan/
+mv /var/www/veejay/public/page /tmp/dustpan/
+curl http://veejay.tv > /dev/null
+curl http://veejay.tv/page/1 > /dev/null

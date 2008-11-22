@@ -1,15 +1,43 @@
 <% content_for :tagline do %>
   <%=link_to(:VeeJay, root_url)%>
 <% end %>
+<% content_for :sidebar do %>
+  <p>
+    Currently, we support registration using OpenID.
+    If you aren't familiar with OpenID,
+    it's a technology that simplifies life by allowing you to login to thousands of websites using a single digital identity.
+    No more remembering a different ID and password for every single site! 
+  </p>
+  <p>
+    You probably don't know it, but most people already have an OpenID.
+    Many of the major internet services support OpenID.
+    If you have a Yahoo account, you automatically have an OpenID.
+  </p>
+  <p>
+    <%=link_to("Learn More", "http://openid.net/", {:target => :_blank})%>
+  </p>
+<% end %>
 <% form_tag(:register) do %>
   <%=error_messages_for(:person)%>
   <ul>
   <% fields_for(:person) { |person| %>
     <li>
+      <p>
+        To register using OpenID,
+        click the button to pick the service you want to use to validate your OpenID (e.g., if you have a Yahoo account, you can click the Yahoo link).
+        This will automatically fill in the Identity URL field. 
+      </p>
+    </li>
+    <li>
       <%=person.label(:identity_url)%>
       <%=person.text_field(:identity_url, {:id => :openid_identifier})%>
     </li>
     <li>
+      <p>
+        <br/>
+        Next, enter your email address, pick a nickname, and click Continue.
+        You'll be directed to the service that you picked, where you can validate your OpenID.
+      </p>
       <%=person.label(:email)%>
       <%=person.text_field(:email)%>
     </li>
@@ -19,7 +47,7 @@
     </li>
   <% } %>
   <li>
-    <%= submit_tag(:go)%>
+    <%= submit_tag("Continue")%>
     or
     <%=link_to(:return, root_url)%>
     or

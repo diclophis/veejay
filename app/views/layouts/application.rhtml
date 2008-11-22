@@ -1,15 +1,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
   <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <meta name="viewport" content="width=1010" />
     <title>VeeJay.tv</title>
     <%= stylesheet_link_tag "application" %>
     <%=javascript_include_tag(:defaults)%>
-    <%=auto_discovery_link_tag(:rss, rss_url)%>
-    <%=auto_discovery_link_tag(:veejay_rss, sets_url(@person)) if (@person and @person.id)%>
+    <% if (@person and @person.id) then %>
+      <%=auto_discovery_link_tag(:rss, sets_url(@person))%>
+    <% else %>
+      <%=auto_discovery_link_tag(:rss, rss_url)%>
+    <% end %>
   </head>
   <body>
-    <%=link_to(image_tag("/images/logo.png", {:id => :logo}), root_url)%>
+    <div>
+      <%=link_to(image_tag("/images/logo.png", {:id => :logo}), root_url)%>
+    </div>
     <div id="header">
       <div id="personal_header" class="edge" style="display: none;">
         <ul>

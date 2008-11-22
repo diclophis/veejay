@@ -38,6 +38,7 @@ ActionController::Routing::Routes.draw do |map|
   map.episode "/:nickname/watch/:slug", :controller => "episode", :action => "watch"
 
   map.login '/login', :controller => "people", :action => "login"
+  map.logout '/logout', :controller => "people", :action => "logout"
   map.register '/register', :controller => "people", :action => "register"
   map.about '/about', :controller => "welcome", :action => "about"
   map.faq '/faq', :controller => "welcome", :action => "faq"

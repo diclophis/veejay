@@ -7,7 +7,7 @@ class PeopleController < ApplicationController
       pending_person.errors.add(:nickname, "OpenID Failure, please retry") and return render unless response.status == :success
       flash[:notice] = "Please register first..." and return redirect_to({:action => :register, :person => pending_person.attributes}) unless Person.exists?(:nickname => pending_person.nickname)
       authenticate(Person.find_by_nickname(pending_person.nickname))
-      cookies[:personal_header] = render_to_string({:partial => "shared/personal_header"})
+      cookies[:personal_header] = {:expires => 1000.hours.from_now, :value => render_to_string({:partial => "shared/personal_header"})}
       return redirect_to(remembered_params)
     elsif request.post? then
       begin
@@ -21,6 +21,11 @@ class PeopleController < ApplicationController
         pending_person.errors.add(:nickname, problem)
       end
     end
+  end
+  def logout
+    cookies[:personal_header] = nil
+    reset_session
+    return redirect_to(root_url)
   end
   def register
     if params["openid.mode"] then
@@ -49,6 +54,7 @@ class PeopleController < ApplicationController
       end
     else
       pending_person
+      pending_person.identity_url = "Click the OpenID button to pick your service"
     end
   end
   def activate
