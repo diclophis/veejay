@@ -42,7 +42,8 @@ ul.grid li img { margin: 2.25em; vertical-align: middle; }
 
 ul.tabs { }
 ul.tabs li { display: inline; }
-ul.tabs li a { }
+ul.tabs li a { padding: 1px 5px 2px; }
+ul.tabs li a.active { -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; border: 1px solid #CAD8F3; background: #DEE7F8; padding: 1px 5px 2px; }
 
 #drop { min-height: 7.5em; border: 1px dashed black; }
 

@@ -58,6 +58,8 @@ class PeopleController < ApplicationController
     else
       pending_person
       pending_person.identity_url = "Click the OpenID button to pick your service"
+      pending_person.nickname = session[:nickname]
+      pending_person.email = session[:email]
     end
   end
   def activate

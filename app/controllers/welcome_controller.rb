@@ -11,4 +11,16 @@ class WelcomeController < ApplicationController
   end
   def faq
   end
+  def redirect
+    @redirect = Redirect.find_by_permalink(params[:permalink])
+    if @redirect.nonced_on then
+      return redirect_to(@redirect.default_url)
+    else
+      @redirect.nonce.each { |k, v|
+        session[k] = v
+      }
+      @redirect.nonced_on = Time.now
+      return redirect_to(@redirect.nonce_url)
+    end
+  end
 end

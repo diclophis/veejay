@@ -69,18 +69,26 @@ class DashboardController < ApplicationController
       begin
         Person.transaction do
           @good_emails, @bad_emails = EmailParser.parse(params[:emails])
-          logger.debug(@good_emails.inspect)
-          logger.debug(@bad_emails.inspect)
           raise if @good_emails.empty?
           raise unless @bad_emails.empty?
-          current_person.email_autocompletions = []
-          current_person.email_autocompletions += @good_emails.collect { |email_autocomplete|
-            "#{email_autocomplete.name} #{email_autocomplete.address}".strip!
+          current_person.email_autocompletions ||= []
+          @good_emails.collect { |email_autocompletion|
+            current_person.email_autocompletions << "#{email_autocompletion.name} #{email_autocompletion.address}".strip
           }
           current_person.email_autocompletions.uniq!
+          current_person.email_autocompletions.delete_if(&:blank?)
           current_person.save!
           @good_emails.each { |good_email|
-            Mercury.deliver_share_redirect(good_email, params[:message], "wang-chung")
+            redirect = Redirect.create({
+              #/redirect/bob-to-something-else-for-diclophis
+              :permalink => good_email.local + "-to-" + @episode.slug + "-for-" + current_person.nickname.downcase,
+              :person_id => current_person.id,
+              :nonce => {:email => good_email.address, :nickname => good_email.local},
+              :nonce_url => episode_url(*@episode.to_param),
+              :default_url => episode_url(*@episode.to_param),
+              :expires_on => 30.days.from_now
+            })
+            Mercury.deliver_share_redirect(good_email, params[:message], redirect.permalink)
           }
           flash[:success] = render_to_string({:partial => "shared/shared_set"}) 
           return redirect_to(dashboard_url)
@@ -91,9 +99,6 @@ class DashboardController < ApplicationController
       end
     end
   end
-=begin
-[{"caption":"Manuel Mujica Lainez","value":4},{"caption":"Gustavo Nielsen","value":3},{"caption":"Silvina Ocampo","value":3},{"caption":"Victoria Ocampo", "value":3},{"caption":"Hector German Oesterheld", "value":3},{"caption":"Olga Orozco", "value":3},{"caption":"Juan L. Ortiz", "value":3},{"caption":"Alicia Partnoy", "value":3},{"caption":"Roberto Payro", "value":3},{"caption":"Ricardo Piglia", "value":3},{"caption":"Felipe Pigna", "value":3},{"caption":"Alejandra Pizarnik", "value":3},{"caption":"Antonio Porchia", "value":3},{"caption":"Juan Carlos Portantiero", "value":3},{"caption":"Manuel Puig", "value":3},{"caption":"Andres Rivera", "value":3},{"caption":"Mario Rodriguez Cobos", "value":3},{"caption":"Arturo Andres Roig", "value":3},{"caption":"Ricardo Rojas", "value":3}]
-=end
   def email_autocompletions
     email_autocompletions = current_person.email_autocompletions || []
     render :text => email_autocompletions.collect { |email_autocomplete|
