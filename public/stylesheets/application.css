@@ -8,11 +8,13 @@ ul { list-style: none; margin: 0 0 0 0; padding: 0; }
 p, pre { font-size: 1.25em; margin: 0 0 1em 0; }
 h1 { font-size: 2.5em; }
 h2 { font-size: 2em; margin: 0 0 0.5em 0; }
-h3 { font-size: 1.5em; margin: 0.5em 0 0.5em 0; }
+h3 { font-size: 1.75em; margin: 0.5em 0 0.5em 0; }
+h4 { font-size: 1.5em; margin: 0.5em 0 0.5em 0; }
 img { border: 0; }
 label { margin: 1em 0 0.5em 0; clear: right; display: block; font-weight: bold; }
 body { font-size: 62.5%; width: 101em; margin: 0; padding: 0.5em; -webkit-text-size-adjust: none; }
 input, textarea { width: 75%; }
+textarea.copypaste { width: 100%; }
 input[type="submit"] { width: 22%; }
 li input[type="submit"] { margin: 1em 0 -0.5em 0; }
 .emptyPlaceMarker { border: 1px dashed red; }
@@ -31,7 +33,7 @@ li input[type="submit"] { margin: 1em 0 -0.5em 0; }
 #header li { display: inline; }
 
 #sidebar { padding: 1em; width: 37em; float: left; }
-#pop { border: 2px solid #e0e0e0; margin: 1em 0 0 0; padding: 0em 0.5em 0.5em 0.5em; }
+#pop { border: 2px solid #e0e0e0; margin: 1em 0 0 0; padding: 0em 0.5em 0.5em 0.5em; overflow: auto; }
 #content { padding: 1em 2em 2em 2em; width: 58em; float: left; }
 #xresults_container { height: 50em; overflow: scroll; }
 ul.grid { margin: 3.5em; }
@@ -42,8 +44,10 @@ ul.grid li img { margin: 2.25em; vertical-align: middle; }
 
 #footer { padding: 0.5em; clear: both; width: 100em; }
 #footer p { text-align: right; margin: 0; }
-
+/*
 a { color: #001155; }
+*/
+a { color: #308000; }
 body { background-color: #A9ADD1; }
 #header { background-color: #e0e0e0; }
 #sidebar { background-color: #FBFAE9; }
@@ -61,3 +65,38 @@ body { background-color: #A9ADD1; }
 * html .pagination { height: 1%; }
 *:first-child+html .pagination { overflow: hidden; }
 */
+
+/* TextboxList sample CSS */
+ul.holder { margin: 0; border: 1px solid #999; overflow: hidden; height: auto !important; height: 1%; padding: 4px 5px 0; }
+*:first-child+html ul.holder { padding-bottom: 2px; } * html ul.holder { padding-bottom: 2px; }
+ul.holder li { float: left; list-style-type: none; margin: 0 5px 4px 0; }
+ul.holder li.bit-box, ul.holder li.bit-input input { font: 11px "Lucida Grande", "Verdana"; }
+ul.holder li.bit-box { -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; border: 1px solid #CAD8F3; background: #DEE7F8; padding: 1px 5px 2px; }
+ul.holder li.bit-box-focus { border-color: #598BEC; background: #598BEC; color: #fff; }
+ul.holder li.bit-input input { width: 150px; margin: 0; border: none; outline: 0; padding: 3px 0 2px; }
+ul.holder li.bit-input input.smallinput { width: 20px; }
+
+#add { border: 1px solid #999; width: 550px; margin: 50px; padding: 20px 30px 10px; }
+form ol { font: 11px "Lucida Grande", "Verdana"; margin: 0; padding: 0; }
+form ol li.input-text { margin-bottom: 10px; list-style-type: none; border-bottom: 1px dotted #999; padding-bottom: 10px; }
+form ol li.input-text label { font-weight: bold; cursor: pointer; display: block; font-size: 13px; margin-bottom: 10px; }
+form ol li.input-text input { width: 500px; padding: 5px 5px 6px; font: 11px "Lucida Grande", "Verdana"; border: 1px solid #999; }
+form ul.holder { width: 500px; }
+#autocomplete-list ul.holder li.bit-box, #apple-list ul.holder li.bit-box { padding-right: 15px; position: relative; }
+#apple-list ul.holder li.bit-input { margin: 0; }
+#apple-list ul.holder li.bit-input input.smallinput { width: 5px; }
+ul.holder li.bit-hover { background: #BBCEF1; border: 1px solid #6D95E0; }
+ul.holder li.bit-box-focus { border-color: #598BEC; background: #598BEC; color: #fff; }
+ul.holder li.bit-box a.closebutton { position: absolute; right: 4px; top: 5px; display: block; width: 7px; height: 7px; font-size: 1px; background: url('/images/close.gif'); }
+ul.holder li.bit-box a.closebutton:hover { background-position: 7px; }
+ul.holder li.bit-box-focus a.closebutton, ul.holder li.bit-box-focus a.closebutton:hover { background-position: bottom; }
+#autocomplete { display: none; position: absolute; width: 512px; background: #eee; }
+#autocomplete .default { padding: 5px 7px; border: 1px solid #ccc; border-width: 0 1px 1px; }
+#autocomplete ul { display: none; margin: 0; padding: 0; overflow: auto; }
+#autocomplete ul li { padding: 5px 12px; z-index: 1000; cursor: pointer; margin: 0; list-style-type: none; border: 1px solid #ccc; border-width: 0 1px 1px; font: 11px "Lucida Grande", "Verdana"; }
+#autocomplete ul li em { font-weight: bold; font-style: normal; background: #ccc; }
+#autocomplete ul li.auto-focus { background: #4173CC; color: #fff; }
+#autocomplete ul li.auto-focus em { background: none; }
+ul.holder li.bit-input input { padding: 2px 0 1px; border: 1px solid #999; }
+#add a { color: #666; }
+#add-test { width: 100px; padding: 2px; }

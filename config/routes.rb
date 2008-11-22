@@ -36,6 +36,7 @@ ActionController::Routing::Routes.draw do |map|
   map.page "/page/:page", :controller => "welcome", :action => "index"
 
   map.episode "/:nickname/watch/:slug", :controller => "episode", :action => "watch"
+  map.share "/:nickname/share/:slug", :controller => "episode", :action => "share"
 
   map.login '/login', :controller => "people", :action => "login"
   map.logout '/logout', :controller => "people", :action => "logout"

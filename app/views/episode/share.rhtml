@@ -1,0 +1,43 @@
+<% content_for :tagline do %>
+  Share <%=link_to(@episode.title, episode_url(*@episode.to_param))%>
+<% end %>
+<% content_for :instructions do %>
+  You can use the code on the left, or send the set by email to any of your friends.
+  Or you can <%=link_to("return to your dashboard", dashboard_url)%>
+<% end %>
+<% content_for :sidebar do %>
+  <% form_tag(:share) do %>
+    <ul>
+      <li>
+        <%=label_tag("url of set")%>
+        <%=text_area_tag(:share, episode_url(*@episode.to_param), {:rows => 3, :class => "copypaste"})%>
+      </li>
+      <li>
+        <%=label_tag("widget embed code")%>
+        <%=text_area_tag(:share, h("<script>coming soon...</script>"), {:rows => 5, :class => "copypaste"})%>
+      </li>
+    </ul>
+  <% end %>
+<% end %>
+<% form_tag(:share) do %>
+  <ul>
+    <li id="autocomplete-list" class="input-text">
+      <%=label_tag("emails of people to share with")%>
+      <input type="text" value="" id="emails" />
+      <div id="autocomplete">
+        <div class="default">Type the emails of people you want ot share with</div> 
+        <ul class="feed">
+        </ul>
+      </div>
+    </li>
+    <li>
+      <%=label_tag("message")%>
+      <%=text_area_tag(:message, params[:message], {:rows => 5})%>
+    </li>
+    <li>
+      <%=submit_tag("Share Set")%>
+      or
+      <%=link_to(:return, dashboard_url)%>
+    </li>
+  </ul>
+<% end %>

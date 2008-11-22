@@ -3,7 +3,12 @@
 class DashboardController < ApplicationController
   before_filter :require_person
   def index
-    @episodes = Episode.paginate(:page => current_page, :conditions => ["person_id = ?", current_person.id])
+    @episodes = Episode.paginate(
+      :page => current_page, 
+      :per_page => current_per_page, 
+      :conditions => ["person_id = ?", current_person.id], 
+      :order => "created_at desc"
+    )
     if request.post? then
       Person.transaction do
         begin

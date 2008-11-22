@@ -21,6 +21,9 @@ y_up_eventHandler = function( pType, pItem ) {
             });
           }
         break;
+        default:
+          $('pop_container').update();
+        break;
       }
     break;
     case "itemEnd":         // thrown when a video has played for its total duration
@@ -125,13 +128,23 @@ Event.observe(window, 'load', function () {
   });
 
   $$('div.edge').each(function(edge) {
-    //alert(jar.get(edge.id));    
-    //alert(jar.getKeys());
     include = (readCookie(edge.id));
     if (include) {
-      //edge.update((include));
       edge.update(unescape(include).gsub(/\+/, ' '));
     }
     edge.show();
   });
+
+  $$('textarea.copypaste').each(function(copypaste) {
+    Event.observe(copypaste, 'focus', function(focused) {
+      this.select();
+    });
+  });
+  
+  if ($('emails')) {
+    list = new FacebookList('emails', 'autocomplete', {
+      newValues: true,
+      fetchFile: '/emails.json'
+    });
+  }
 });

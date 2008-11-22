@@ -47,7 +47,7 @@ class ProfileController < ApplicationController
           @episode.description = params[:episode][:description]
           current_person.episodes << @episode
           @episode.save!
-          flash[:success] = "Saved!"
+          flash[:success] = render_to_string({:partial => "shared/created_set"}) 
           return redirect_to(profile_url(current_person))
         end
       rescue => problem

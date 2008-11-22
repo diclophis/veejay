@@ -1,6 +1,10 @@
 <% content_for :tagline do %>
-  <%=link_to(:editing, edit_url(@episode))%>
-  an existing set
+  Editing an existing set
+<% end %>
+<% content_for :instructions do %>
+  Update this set using the form below.
+  You can also <%=link_to("share this set", share_url(*@episode.to_param))%>.
+  Or you can <%=link_to("return to your dashboard", dashboard_url)%>.
 <% end %>
 <% content_for :sidebar do %>
   <% form_tag(:search, {:id => "search"}) do %>
@@ -16,43 +20,46 @@
 <% form_tag(edit_url(@episode.id)) do %>
   <%=error_messages_for(:episode)%>
   <ul>
-  <% fields_for(:episode) { |episode| %>
+    <% fields_for(:episode) { |episode| %>
+      <li>
+        <%=episode.label(:title)%>
+        <%=episode.text_field(:title)%>
+      </li>
+      <li>
+        <%=episode.label(:description)%>
+        <%=episode.text_area(:description, {:rows => 5})%>
+      </li>
+    <% } %>
     <li>
-      <%=episode.label(:title)%>
-      <%=episode.text_field(:title)%>
+      <%=label_tag(:videos)%>
+      <% if @videos.empty? then %>
+      <% else %>
+      <% end %>
+      <ul id="drop" class="videos">
+        <% @videos.each { |video| %>
+          <li class="video" id="video_<%=video.id%>">
+            <table>
+              <tr>
+                <td>
+                  <%=link_to(image_tag(video.images.first.url, {:width => "120"}), "#", {:title => video.title})%>
+                </td>
+                <td>
+                  <p>
+                    "<%=link_to(video.title, "#")%>"
+                    -
+                    <%=video.artists.first.name%>
+                    <%=video.formatted_duration%>
+                  </p>
+                  <%=hidden_field_tag("episode[video_ids][]", video.id, {:id => nil})%>
+                </td>
+              </tr>
+            </table>
+          </li>
+        <% } %>
+      </ul>
     </li>
     <li>
-      <%=episode.label(:description)%>
-      <%=episode.text_area(:description, {:rows => 5})%>
-    </li>
-  <% } %>
-  <li>
-    <%=label_tag(:videos)%>
-    <% if @videos.empty? then %>
-    <% else %>
-    <% end %>
-    <ul id="drop" class="videos">
-      <% @videos.each { |video| %>
-        <li class="video" id="video_<%=video.id%>">
-          <table>
-            <tr>
-              <td>
-                <%=link_to(image_tag(video.images.first.url, {:width => "120"}), "#", {:title => video.title})%>
-              </td>
-              <td>
-                <p>
-                  "<%=link_to(video.title, "#")%>"
-                  -
-                  <%=video.artists.first.name%>
-                  <%=video.formatted_duration%>
-                </p>
-                <%=hidden_field_tag("episode[video_ids][]", video.id, {:id => nil})%>
-              </td>
-            </tr>
-          </table>
-        </li>
-      <% } %>
+      <%=submit_tag("Update Set")%>
     </li>
   </ul>
-  <%=submit_tag(:go)%>
 <% end %>

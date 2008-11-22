@@ -8,6 +8,7 @@ class PeopleController < ApplicationController
       flash[:notice] = "Please register first..." and return redirect_to({:action => :register, :person => pending_person.attributes}) unless Person.exists?(:nickname => pending_person.nickname)
       authenticate(Person.find_by_nickname(pending_person.nickname))
       cookies[:personal_header] = {:expires => 1000.hours.from_now, :value => render_to_string({:partial => "shared/personal_header"})}
+      cookies[:nickname] = {:expires => 1000.hours.from_now, :value => current_person.nickname}
       return redirect_to(remembered_params)
     elsif request.post? then
       begin
@@ -20,6 +21,8 @@ class PeopleController < ApplicationController
         logger.debug(problem.backtrace.join("\n"))
         pending_person.errors.add(:nickname, problem)
       end
+    else
+      pending_person.nickname = cookies[:nickname]
     end
   end
   def logout
