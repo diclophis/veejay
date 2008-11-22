@@ -1,6 +1,7 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 var sc;
+var list;
 
 y_up_eventHandler = function( pType, pItem ) {
   //{"type": "S_AD", "clipid": "v2140336", "spaceId": "396500312"}
@@ -145,6 +146,13 @@ Event.observe(window, 'load', function () {
     list = new FacebookList('emails', 'autocomplete', {
       newValues: true,
       fetchFile: '/emails.json'
+    });
+    Event.observe($('share_form'), 'submit', function(submitted) {
+      list.update();
+      alert($F('emails'));
+      //$('entered_emails').value = $F('emails');
+      //alert($F('emails'));
+      return true;
     });
   }
 });

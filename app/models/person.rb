@@ -15,7 +15,7 @@ class Person < ActiveRecord::Base
   validates_presence_of :nickname
   validates_format_of :nickname, :with => /^[a-zA-Z0-9]+$/, :message => "may only be letters (a-z,A-Z) and numbers (0-9) and cannot contain spaces"
   validates_each :nickname do |record, key, value|
-    record.errors.add(key, "is reserved") if %w{logout pop activate stylesheets images javascripts dashboard register login about page update edit subscribe sets rss create search}.include?(value)
+    record.errors.add(key, "is reserved") if %w{redirect logout pop activate stylesheets images javascripts dashboard register login about page update edit subscribe sets rss create search}.include?(value)
   end
   validates_uniqueness_of :nickname
   validates_presence_of :activation_code

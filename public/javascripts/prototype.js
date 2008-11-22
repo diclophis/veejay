@@ -4741,6 +4741,16 @@ Element.addMethods({
       if(!obj.curOn) {
           obj.blurhide = obj.autoHide.bind(obj).delay(0.1);
       }
+            if(obj.options.get('newValues')) {
+              new_value_el = obj.current.retrieveData('input');
+              new_value_el.value = new_value_el.value.strip().gsub(",","");
+              if(!obj.options.get("spaceReplace").blank()) new_value_el.gsub(" ", obj.options.get("spaceReplace"));
+              if(!new_value_el.value.blank()) {
+                //e.stop();
+                obj.newvalue = true;
+                obj.autoAdd(new_value_el);
+              }
+            }
   },
   filter: function(D,E) { var C=[];for(var B=0,A=this.length;B<A;B++){if(D.call(E,this[B],B,this)){C.push(this[B]);}} return C; }
 });         

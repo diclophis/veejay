@@ -19,14 +19,19 @@
     </ul>
   <% end %>
 <% end %>
-<% form_tag(:share) do %>
+<% form_tag(:share, {:id => :share_form}) do %>
   <ul>
     <li id="autocomplete-list" class="input-text">
-      <%=label_tag("emails of people to share with")%>
-      <input type="text" value="" id="emails" />
+      <%=label_tag("emails of people to share with seperated by a comma")%>
+      <input type="text" value="" id="emails" name="emails"/>
       <div id="autocomplete">
         <div class="default">Type the emails of people you want ot share with</div> 
         <ul class="feed">
+          <% @good_emails.each { |good_email| %>
+            <li value="<%=h("#{good_email.name} #{good_email.address}")%>">
+              <%=h("#{good_email.name} #{good_email.address}")%>
+            </li>
+          <% } %>
         </ul>
       </div>
     </li>

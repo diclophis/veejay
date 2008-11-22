@@ -20,3 +20,29 @@ module ActiveRecord
     end
   end
 end
+
+class EmailParser
+  def self.parse (emails)
+    good = []
+    bad = []
+    split_emails = emails.split(",")
+    split_emails.each { |email|
+      begin
+        parsed = TMail::Address.parse(email)
+        good << parsed
+      rescue TMail::SyntaxError
+        parts = email.split(" ")
+        address = parts.slice!(-1)
+        name = parts.join(" ")
+        formatted = "\"#{name}\" <#{address}>"
+        begin
+          parsed = TMail::Address.parse(formatted)
+          good << parsed
+        rescue TMail::SyntaxError
+          bad << email
+        end
+      end
+    }
+    [good, bad]
+  end
+end
