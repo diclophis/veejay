@@ -81,7 +81,7 @@ class DashboardController < ApplicationController
           @good_emails.each { |good_email|
             redirect = Redirect.create({
               #/redirect/bob-to-something-else-for-diclophis
-              :permalink => good_email.local + "-to-" + @episode.slug + "-for-" + current_person.nickname.downcase,
+              :permalink => Slugalizer.slugalize(good_email.local) + "-to-" + @episode.slug + "-for-" + Slugalizer.slugalize(current_person.nickname),
               :person_id => current_person.id,
               :nonce => {:email => good_email.address, :nickname => good_email.local},
               :nonce_url => episode_url(*@episode.to_param),
