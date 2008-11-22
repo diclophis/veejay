@@ -145,14 +145,12 @@ Event.observe(window, 'load', function () {
   if ($('emails')) {
     list = new FacebookList('emails', 'autocomplete', {
       newValues: true,
-      fetchFile: '/emails.json'
+      fetchFile: '/email_autocompletions'
     });
     Event.observe($('share_form'), 'submit', function(submitted) {
       list.update();
-      alert($F('emails'));
-      //$('entered_emails').value = $F('emails');
-      //alert($F('emails'));
       return true;
     });
+    $('emails').focus();
   }
 });

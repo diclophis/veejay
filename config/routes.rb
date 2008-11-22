@@ -37,11 +37,13 @@ ActionController::Routing::Routes.draw do |map|
   map.page "/redirect/:permalink", :controller => "welcome", :action => "redirect"
 
   map.episode "/:nickname/watch/:slug", :controller => "episode", :action => "watch"
-  map.share "/:nickname/share/:slug", :controller => "episode", :action => "share"
+  map.pop '/pop', :controller => "episode", :action => "pop"
 
   map.login '/login', :controller => "people", :action => "login"
   map.logout '/logout', :controller => "people", :action => "logout"
   map.register '/register', :controller => "people", :action => "register"
+  map.activate '/activate/:id', :controller => "people", :action => "activate"
+
   map.about '/about', :controller => "welcome", :action => "about"
   map.faq '/faq', :controller => "welcome", :action => "faq"
 
@@ -55,16 +57,17 @@ ActionController::Routing::Routes.draw do |map|
   #map.image '/image/:permalink', :controller => "welcome", :action => "image"
   #map.similarities '/similarities/:permalink', :controller => "welcome", :action => "similarities"
   map.dashboard '/dashboard', :controller => "dashboard", :action => "index"
-  map.update '/update', :controller => "dashboard", :action => "update"
+  map.share "/:nickname/share/:slug", :controller => "dashboard", :action => "share"
+  map.email_autocompletions "/email_autocompletions", :controller => "dashboard", :action => "email_autocompletions"
+  #map.update '/update', :controller => "dashboard", :action => "update"
   map.edit '/edit/:id', :controller => "dashboard", :action => "edit"
   map.subscribe '/subscribe/:id', :controller => "dashboard", :action => "subscribe"
-  map.sets '/sets/:nickname', :controller => "profile", :action => "index", :format => "rss"
   map.create '/create', :controller => "profile", :action => "create"
   map.search '/search', :controller => "profile", :action => "search"
-  map.pop '/pop', :controller => "episode", :action => "pop"
   map.preview '/preview/:id', :controller => "episode", :action => "preview"
+
+  map.sets '/sets/:nickname', :controller => "profile", :action => "index", :format => "rss"
   map.rss '/rss', :controller => "welcome", :action => "index", :format => "rss"
-  map.activate '/activate/:id', :controller => "people", :action => "activate"
 
   # See how all your routes lay out with "rake routes"
   # Install the default routes as the lowest priority.

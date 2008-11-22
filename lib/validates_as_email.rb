@@ -29,20 +29,27 @@ class EmailParser
     split_emails.each { |email|
       begin
         parsed = TMail::Address.parse(email)
+        self.sanity_check(parsed)
         good << parsed
-      rescue TMail::SyntaxError
+      rescue
         parts = email.split(" ")
         address = parts.slice!(-1)
         name = parts.join(" ")
         formatted = "\"#{name}\" <#{address}>"
         begin
           parsed = TMail::Address.parse(formatted)
+          self.sanity_check(parsed)
           good << parsed
-        rescue TMail::SyntaxError
+        rescue
           bad << email
         end
       end
     }
     [good, bad]
+  end
+  def self.sanity_check (address)
+    raise if address.domain.blank?
+    raise unless address.domain.include?(".")
+    URI.parse("http://#{address.domain}")
   end
 end

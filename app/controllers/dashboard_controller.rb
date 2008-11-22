@@ -62,4 +62,39 @@ class DashboardController < ApplicationController
       end
     end
   end
+  def share
+    @episode = Episode.find(:first, :include => :person, :conditions => ["people.nickname = ? and slug = ?", params[:nickname], params[:slug]])
+    @good_emails = @bad_emails = []
+    if request.post? then
+      begin
+        Person.transaction do
+          @good_emails, @bad_emails = EmailParser.parse(params[:emails])
+          logger.debug(@good_emails.inspect)
+          logger.debug(@bad_emails.inspect)
+          raise if @good_emails.empty?
+          raise unless @bad_emails.empty?
+          current_person.email_autocompletions ||= []
+          current_person.email_autocompletions += @good_emails
+          current_person.save!
+          flash[:success] = render_to_string({:partial => "shared/shared_set"}) 
+          return redirect_to(dashboard_url)
+        end
+      rescue => problem
+        logger.debug(problem)
+        flash.now[:error] = render_to_string({:partial => "shared/emails_error"})
+      end
+    end
+  end
+=begin
+[{"caption":"Manuel Mujica Lainez","value":4},{"caption":"Gustavo Nielsen","value":3},{"caption":"Silvina Ocampo","value":3},{"caption":"Victoria Ocampo", "value":3},{"caption":"Hector German Oesterheld", "value":3},{"caption":"Olga Orozco", "value":3},{"caption":"Juan L. Ortiz", "value":3},{"caption":"Alicia Partnoy", "value":3},{"caption":"Roberto Payro", "value":3},{"caption":"Ricardo Piglia", "value":3},{"caption":"Felipe Pigna", "value":3},{"caption":"Alejandra Pizarnik", "value":3},{"caption":"Antonio Porchia", "value":3},{"caption":"Juan Carlos Portantiero", "value":3},{"caption":"Manuel Puig", "value":3},{"caption":"Andres Rivera", "value":3},{"caption":"Mario Rodriguez Cobos", "value":3},{"caption":"Arturo Andres Roig", "value":3},{"caption":"Ricardo Rojas", "value":3}]
+=end
+  def email_autocompletions
+    email_autocompletions = current_person.email_autocompletions || []
+    render :text => email_autocompletions.collect { |email_autocomplete|
+      {
+        :value => "#{email_autocomplete.name} #{email_autocomplete.address}",
+        :caption => "#{email_autocomplete.name} #{email_autocomplete.address}"
+      }
+    }.to_json
+  end
 end

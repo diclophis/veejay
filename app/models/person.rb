@@ -1,10 +1,8 @@
 #
 
 class Person < ActiveRecord::Base
+  serialize :email_autocompletions
   has_many_friends
-  #has_many :findings
-  #has_many :images, :through => :findings
-  #has_many :last_three_images, :source => :image, :through => :findings, :limit => 3, :order => 'created_at DESC'
   has_many :episodes
   before_validation_on_create :assign_activation_code
   before_validation :normalize_identity_url

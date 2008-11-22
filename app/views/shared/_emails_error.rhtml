@@ -1,0 +1,17 @@
+<div class="errorExplanation" id="errorExplanation">
+  <h2>
+    This Set could not be shared
+  </h2>
+  <ul>
+    <% if @good_emails.empty? then %>
+      <li>
+        You must specify at least one email address
+      </li>
+    <% end %>
+    <% @bad_emails.each { |bad_email| %>
+      <li>
+        <%=h(bad_email)%> is an invalid email address
+      </li>
+    <% } %>
+  </ul>
+</div>
