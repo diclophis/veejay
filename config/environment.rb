@@ -69,6 +69,7 @@ Rails::Initializer.run do |config|
   # config.active_record.observers = :cacher, :garbage_collector
 
   config.action_mailer.default_url_options = { :host => "veejay.tv" }
+  config.action_controller.page_cache_directory = RAILS_ROOT + "/public/cache"
 end
 
 require 'openid'

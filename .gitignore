@@ -4,3 +4,4 @@ config/music.rb
 tmp/*
 log/*.log
 db/schema.rb
+public/cache/*
