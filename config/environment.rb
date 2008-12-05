@@ -26,7 +26,7 @@ Rails::Initializer.run do |config|
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "aws-s3", :lib => "aws/s3"
   #config.gem "ruby-openid"
-  config.gem "yahoo-music"
+  #config.gem "yahoo-music"
   #config.gem "mtv-music"
 
   # Only load the plugins named here, in the order given. By default, all plugins 
@@ -89,24 +89,25 @@ require 'validates_as_uri'
 require 'validates_as_email'
 require 'smtp_tls'
 require 'gmail'
-require 'music'
+#require 'music'
 require 'plist'
 require 'has_ratings'
 require 'rss'
 require 'lyrics'
 require 'slugalizer'
+require 'remote_video'
 require '/root/ruby-oembed/lib/oembed'
 
 ActiveRecord::Base.store_full_sti_class = true
 Fast::Cache.enable!
 TagList.delimiter = " "
 
-class Yahoo::Music::Video
-  yaml_as "tag:ruby.yaml.org,2002:Yahoo::Music::Video"
-end
-class Yahoo::Music::Artist
-  yaml_as "tag:ruby.yaml.org,2002:Yahoo::Music::Artist"
-end
-class Yahoo::Music::Image
-  yaml_as "tag:ruby.yaml.org,2002:Yahoo::Music::Image"
-end
+#class Yahoo::Music::Video
+#  yaml_as "tag:ruby.yaml.org,2002:Yahoo::Music::Video"
+#end
+#class Yahoo::Music::Artist
+#  yaml_as "tag:ruby.yaml.org,2002:Yahoo::Music::Artist"
+#end
+#class Yahoo::Music::Image
+#  yaml_as "tag:ruby.yaml.org,2002:Yahoo::Music::Image"
+#end

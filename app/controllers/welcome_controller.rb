@@ -20,6 +20,7 @@ class WelcomeController < ApplicationController
         session[k] = v
       }
       @redirect.nonced_on = Time.now
+      @redirect.save!
       return redirect_to(@redirect.nonce_url)
     end
   end

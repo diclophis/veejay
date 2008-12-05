@@ -8,3 +8,27 @@ Redirect
   default_url
   nonced
 
+@remote_video = RemoteVideo.find_by_id(params[:remote_video_id])
+@remote_artist = RemoteArtist.find_by_name(params[:remote_artist_name])
+@remote_videos = RemoteVideo.search(params[:artist_or_song], params[:limit], params[:offset])
+
+Episode
+  image_url
+
+Video
+  remote_video_id
+  remote_video_image_url
+  remote_video_title
+  remote_video_artist_names
+  remote_video_duration
+
+:remote_video_id => video.id,
+:remote_video_title => video.title,
+:remote_video_duration => video.duration,
+:remote_video => video
+
+RemoteArtist
+  name
+  releases
+  website
+  categories
