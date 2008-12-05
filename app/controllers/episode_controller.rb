@@ -14,9 +14,11 @@ class EpisodeController < ApplicationController
     @lyrics = Lyrics.for(@video.artists.first.name, @video.title)
     render :partial => "episode/pop"
   end
+  def play
+    @type, @remote_id = params[:id].split("-")
+    render :partial => @type
+  end
   def preview
-    #@videos = Yahoo::Music::Video.item(params[:id])
-    #@video = 
     @type, @remote_id = params[:id].split("-")
     render :layout => "vanilla"
   end

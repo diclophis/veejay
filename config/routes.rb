@@ -65,6 +65,7 @@ ActionController::Routing::Routes.draw do |map|
   map.create '/create', :controller => "profile", :action => "create"
   map.search '/search', :controller => "profile", :action => "search"
   map.preview '/preview/:id', :controller => "episode", :action => "preview"
+  map.play '/play/:id', :controller => "episode", :action => "play"
 
   map.sets '/sets/:nickname', :controller => "profile", :action => "index", :format => "rss"
   map.rss '/rss', :controller => "welcome", :action => "index", :format => "rss"

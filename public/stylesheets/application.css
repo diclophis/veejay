@@ -35,6 +35,9 @@ li input[type="submit"] { margin: 1em 0 -0.5em 0; }
 #sidebar { padding: 1em; width: 37em; float: left; }
 #pop { border: 2px solid #e0e0e0; margin: 1em 0 0 0; padding: 0em 0.5em 0.5em 0.5em; overflow: auto; }
 #content { padding: 1em 2em 2em 2em; width: 58em; float: left; }
+#player_container { width: 512px; height:322px; }
+#player { width: 512px; height:322px; }
+
 #xresults_container { height: 50em; overflow: scroll; }
 ul.grid { margin: 3.5em; }
 ul.grid li { display: inline; }

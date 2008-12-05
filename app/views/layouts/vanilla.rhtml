@@ -5,8 +5,8 @@
     <title>VeeJay.tv</title>
     <%= stylesheet_link_tag "application" %>
     <%=javascript_include_tag(:defaults)%>
-    <%=auto_discovery_link_tag(:rss, rss_feed_url(@feeder)) if @feeder%>
     <%=javascript_include_tag("swfobject")%>
+    <%=auto_discovery_link_tag(:rss, rss_feed_url(@feeder)) if @feeder%>
   </head>
   <body>
     <div id="content">

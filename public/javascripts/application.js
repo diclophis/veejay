@@ -3,13 +3,72 @@
 var sc;
 var list;
 
-y_up_eventHandler = function( pType, pItem ) {
-  //{"type": "S_AD", "clipid": "v2140336", "spaceId": "396500312"}
-  //{"type": "S_AD", "clipid": "v2140336", "spaceId": "396500312"}
-  //{"type": "S_STREAM", "clipid": "v2140336", "spaceId": "396500312"}
+play_video = function (remote_id) {
+  chunks = remote_id.split("-");
+  type = chunks[0];
+  remote_id = chunks[1];
+  var params = {};
+  params.allowscriptaccess = "always";
+  params.allowfullscreen = 'true';
+  var attributes = {};
+  attributes.id = "the_player";
+  attributes.name = "the_player";
+  switch (type) {
+    case "yahoo":
+      var flashvars = {};
+      flashvars.id = 'v' + remote_id;
+      flashvars.eID = '1301797';
+      flashvars.ympsc = '4195351';
+      flashvars.lang = 'en';
+      flashvars.shareEnabled = '1';
+      flashvars.enableFullScreen = 'true';
+      flashvars.autoStart = '0';
+      flashvars.eh = 'yahoo_event_handler';
+      swfobject.embedSWF("http://d.yimg.com/cosmos.bcst.yahoo.com/up/fop/embedflv/swf/fop.swf", "player", "512", "332", "9.0.0", false, flashvars, params, attributes);
+    break;
+    case "mtv":
+      var flashvars = {};
+      swfobject.embedSWF("http://media.mtvnservices.com/mgid:uma:video:api.mtvnservices.com:" + remote_id, "player", "512", "332", "9.0.0", false, flashvars, params, attributes);
+    break;
+    case "youtube":
+      var flashvars = {};
+      swfobject.embedSWF("http://www.youtube.com/v/" + remote_id + "&enablejsapi=1&playerapiid=ytplayer", "player", "512", "332", "9.0.0", false, flashvars, params, attributes);
+    break;
+  }
+}
+
+mtv_state_change = function (state) {
+}
+
+mtv_playhead_update = function () {
+}
+
+mtv_media_ended = function () {
+  swfobject.removeSWF("the_player");
+}
+
+mtv_read = function () {
+}
+
+function mtvnPlayerLoaded (player_id) {
+  player = swfobject.getObjectById(player_id);
+  player.addEventListener('STATE_CHANGE', 'mtv_state_change');
+  player.addEventListener('PLAYHEAD_UPDATE', 'mtv_playhead_update');
+  player.addEventListener('MEDIA_ENDED', 'mtv_media_ended');
+  player.addEventListener('READY', 'mtv_ready'); 
+}
+
+function mtvnSetCoad(adObject) {
+  return;
+}
+
+yahoo_event_handler = function( pType, pItem ) {
+  alert(pType);
   switch (pType){
     case "init":            // thrown when the player has been initialized and the flash external API is ready to be accessed
+    break;
     case "itemBegin":       // thrown when a video starts playing for the first time
+      /*
       switch(pItem.type) {
         case "S_STREAM":
           if ($('pop_form')) {
@@ -26,9 +85,12 @@ y_up_eventHandler = function( pType, pItem ) {
           $('pop_container').update();
         break;
       }
+      */
+    break;
+    case "done":            // thrown when all videos have played
+      swfobject.removeSWF("the_player");
     break;
     case "itemEnd":         // thrown when a video has played for its total duration
-    case "done":            // thrown when all videos have played
     case "streamPlay":      // thrown anytime a video begins to play
     case "streamPause":     // thrown when vidPause() is requested and completed
     case "streamStop":      // thrown when playback has stopped for whatever reason (not the same as itemEnd)
@@ -58,7 +120,9 @@ Event.observe(window, 'load', function () {
   if ($('pause_button')) {
     Event.observe($('pause_button'), 'click', function (pause) {
       Event.stop(pause);
+      /*
       $('uvp_fop').vidPause();
+      */
       $('play_button').show();
       $('pause_button').hide();
     });
@@ -68,14 +132,29 @@ Event.observe(window, 'load', function () {
   if ($('play_button')) {
     Event.observe($('play_button'), 'click', function (play) {
       Event.stop(play);
-      //$('uvp_fop').setVidHeight("1000");
+      /*
       $('uvp_fop').vidPlay();
+      */
       $('play_button').hide();
       $('pause_button').show();
     });
     $('play_button').hide();
   }
 
+  if ($('player_container')) {
+    videos = $$('li.video').collect(function(video) { return video.id.replace("video_", ""); });
+    /*
+    new Ajax.Updater('player_container', '/play/' + videos.first(), {
+      evalScripts : true,
+      method : 'get',
+      onComplete : function () {
+      }
+    });
+    */
+    //play_video(videos.first());
+    play_video(videos[1]);
+  }
+  /*
   if ($('uvp_fop_container')) {
     videos = $$('li.video').collect(function(video) { return 'v' + video.id.replace("video_", ""); });
     $$('li.video a').each(function(link_to_video) {
@@ -105,6 +184,7 @@ Event.observe(window, 'load', function () {
     so.addParam("allowScriptAccess", "always");  // for scripting access
     so.write('uvp_fop_container');
   }
+  */
 
   $$('form#search').each(function(search_form) {
     Event.observe(search_form, 'submit', function(submitted) {

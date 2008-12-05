@@ -6,6 +6,7 @@
     <title>VeeJay.tv</title>
     <%= stylesheet_link_tag "application" %>
     <%=javascript_include_tag(:defaults)%>
+    <%=javascript_include_tag("swfobject")%>
     <% if (@person and @person.id) then %>
       <%=auto_discovery_link_tag(:rss, sets_url(@person))%>
     <% else %>
