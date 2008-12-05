@@ -10,69 +10,112 @@
 =end
 
 class RemoteVideo
-  attr_accessor :video_id, :image_url, :title, :artist_names, :duration
+  attr_accessor :remote_id, :image_url, :title, :artist_names, :duration
 
-  def initialize (video_id, image_url, title, artist_names, duration)
-    self.video_id = video_id
+  def initialize (remote_id, title, duration, artist_names, image_url)
+    self.remote_id = remote_id
     self.image_url = image_url
     self.title = title
     self.artist_names = artist_names
     self.duration = duration
   end
   
-#"http://gdata.youtube.com/feeds/api/videos?q=%s&alt=rss&v=2"
-
   def self.find_by_id (remote_video_id)
   end
+
   def self.fetch (format, artist_or_song)
     encoded_artist_or_song = URI.encode(artist_or_song)
     url = format % [encoded_artist_or_song]
     data = Fast.fetch(url)
   end
-  def self.extract_mtv_videos (data)
-    xml = Hpricot::XML(data)
-    xml.search("item").each { |video|
-      puts title = video.title
-      puts id = "mtv|" + video.search("media:content").collect { |media_content|
-        media_content.attributes["url"].split(":").last
-      }.first
-      puts artist_names = video.search("media:credit").delete_if { |credit|
-        credit.attributes["role"] != "artist/performer"
-      }.collect { |credit|
-        credit.to_plain_text
+
+  def self.extract_youtube_videos (data)
+    begin
+      xml = Hpricot::XML(data)
+      xml.search("item").collect { |video|
+        title = video.title
+        remote_id = video.search("guid").collect { |guid|
+          "youtube|" + guid.to_plain_text.split(":").last
+        }.first
+        duration = video.search("yt:duration").collect { |yt_duration|
+          yt_duration.attributes["seconds"]
+        }.first
+        artist_names = []
+        image_url = video.search("media:thumbnail").sort_by { |image|
+          image.attributes["width"].to_i
+        }.collect { |image|
+          image.attributes["url"]
+        }.last
+        RemoteVideo.new(remote_id, title, duration, artist_names, image_url)
       }
-    }
-    []
+    rescue
+      []
+    end
+  end
+
+  def self.extract_mtv_videos (data)
+    begin
+      xml = Hpricot::XML(data)
+      xml.search("item").collect { |video|
+        title = video.title
+        remote_id, duration = video.search("media:content").collect { |media_content|
+          ["mtv|" + media_content.attributes["url"].split(":").last, media_content.attributes["duration"]]
+        }.first
+        artist_names = video.search("media:credit").delete_if { |credit|
+          credit.attributes["role"] != "artist/performer"
+        }.collect { |credit|
+          credit.to_plain_text
+        }
+        image_url = video.search("media:thumbnail").sort_by { |image|
+          image.attributes["width"].to_i
+        }.collect { |image|
+          image.attributes["url"]
+        }.last
+        RemoteVideo.new(remote_id, title, duration, artist_names, image_url)
+      }
+    rescue
+      []
+    end
   end
   def self.extract_yahoo_videos (data)
-    xml = Hpricot::XML(data)
-    xml.search("Video").collect { |video|
-      title = video.attributes["title"]
-      id = video.attributes["id"]
-      unless id.nil?
-        id = "yahoo|" + id
-      end
-      duration = video.attributes["duration"]
-      artist_names = video.search("Artist").collect { |artist|
-        artist.attributes["name"]
+    begin
+      xml = Hpricot::XML(data)
+      xml.search("Video").collect { |video|
+        title = video.attributes["title"]
+        remote_id = video.attributes["id"]
+        unless remote_id.nil?
+          remote_id = "yahoo|" + remote_id
+        end
+        duration = video.attributes["duration"]
+        artist_names = video.search("Artist").collect { |artist|
+          artist.attributes["name"]
+        }
+        image_url = video.search("Image").collect { |image|
+          image.attributes["url"]
+        }.first
+        RemoteVideo.new(remote_id, title, duration, artist_names, image_url)
+      }.delete_if { |video|
+        video.remote_id.blank? or video.remote_id == 0
       }
-      image_url = video.search("Image").collect { |image|
-        image.attributes["url"]
-      }.first
-      RemoteVideo.new(id, title, duration, artist_names, image_url)
-    }.delete_if { |video|
-      video.video_id.blank? or video.video_id == 0
-    }
+    end
   end
   def self.search(artist_or_song, limit = nil, offset = nil)
-    #yahoo_format = "http://us.music.yahooapis.com/video/v1/list/search/all/%s?appid=lbQe24DV34HOfBA1dKUdCW_UVvWU2mUjGlXI1yO_RRKiczchv2K5YyrvCcs6Bk_x"
-    #yahoo_data = self.fetch(yahoo_format, artist_or_song)
-    #yahoo_videos = self.extract_yahoo_videos(yahoo_data)
-    #puts yahoo_videos.inspect
+    yahoo_format = "http://us.music.yahooapis.com/video/v1/list/search/all/%s?appid=lbQe24DV34HOfBA1dKUdCW_UVvWU2mUjGlXI1yO_RRKiczchv2K5YyrvCcs6Bk_x"
+    yahoo_data = self.fetch(yahoo_format, artist_or_song)
+    yahoo_videos = self.extract_yahoo_videos(yahoo_data)
     mtv_format = "http://api.mtvnservices.com/1/video/search/?term=%s&feed-format=mrss"
     mtv_data = self.fetch(mtv_format, artist_or_song)
     mtv_videos = self.extract_mtv_videos(mtv_data)
-    puts mtv_videos.inspect
+    youtube_format = "http://gdata.youtube.com/feeds/api/videos?q=%s&alt=rss&v=2"
+    youtube_data = self.fetch(youtube_format, artist_or_song)
+    youtube_videos = self.extract_youtube_videos(youtube_data)
+    good_videos = (yahoo_videos + mtv_videos).sort_by { |video|
+      video.title
+    }
+    (good_videos + youtube_videos).each { |video|
+      puts video.title
+      puts video.remote_id
+    }
   end
 end
 
