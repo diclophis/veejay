@@ -15,7 +15,9 @@ class EpisodeController < ApplicationController
     render :partial => "episode/pop"
   end
   def preview
-    @videos = Yahoo::Music::Video.item(params[:id])
+    #@videos = Yahoo::Music::Video.item(params[:id])
+    #@video = 
+    @type, @remote_id = params[:id].split("-")
     render :layout => "vanilla"
   end
 end

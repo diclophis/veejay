@@ -8,20 +8,23 @@
   </h3>
   <ul id="results">
     <% @videos.each { |video| %>
-      <li class="video" id="video_<%=video.id%>">
+      <li class="video" id="video_<%=video.remote_id%>">
         <table>
           <tr>
             <td>
-              <%=link_to(image_tag(video.images.first.url, {:width => "120"}), "#", {:title => video.title})%>
+              <%=link_to(image_tag(video.image_url, {:width => "120"}), "#", {:title => video.title})%>
             </td>
             <td>
               <p>
-                "<%=link_to(video.title, preview_url(video.id), {:target => :_blank})%>"
+                "<%=link_to(video.title, preview_url(video.remote_id), {:target => :_blank})%>"
                 -
-                <%=video.artists.first.name%>
+                <%=video.artist_names.join(",")%>
                 <%=video.formatted_duration%>
               </p>
-              <%=hidden_field_tag("episode[video_ids][]", video.id, {:id => nil})%>
+              <%=hidden_field_tag("episode[videos][#{video.remote_id}][title]", video.title, {:id => nil})%>
+              <%=hidden_field_tag("episode[videos][#{video.remote_id}][duration]", video.duration, {:id => nil})%>
+              <%=hidden_field_tag("episode[videos][#{video.remote_id}][artist_names]", video.artist_names.to_json, {:id => nil})%>
+              <%=hidden_field_tag("episode[videos][#{video.remote_id}][image_url]", video.image_url, {:id => nil})%>
             </td>
           </tr>
         </table>

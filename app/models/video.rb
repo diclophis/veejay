@@ -2,5 +2,5 @@
 
 class Video < ActiveRecord::Base
   belongs_to :episode
-  serialize :yahoo_video#, Yahoo::Music::Video
+  serialize :remote_video
 end

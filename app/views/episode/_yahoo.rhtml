@@ -1,0 +1,22 @@
+<div id="yahoo_player_container">
+  Upgrade flash
+</div>
+<script type="text/javascript">
+  var flashvars = {};
+  flashvars.id = 'v<%=@remote_id%>';
+  flashvars.eID = '1301797';
+  flashvars.ympsc = '4195351';
+  flashvars.lang = 'en';
+  flashvars.shareEnabled = '1';
+  flashvars.enableFullScreen = 'true';
+  flashvars.autoStart = '0';
+  //flashvars.eh = 'myCallbackEventHandler';
+  var params = {};
+  params.allowscriptaccess = "always";
+  params.allowFullScreen = 'true';
+  var attributes = {};
+  attributes.id = "mtvn_player";
+  attributes.name = "mtvn_player";
+  swfobject.embedSWF("http://d.yimg.com/cosmos.bcst.yahoo.com/up/fop/embedflv/swf/fop.swf", "yahoo_player_container", "512", "332", "9.0.0", false, flashvars, params, attributes);
+</script>
+

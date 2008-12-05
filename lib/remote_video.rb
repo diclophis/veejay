@@ -15,9 +15,27 @@ class RemoteVideo
   def initialize (remote_id, title, duration, artist_names, image_url)
     self.remote_id = remote_id
     self.image_url = image_url
+    self.image_url ||= "/images/bluebox.jpg"
     self.title = title
     self.artist_names = artist_names
-    self.duration = duration
+    self.duration = duration.to_i
+  end
+
+  def formatted_duration
+    seconds = self.duration
+    return "" if seconds == 0
+    m = (seconds/60).floor
+    s = (seconds - (m * 60)).round
+# add leading zero to one-digit minute
+    if m < 10 then
+      m = "0#{m}"
+    end
+# add leading zero to one-digit second
+    if s < 10 then
+      s = "0#{s}"
+    end
+# return formatted time
+    return "#{m}:#{s}"
   end
   
   def self.find_by_id (remote_video_id)
@@ -35,7 +53,7 @@ class RemoteVideo
       xml.search("item").collect { |video|
         title = video.title
         remote_id = video.search("guid").collect { |guid|
-          "youtube|" + guid.to_plain_text.split(":").last
+          "youtube-" + guid.to_plain_text.split(":").last
         }.first
         duration = video.search("yt:duration").collect { |yt_duration|
           yt_duration.attributes["seconds"]
@@ -59,7 +77,7 @@ class RemoteVideo
       xml.search("item").collect { |video|
         title = video.title
         remote_id, duration = video.search("media:content").collect { |media_content|
-          ["mtv|" + media_content.attributes["url"].split(":").last, media_content.attributes["duration"]]
+          ["mtv-" + media_content.attributes["url"].split(":").last, media_content.attributes["duration"]]
         }.first
         artist_names = video.search("media:credit").delete_if { |credit|
           credit.attributes["role"] != "artist/performer"
@@ -84,7 +102,7 @@ class RemoteVideo
         title = video.attributes["title"]
         remote_id = video.attributes["id"]
         unless remote_id.nil?
-          remote_id = "yahoo|" + remote_id
+          remote_id = "yahoo-" + remote_id
         end
         duration = video.attributes["duration"]
         artist_names = video.search("Artist").collect { |artist|
@@ -112,10 +130,7 @@ class RemoteVideo
     good_videos = (yahoo_videos + mtv_videos).sort_by { |video|
       video.title
     }
-    (good_videos + youtube_videos).each { |video|
-      puts video.title
-      puts video.remote_id
-    }
+    (good_videos + youtube_videos)
   end
 end
 

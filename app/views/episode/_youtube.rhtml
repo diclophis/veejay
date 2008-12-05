@@ -1,0 +1,9 @@
+<div id="youtube_player_container">
+  Upgrade flash
+</div>
+<script type="text/javascript">
+  var flashvars = {};
+  var params = { allowScriptAccess: "always" };
+  var atts = { id: "myytplayer" };
+  swfobject.embedSWF("http://www.youtube.com/v/<%=@remote_id%>&enablejsapi=1&playerapiid=ytplayer", "youtube_player_container", "512", "332", "9.0.0", false, flashvars, params, atts);
+</script>

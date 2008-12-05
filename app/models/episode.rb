@@ -14,4 +14,10 @@ class Episode < ActiveRecord::Base
   def normalize_slug
     self.slug = Slugalizer.slugalize(title)
   end
+  def self.dump
+    episodes = Episode.find(:all).collect { |episode|
+      [episode.videos, episode]
+    }
+    puts episodes.to_json
+  end
 end

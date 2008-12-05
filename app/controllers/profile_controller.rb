@@ -26,20 +26,15 @@ class ProfileController < ApplicationController
   end
   def create
     @episode = Episode.new
-    @videos = []
     if request.post? then
       begin
         Person.transaction do
-          if params[:episode][:video_ids] then
-            params[:episode][:video_ids].each { |video_id|
-              video = Yahoo::Music::Video.item(video_id).first
+          if params[:episode][:videos] then
+            params[:episode][:videos].each { |remote_id, attributes|
+              remote_video = RemoteVideo.new(remote_id, attributes[:title], attributes[:duration], ActiveSupport::JSON.decode(attributes[:artist_names]), attributes[:image_url])
               @episode.videos << Video.create({
-                :yahoo_id => video.id,
-                :yahoo_title => video.title,
-                :yahoo_duration => video.duration,
-                :yahoo_video => video
+                :remote_video => remote_video
               })
-              @videos << video
             }
           end
           @episode.total_duration = 0
@@ -58,8 +53,7 @@ class ProfileController < ApplicationController
   def search
     @videos = []
     unless params[:artist_or_song].blank?
-      @videos = Yahoo::Music::Video.search(params[:artist_or_song], {"count" => "20"})
-      @videos.delete_if { |video| video.id.blank? or video.id == 0 or video.images.first.nil? }
+      @videos = RemoteVideo.search(params[:artist_or_song])
     end
     render :partial => "profile/results"
   end
