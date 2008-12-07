@@ -5,10 +5,11 @@ a { text-decoration: none; outline: none; }
 a:active { outline: none; }
 form,div,li,h1,h2,h3,h4,h5,h6,p,a { font-family: sans-serif; margin: 0; padding: 0; }
 ul { list-style: none; margin: 0 0 0 0; padding: 0; }
+li { margin: 0.5em 0 0.5em 0; }
 p, pre { font-size: 1.25em; margin: 0; }
 h1 { font-size: 2.5em; color: #031634; }
 h2 { font-size: 2em; margin: 0 0 0.5em 0; }
-h3 { font-size: 1.75em; margin: 0 0 0.5em 0; }
+h3 { font-size: 1.75em; margin: 0 0 0em 0; }
 h4 { font-size: 1.5em; margin: 0 0 0.5em 0; }
 img { border: 0; margin: 0; padding: 0; }
 label { margin: 0 0 0.5em 0; clear: right; display: block; font-weight: bold; }
@@ -20,26 +21,28 @@ li input[type="submit"] { margin: 1em 0 -0.5em 0; }
 
 .emptyPlaceMarker { border: 1px dashed red; }
 
-.errorExplanation { background-color:#ffcccc; border: 0.25em solid red; vertical-align:top; padding: 1em; margin: 1em 0 1em 0; }
+.errorExplanation { background-color:#ffcccc; border: 0.25em solid red; vertical-align:top; padding: 1em; }
 .errorExplanation h2 { color: maroon; margin: 0; }
 .errorExplanation ul li { list-style: square; margin: 0 0 0 2em; }
 
-#flash { }
+.flash { margin: 1em 0 1em 0; }
 .fieldWithErrors input[type="text"], .fieldWithErrors input[type="password"] { background-color: yellow; }
-.success .rounded { border: 0.25em solid green; background-color: #ccffcc; }
-.notice { border: 0.25em solid gold; background-color: yellow; }
+.success { padding: 1em; border: 0.25em solid green; background-color: #ccffcc; }
+.notice { padding: 1em; border: 0.25em solid gold; background-color: yellow; }
 .spinning { background: white url(/images/spinner.gif) no-repeat top right; }
-
 .rounded { margin: 1.5em; padding: 0em; }
 
+#errorExplanation { margin: 1em 0 1em 0; }
 #logo { width: 10em; height: 10em; float: left; }
-#header { background-color: #E8DDCB; margin: 0 0 1em 1em; padding: 0em; width: 87em; float: left; height: 10em; }
+#header { background-color: #E8DDCB; margin: 0 0 1em 1em; padding: 0em; width: 88em; float: left; height: 10em; }
 #header p { margin: 1em; }
 #header ul { float: right; margin: 0 0 0 0; }
 #header li { display: inline; }
-
 #sidebar { background-color: #E8DDCB; margin: 1em; padding: 0em; width: 42em; float: left; }
-#content { background-color: #E8DDCB; margin: 1em; padding: 0em; width: 532px; float: left; }
+#results_container { margin: 1em 0 1em 0; }
+#subscriptions { margin: 1em 0 1em 0; }
+#content { background-color: #E8DDCB; margin: 1em; padding: 0em; width: 542px; float: left; }
+#drop { min-height: 7em; border: 1px dashed black; padding: 0em 1em 0 1em; }
 
 /*
 #player_container { width: 512px; height:322px; background-color: black; }
@@ -50,12 +53,11 @@ ul.grid { margin: 1em; }
 ul.grid li { display: inline; }
 ul.grid li img { margin: 2.1em; vertical-align: middle; }
 
-ul.tabs { }
+ul.tabs { margin: 1em 0 1em 0; }
 ul.tabs li { display: inline; }
-ul.tabs li a { padding: 1px 5px 2px; }
+ul.tabs li a { padding: 1px 6px 2px; }
 ul.tabs li a.active { -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; border: 1px solid #CAD8F3; background: #DEE7F8; padding: 1px 5px 2px; }
 
-#drop { min-height: 7.5em; border: 1px dashed black; }
 
 #footer { padding: 1em; clear: both; width: 96em; }
 #footer p { text-align: right; }
@@ -125,4 +127,9 @@ td.remote_video_info {
 td.remote_video_controls {
 }
 
-table, tbody, tr, td { margin: 0; padding: 0; border-collapse: collapse; border: 0; }
+table, tbody, tr, td { margin: 0; padding: 0.25em; border-collapse: collapse; }
+/*
+td { padding: 0.25em; border: 1px solid blue; }
+ul { border: 1px solid red; }
+li { border: 1px solid green; margin: 0; padding: 1em; }
+*/

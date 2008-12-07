@@ -1,11 +1,11 @@
 <% if @videos.empty? then %>
-  <h3>
-    Sorry please try again
-  </h3>
-<% else %>
-  <h3>
+  <div id="flash" class="notice">
     <%=@videos.length%> videos found
-  </h3>
+  </div>
+<% else %>
+  <div id="flash" class="success">
+    <%=@videos.length%> videos found
+  </div>
   <ul id="results">
     <% @videos.each { |video| %>
       <%=render({:partial => "shared/remote_video", :locals => {:remote_video => video}})%>

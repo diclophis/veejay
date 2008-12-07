@@ -20,25 +20,27 @@
     </ul>
   <% end %>
   <% unless current_person.friends_by_me.empty? %>
-    <h3>
-      My Subscriptions
-    </h3>
-    <ul>
-      <li>
-        <% current_person.friends_by_me.each { |friend| %>
-          <table>
-            <tr>
-              <td>
-                <%=image_tag(friend.gravatar_url)%>
-              </td>
-              <td>
-                <%=link_to(friend.nickname, profile_url(friend))%>
-              </td>
-            </tr>
-          </table>
-        <% } %>
-      </li>
-    </ul>
+    <div id="subscriptions">
+      <h3>
+        My Subscriptions
+      </h3>
+      <ul>
+        <li>
+          <% current_person.friends_by_me.each { |friend| %>
+            <table>
+              <tr>
+                <td>
+                  <%=image_tag(friend.gravatar_url)%>
+                </td>
+                <td>
+                  <%=link_to(friend.nickname, profile_url(friend))%>
+                </td>
+              </tr>
+            </table>
+          <% } %>
+        </li>
+      </ul>
+    </div>
   <% end %>
 <% end %>
 <% if @episodes.empty? then %>

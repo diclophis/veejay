@@ -83,6 +83,7 @@ require 'xmlrpc/client'
 require 'hpricot'
 require 'iconv'
 require 'yaml'
+require 'timeout'
 require 'soap/wsdlDriver' 
 
 require 'validates_as_uri'

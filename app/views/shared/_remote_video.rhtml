@@ -1,5 +1,4 @@
 <li class="video" id="video_<%=remote_video.remote_id%>">
-  <%=hidden_field_tag("episode[videos][]",  remote_video.to_yaml, {:id => nil})%>
   <table>
     <tr>
       <td>
@@ -19,6 +18,7 @@
       <td class="remote_video_controls">
         <%=link_to(image_tag("icon/plus_circle.png"), "#", {:class => "add_remote_video_button", :style => (@episode) ? "display: none;" : "" })%>
         <%=link_to(image_tag("icon/cross_circle.png"), "#", {:class => "remove_remote_video_button", :style => (@episode) ? "" : "display: none;" })%>
+        <%=hidden_field_tag("episode[videos][]",  remote_video.to_yaml, {:id => nil})%>
       </td>
     </tr>
   </table>

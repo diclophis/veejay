@@ -46,9 +46,15 @@ class RemoteVideo
   end
 
   def self.fetch (format, artist_or_song)
-    encoded_artist_or_song = URI.encode(artist_or_song)
-    url = format % [encoded_artist_or_song]
-    data = Fast.fetch(url)
+    begin
+      Timeout::timeout(3) do
+        encoded_artist_or_song = URI.encode(artist_or_song)
+        url = format % [encoded_artist_or_song]
+        data = Fast.fetch(url)
+      end
+    rescue Exception => problem
+      nil
+    end
   end
 
   def self.extract_youtube_videos (data)
@@ -119,6 +125,8 @@ class RemoteVideo
       }.delete_if { |video|
         video.remote_id.blank? or video.remote_id == 0
       }
+    rescue
+      []
     end
   end
   def self.search(artist_or_song, limit = nil, offset = nil)

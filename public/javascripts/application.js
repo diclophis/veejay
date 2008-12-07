@@ -269,6 +269,12 @@ Event.observe(window, 'load', function () {
           //Sortable.create('results',{containment: ['results', 'drop'], dropOnEmpty: true, constraint: false, revert: false, scroll: window});
           Sortable.destroy('drop');
           Sortable.create('drop',{containment: ['results', 'drop'], dropOnEmpty: true, constraint: false});
+        },
+        onFailure : function () {
+          alert('an error has occured');
+          $('artist_or_song').enable();
+          $('search_button').enable();
+          $('artist_or_song').removeClassName('spinning');
         }
       });
       $('artist_or_song').disable();
@@ -312,10 +318,9 @@ Event.observe(window, 'load', function () {
   DD_roundies.addRule("div.rounded", 20);
   */
 
-  DD_roundies.addRule("#logo", 20);
   DD_roundies.addRule("#header", 20);
-  DD_roundies.addRule("#sidebar", 20);
-  DD_roundies.addRule("#content", 20);
+  DD_roundies.addRule("#sidebar", 15);
+  DD_roundies.addRule("#content", 10);
   DD_roundies.addRule("#footer", 5);
 
 });
