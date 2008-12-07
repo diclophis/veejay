@@ -1,0 +1,18 @@
+<li class="video" id="video_<%=remote_video.remote_id%>">
+  <table>
+    <tr>
+      <td>
+        <%=link_to(image_tag(remote_video.image_url, {:width => "120"}), "#", {:title => remote_video.title})%>
+      </td>
+      <td>
+        <p>
+          "<%=link_to(remote_video.title, preview_url(remote_video.remote_id), {:target => :_blank})%>"
+          -
+          <%=remote_video.artist_names.join(",")%>
+          <%=remote_video.formatted_duration%>
+        </p>
+        <%=hidden_field_tag("episode[videos][]",  remote_video.to_yaml, {:id => nil})%>
+      </td>
+    </tr>
+  </table>
+</li>
