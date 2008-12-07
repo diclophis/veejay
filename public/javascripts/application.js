@@ -1,11 +1,13 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
-var current_video = 0;
+var last_video = current_video = 0;
 var videos;
 var list;
 var youtube_remote_id;
 
 play_video = function () {
+  swfobject.removeSWF("the_player_" + last_video);
+  $("player_container").insert('<div id="player"></div>');
   remote_id = videos[current_video];
   chunks = remote_id.split("-");
   type = chunks[0];
@@ -14,8 +16,8 @@ play_video = function () {
   params.allowscriptaccess = "always";
   params.allowfullscreen = 'true';
   var attributes = {};
-  attributes.id = "the_player";
-  attributes.name = "the_player";
+  attributes.id = "the_player_" + current_video;
+  attributes.name = "the_player_" + current_video;
   switch (type) {
     case "yahoo":
       var flashvars = {};
@@ -37,11 +39,12 @@ play_video = function () {
     break;
     case "youtube":
       var flashvars = {};
-      //swfobject.embedSWF("http://www.youtube.com/v/" + remote_id + "&enablejsapi=1&playerapiid=the_player", "player", "512", "332", "9.0.0", false, flashvars, params, attributes);
       youtube_remote_id = remote_id;
-      swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&playerapiid=the_player&rel=0", "player", "512", "332", "9.0.0", false, flashvars, params, attributes);
+      //swfobject.embedSWF("http://www.youtube.com/v/" + remote_id + "&enablejsapi=1&playerapiid=the_player&autoplay=1&rel=0", "player", "512", "332", "9.0.0", false, flashvars, params, attributes);
+      swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&playerapiid=" + attributes.id + "&rel=0", "player", "512", "332", "9.0.0", false, flashvars, params, attributes);
     break;
   }
+  last_video = current_video;
   current_video++;
 }
 
@@ -56,14 +59,12 @@ function youtube_state_change (state) {
   //video cued (5). 
   //When the SWF is first loaded, it will broadcast an unstarted (-1) event.
   //When the video is cued and ready to play, it will broadcast a video cued event (5).
-  //alert("Player's new state: " + state);
   if (state == 0) {
     play_video();
   }
 }
 
 function youtube_error () {
-  //alert("error");
 }
 
 function onYouTubePlayerReady (player_id) {
@@ -80,7 +81,6 @@ mtv_playhead_update = function () {
 }
 
 mtv_media_ended = function () {
-  swfobject.removeSWF("the_player");
   play_video();
 }
 
@@ -100,7 +100,6 @@ function mtvnSetCoad(adObject) {
 }
 
 yahoo_event_handler = function( pType, pItem ) {
-  //alert(pType);
   switch (pType){
     case "init":            // thrown when the player has been initialized and the flash external API is ready to be accessed
     break;
@@ -125,7 +124,6 @@ yahoo_event_handler = function( pType, pItem ) {
       */
     break;
     case "done":            // thrown when all videos have played
-      swfobject.removeSWF("the_player");
       play_video();
     break;
     case "itemEnd":         // thrown when a video has played for its total duration
@@ -180,8 +178,23 @@ Event.observe(window, 'load', function () {
   }
 
   if ($('player_container')) {
+    $$('li.video a').each(function(link_to_video) {
+      Event.observe(link_to_video, 'click', function(clicked) {
+        Event.stop(clicked);
+        selected_video = this.parentNode.id.replace("video_", "");
+        selected_video_index = videos.indexOf(selected_video);
+        if (selected_video_index > 0) {
+          //left_side = videos.slice(0, selected_video_index - 1);
+          //right_side = videos.slice(selected_video_index);
+          //videos = $A(right_side.concat(left_side)).join(",");
+        }
+        //$('uvp_fop').playID(videos);
+        current_video = selected_video_index;
+        play_video();
+      });
+    });
     videos = $$('li.video').collect(function(video) { return video.id.replace("video_", ""); });
-    play_video(videos[current_video]);
+    play_video();
   }
   /*
   if ($('uvp_fop_container')) {

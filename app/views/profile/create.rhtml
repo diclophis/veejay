@@ -48,10 +48,7 @@
                   <%=video.remote_video.artist_names.join(",")%>
                   <%=video.remote_video.formatted_duration%>
                 </p>
-                <%=hidden_field_tag("episode[videos][#{video.remote_video.remote_id}][title]", video.remote_video.title, {:id => nil})%>
-                <%=hidden_field_tag("episode[videos][#{video.remote_video.remote_id}][duration]", video.remote_video.duration, {:id => nil})%>
-                <%=hidden_field_tag("episode[videos][#{video.remote_video.remote_id}][artist_names]", video.remote_video.artist_names.to_json, {:id => nil})%>
-                <%=hidden_field_tag("episode[videos][#{video.remote_video.remote_id}][image_url]", video.remote_video.image_url, {:id => nil})%>
+                <%=hidden_field_tag("episode[videos][]",  video.remote_video.to_yaml, {:id => nil})%>
               </td>
             </tr>
           </table>

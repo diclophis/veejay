@@ -59,3 +59,4 @@ RemoteArtist
       <%=will_paginate(@recent_episodes)%>
     </li>
   </ul>
+              #RemoteVideo.new(attributes[:remote_id], attributes[:title], attributes[:duration], ActiveSupport::JSON.decode(attributes[:artist_names]), attributes[:image_url])

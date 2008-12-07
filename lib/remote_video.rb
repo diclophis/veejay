@@ -12,6 +12,10 @@
 class RemoteVideo
   attr_accessor :remote_id, :image_url, :title, :artist_names, :duration
 
+  #def to_json (options = {})
+  #  ActiveSupport::JSON.encode(instance_values, options)
+  #end
+
   def initialize (remote_id, title, duration, artist_names, image_url)
     self.remote_id = remote_id
     self.image_url = image_url

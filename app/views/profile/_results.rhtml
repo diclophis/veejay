@@ -21,10 +21,7 @@
                 <%=video.artist_names.join(",")%>
                 <%=video.formatted_duration%>
               </p>
-              <%=hidden_field_tag("episode[videos][#{video.remote_id}][title]", video.title, {:id => nil})%>
-              <%=hidden_field_tag("episode[videos][#{video.remote_id}][duration]", video.duration, {:id => nil})%>
-              <%=hidden_field_tag("episode[videos][#{video.remote_id}][artist_names]", video.artist_names.to_json, {:id => nil})%>
-              <%=hidden_field_tag("episode[videos][#{video.remote_id}][image_url]", video.image_url, {:id => nil})%>
+              <%=hidden_field_tag("episode[videos][]",  video.to_yaml, {:id => nil})%>
             </td>
           </tr>
         </table>
