@@ -32,29 +32,12 @@
     <% } %>
     <li>
       <%=label_tag(:videos)%>
-      <% if @videos.empty? then %>
+      <% if @episode.videos.empty? then %>
       <% else %>
       <% end %>
       <ul id="drop" class="videos">
-        <% @videos.each { |video| %>
-          <li class="video" id="video_<%=video.id%>">
-            <table>
-              <tr>
-                <td>
-                  <%=link_to(image_tag(video.images.first.url, {:width => "120"}), "#", {:title => video.title})%>
-                </td>
-                <td>
-                  <p>
-                    "<%=link_to(video.title, "#")%>"
-                    -
-                    <%=video.artists.first.name%>
-                    <%=video.formatted_duration%>
-                  </p>
-                  <%=hidden_field_tag("episode[video_ids][]", video.id, {:id => nil})%>
-                </td>
-              </tr>
-            </table>
-          </li>
+        <% @episode.videos.each { |video| %>
+          <%=render({:partial => "shared/remote_video", :locals => {:remote_video => video.remote_video}})%>
         <% } %>
       </ul>
     </li>

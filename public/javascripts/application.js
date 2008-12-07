@@ -65,6 +65,7 @@ function youtube_state_change (state) {
 }
 
 function youtube_error () {
+  alert('youtube error');
 }
 
 function onYouTubePlayerReady (player_id) {

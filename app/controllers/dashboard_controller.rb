@@ -33,22 +33,18 @@ class DashboardController < ApplicationController
   end
   def edit
     @episode = Episode.find_by_id(params[:id])
-    @videos = @episode.videos.collect { |video| video.yahoo_video }
+    #@videos = @episode.videos.collect { |video| video.yahoo_video }
     if request.post? then
       begin
         Person.transaction do
           @episode.videos.delete_all
           @episode.videos.clear
-          if params[:episode][:video_ids] then
-            params[:episode][:video_ids].each { |video_id|
-              video = Yahoo::Music::Video.item(video_id).first
+          if params[:episode][:videos] then
+            params[:episode][:videos].each { |video_as_yaml|
+              remote_video = YAML.load(video_as_yaml)
               @episode.videos << Video.create({
-                :yahoo_id => video.id,
-                :yahoo_title => video.title,
-                :yahoo_duration => video.duration,
-                :yahoo_video => video
+                :remote_video => remote_video
               })
-              @videos << video
             }
           end
           @episode.title = params[:episode][:title]
