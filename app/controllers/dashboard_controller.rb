@@ -63,6 +63,7 @@ class DashboardController < ApplicationController
     end
   end
   def share
+    flash.now[:success] = "wang chng"
     @episode = Episode.find(:first, :include => :person, :conditions => ["people.nickname = ? and slug = ?", params[:nickname], params[:slug]])
     unless @episode.person == current_person
       flash[:notice] = "This Is Not Your Video"

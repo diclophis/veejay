@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <meta name="viewport" content="width=1010" />
     <title>VeeJay.tv</title>
-    <%= stylesheet_link_tag "application" %>
+    <%=stylesheet_link_tag("application")%>
     <%=javascript_include_tag(:defaults)%>
     <%=javascript_include_tag("swfobject")%>
     <%=javascript_include_tag("roundies")%>
@@ -19,39 +19,47 @@
       <%=link_to(image_tag("/images/logo.png", {:id => :logo}), root_url)%>
     </div>
     <div id="header">
-      <div id="personal_header" class="edge" style="display: none;">
-        <ul>
-          <li>
-            <%=link_to(:login, login_url)%>
-          </li>
-          <li>
-            or
-          </li>
-          <li>
-            <%=link_to(:register, register_url)%>
-          </li>
-        </ul>
+      <div class="rounded">
+        <div id="personal_header" class="edge" style="display: none;">
+          <ul>
+            <li>
+              <%=link_to(:login, login_url)%>
+            </li>
+            <li>
+              or
+            </li>
+            <li>
+              <%=link_to(:register, register_url)%>
+            </li>
+          </ul>
+        </div>
+        <h1>
+          <%= yield :tagline %>
+        </h1>
+        <p>
+          <%= yield :instructions %>
+        </p>
       </div>
-      <h1>
-        <%= yield :tagline %>
-      </h1>
-      <p>
-        <%= yield :instructions %>
-      </p>
     </div>
     <div id="sidebar">
-      <%= yield :sidebar %>
+      <div class="rounded">
+        <%= yield :sidebar %>
+      </div>
     </div>
     <div id="content">
-      <%=render :partial => 'shared/flash' %>
-      <%=@content_for_layout %>
+      <div class="rounded">
+        <%=render :partial => 'shared/flash' %>
+        <%=@content_for_layout %>
+      </div>
     </div>
     <div id="footer">
-      <p>
-        <%=link_to(:faq, faq_url)%>
-        <%=link_to(:about, about_url)%>
-        &copy; 2008
-      </p>
+      <div class="rounded">
+        <p>
+          <%=link_to(:faq, faq_url)%>
+          <%=link_to(:about, about_url)%>
+          &copy; 2008
+        </p>
+      </div>
     </div>
     <!--
     <%= render :partial => "shared/uservoice" %>

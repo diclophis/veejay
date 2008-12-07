@@ -14,8 +14,10 @@
           </td>
           <td>
             <p>
-              <%=h(@person.biography)%>
-              <br/>
+              <% unless @person.biography.blank? %>
+                <%=h(@person.biography)%>
+                <br/>
+              <% end %>
               <%=link_to(:subscribe, subscribe_url(@person)) %>
             </p>
           </td>

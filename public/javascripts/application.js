@@ -308,6 +308,10 @@ Event.observe(window, 'load', function () {
     new Control.Tabs(tab_group);  
   });  
 
+  /*
+  DD_roundies.addRule("div.rounded", 20);
+  */
+
   DD_roundies.addRule("#logo", 20);
   DD_roundies.addRule("#header", 20);
   DD_roundies.addRule("#sidebar", 20);

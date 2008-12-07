@@ -5,43 +5,50 @@ a { text-decoration: none; outline: none; }
 a:active { outline: none; }
 form,div,li,h1,h2,h3,h4,h5,h6,p,a { font-family: sans-serif; margin: 0; padding: 0; }
 ul { list-style: none; margin: 0 0 0 0; padding: 0; }
-p, pre { font-size: 1.25em; margin: 0 0 0em 0; }
-h1 { font-size: 2.5em; }
+p, pre { font-size: 1.25em; margin: 0; }
+h1 { font-size: 2.5em; color: #031634; }
 h2 { font-size: 2em; margin: 0 0 0.5em 0; }
-h3 { font-size: 1.75em; margin: 0.5em 0 0.5em 0; }
-h4 { font-size: 1.5em; margin: 0.5em 0 0.5em 0; }
-img { border: 0; }
-label { margin: 1em 0 0.5em 0; clear: right; display: block; font-weight: bold; }
+h3 { font-size: 1.75em; margin: 0 0 0.5em 0; }
+h4 { font-size: 1.5em; margin: 0 0 0.5em 0; }
+img { border: 0; margin: 0; padding: 0; }
+label { margin: 0 0 0.5em 0; clear: right; display: block; font-weight: bold; }
 body { font-size: 62.5%; width: 101em; margin: 0; padding: 0.5em; -webkit-text-size-adjust: none; }
 input, textarea { width: 75%; }
 textarea.copypaste { width: 100%; }
 input[type="submit"] { width: 22%; }
 li input[type="submit"] { margin: 1em 0 -0.5em 0; }
+
 .emptyPlaceMarker { border: 1px dashed red; }
-.errorExplanation { background-color:#ffcccc; border: 0.25em solid red; vertical-align:top; padding: 1em; }
+
+.errorExplanation { background-color:#ffcccc; border: 0.25em solid red; vertical-align:top; padding: 1em; margin: 1em 0 1em 0; }
 .errorExplanation h2 { color: maroon; margin: 0; }
 .errorExplanation ul li { list-style: square; margin: 0 0 0 2em; }
+
+#flash { }
 .fieldWithErrors input[type="text"], .fieldWithErrors input[type="password"] { background-color: yellow; }
-.success { border: 0.25em solid green; background-color: #ccffcc; padding: 0.5em; margin-bottom: 2em; }
-.notice { border: 0.25em solid gold; background-color: yellow; padding: 0.5em; }
+.success .rounded { border: 0.25em solid green; background-color: #ccffcc; }
+.notice { border: 0.25em solid gold; background-color: yellow; }
 .spinning { background: white url(/images/spinner.gif) no-repeat top right; }
 
+.rounded { margin: 1.5em; padding: 0em; }
+
 #logo { width: 10em; height: 10em; float: left; }
-#header { margin: 0 0 0 1em; padding: 1em; width: 88em; float: left; height: 8em; }
+#header { background-color: #E8DDCB; margin: 0 0 1em 1em; padding: 0em; width: 87em; float: left; height: 10em; }
 #header p { margin: 1em; }
 #header ul { float: right; margin: 0 0 0 0; }
 #header li { display: inline; }
 
-#sidebar { margin: 1em 0 0 0; padding: 1em; width: 36em; float: left; }
-#pop { border: 2px solid #e0e0e0; margin: 1em 0 0 0; padding: 0em 0.5em 0.5em 0.5em; overflow: auto; }
-#content { margin: 1em 0 1em 1em; padding: 1em 2em 2em 2em; width: 58em; float: left; }
+#sidebar { background-color: #E8DDCB; margin: 1em; padding: 0em; width: 42em; float: left; }
+#content { background-color: #E8DDCB; margin: 1em; padding: 0em; width: 532px; float: left; }
+
+/*
 #player_container { width: 512px; height:322px; background-color: black; }
 #player { width: 512px; height:322px; }
+*/
 
-#xresults_container { height: 50em; overflow: scroll; }
-ul.grid { margin: 3.5em; }
+ul.grid { margin: 1em; }
 ul.grid li { display: inline; }
-ul.grid li img { margin: 2.25em; vertical-align: middle; }
+ul.grid li img { margin: 2.1em; vertical-align: middle; }
 
 ul.tabs { }
 ul.tabs li { display: inline; }
@@ -50,17 +57,19 @@ ul.tabs li a.active { -moz-border-radius: 6px; -webkit-border-radius: 6px; borde
 
 #drop { min-height: 7.5em; border: 1px dashed black; }
 
-#footer { padding: 0.5em; clear: both; width: 100em; }
-#footer p { text-align: right; margin: 0; }
+#footer { padding: 1em; clear: both; width: 96em; }
+#footer p { text-align: right; }
 /*
 a { color: #001155; }
 */
-a { color: blue; }
-body { background-color: #A9ADD1; }
-#header { background-color: #e0e0e0; }
-#sidebar { background-color: #FBFAE9; }
-#content { background-color: #CED1EB; }
-#footer { background-color: #ababab; }
+a { color: #033649; }
+body { background-color: #CDB380; }
+/*
+#header .rounded { background-color: #e0e0e0; }
+#sidebar .rounded { background-color: #FBFAE9; }
+#content .rounded { background-color: #CED1EB; }
+#footer .rounded { background-color: #ababab; }
+*/
 
 /*
 .pagination { }
@@ -115,3 +124,5 @@ td.remote_video_info {
 
 td.remote_video_controls {
 }
+
+table, tbody, tr, td { margin: 0; padding: 0; border-collapse: collapse; border: 0; }

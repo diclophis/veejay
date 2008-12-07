@@ -1,7 +1,5 @@
 #
 
-#include Yahoo::Music
-
 class ProfileController < ApplicationController
   before_filter :require_person, :only => [:create, :search]
   def index
