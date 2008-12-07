@@ -33,6 +33,10 @@ class DashboardController < ApplicationController
   end
   def edit
     @episode = Episode.find_by_id(params[:id])
+    unless @episode.person == current_person
+      flash[:notice] = "This Is Not Your Video"
+      return redirect_to(dashboard_url)
+    end
     #@videos = @episode.videos.collect { |video| video.yahoo_video }
     if request.post? then
       begin
@@ -60,6 +64,10 @@ class DashboardController < ApplicationController
   end
   def share
     @episode = Episode.find(:first, :include => :person, :conditions => ["people.nickname = ? and slug = ?", params[:nickname], params[:slug]])
+    unless @episode.person == current_person
+      flash[:notice] = "This Is Not Your Video"
+      return redirect_to(dashboard_url)
+    end
     @good_emails = @bad_emails = []
     if request.post? then
       begin

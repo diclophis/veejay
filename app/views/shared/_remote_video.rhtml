@@ -1,17 +1,24 @@
 <li class="video" id="video_<%=remote_video.remote_id%>">
+  <%=hidden_field_tag("episode[videos][]",  remote_video.to_yaml, {:id => nil})%>
   <table>
     <tr>
       <td>
         <%=link_to(image_tag(remote_video.image_url, {:width => "120"}), "#", {:title => remote_video.title})%>
       </td>
-      <td>
+      <td class="remote_video_info">
         <p>
           "<%=link_to(remote_video.title, preview_url(remote_video.remote_id), {:target => :_blank})%>"
-          -
+          <br/>
           <%=remote_video.artist_names.join(",")%>
+          <br/>
           <%=remote_video.formatted_duration%>
+          <br/>
+          <%=remote_video.remote_id.split("-").first%>
         </p>
-        <%=hidden_field_tag("episode[videos][]",  remote_video.to_yaml, {:id => nil})%>
+      </td>
+      <td class="remote_video_controls">
+        <%=link_to(image_tag("icon/plus_circle.png"), "#", {:class => "add_remote_video_button", :style => (@episode) ? "display: none;" : "" })%>
+        <%=link_to(image_tag("icon/cross_circle.png"), "#", {:class => "remove_remote_video_button", :style => (@episode) ? "" : "display: none;" })%>
       </td>
     </tr>
   </table>
