@@ -30,8 +30,9 @@ class ProfileController < ApplicationController
       begin
         Person.transaction do
           if params[:episode][:videos] then
-            params[:episode][:videos].each { |remote_id, attributes|
-              remote_video = RemoteVideo.new(remote_id, attributes[:title], attributes[:duration], ActiveSupport::JSON.decode(attributes[:artist_names]), attributes[:image_url])
+            params[:episode][:videos].each { |attributes_in_json|
+
+              remote_video = RemoteVideo.new(attributes[:remote_id], attributes[:title], attributes[:duration], ActiveSupport::JSON.decode(attributes[:artist_names]), attributes[:image_url])
               @episode.videos << Video.create({
                 :remote_video => remote_video
               })

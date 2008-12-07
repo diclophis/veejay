@@ -1,10 +1,12 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
-var sc;
+var current_video = 0;
+var videos;
 var list;
 var youtube_remote_id;
 
-play_video = function (remote_id) {
+play_video = function () {
+  remote_id = videos[current_video];
   chunks = remote_id.split("-");
   type = chunks[0];
   remote_id = chunks[1];
@@ -37,9 +39,10 @@ play_video = function (remote_id) {
       var flashvars = {};
       //swfobject.embedSWF("http://www.youtube.com/v/" + remote_id + "&enablejsapi=1&playerapiid=the_player", "player", "512", "332", "9.0.0", false, flashvars, params, attributes);
       youtube_remote_id = remote_id;
-      swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&playerapiid=the_player", "player", "512", "332", "9.0.0", false, flashvars, params, attributes);
+      swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&playerapiid=the_player&rel=0", "player", "512", "332", "9.0.0", false, flashvars, params, attributes);
     break;
   }
+  current_video++;
 }
 
 function youtube_state_change (state) {
@@ -54,6 +57,9 @@ function youtube_state_change (state) {
   //When the SWF is first loaded, it will broadcast an unstarted (-1) event.
   //When the video is cued and ready to play, it will broadcast a video cued event (5).
   //alert("Player's new state: " + state);
+  if (state == 0) {
+    play_video();
+  }
 }
 
 function youtube_error () {
@@ -75,6 +81,7 @@ mtv_playhead_update = function () {
 
 mtv_media_ended = function () {
   swfobject.removeSWF("the_player");
+  play_video();
 }
 
 mtv_read = function () {
@@ -119,6 +126,7 @@ yahoo_event_handler = function( pType, pItem ) {
     break;
     case "done":            // thrown when all videos have played
       swfobject.removeSWF("the_player");
+      play_video();
     break;
     case "itemEnd":         // thrown when a video has played for its total duration
     case "streamPlay":      // thrown anytime a video begins to play
@@ -173,16 +181,7 @@ Event.observe(window, 'load', function () {
 
   if ($('player_container')) {
     videos = $$('li.video').collect(function(video) { return video.id.replace("video_", ""); });
-    /*
-    new Ajax.Updater('player_container', '/play/' + videos.first(), {
-      evalScripts : true,
-      method : 'get',
-      onComplete : function () {
-      }
-    });
-    */
-    //play_video(videos.first());
-    play_video(videos[0]);
+    play_video(videos[current_video]);
   }
   /*
   if ($('uvp_fop_container')) {
@@ -266,4 +265,11 @@ Event.observe(window, 'load', function () {
   $$('.tabs').each(function(tab_group){  
     new Control.Tabs(tab_group);  
   });  
+
+  DD_roundies.addRule("#logo", 20);
+  DD_roundies.addRule("#header", 20);
+  DD_roundies.addRule("#sidebar", 20);
+  DD_roundies.addRule("#content", 20);
+  DD_roundies.addRule("#footer", 5);
+
 });
