@@ -3,6 +3,7 @@
 class Episode < ActiveRecord::Base
   belongs_to :person
   has_many :videos
+  has_ratings
   validates_presence_of :title
   validates_length_of :title, :maximum => 42
   validates_uniqueness_of :title, :scope => :person_id

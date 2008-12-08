@@ -41,15 +41,15 @@
         </p>
       </div>
     </div>
-    <div id="sidebar">
-      <div class="rounded">
-        <%= yield :sidebar %>
-      </div>
-    </div>
     <div id="content">
       <div class="rounded">
         <%=render :partial => 'shared/flash' %>
         <%=@content_for_layout %>
+      </div>
+    </div>
+    <div id="sidebar">
+      <div class="rounded">
+        <%= yield :sidebar %>
       </div>
     </div>
     <div id="footer">

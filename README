@@ -60,3 +60,57 @@ RemoteArtist
     </li>
   </ul>
               #RemoteVideo.new(attributes[:remote_id], attributes[:title], attributes[:duration], ActiveSupport::JSON.decode(attributes[:artist_names]), attributes[:image_url])
+
+@rating_value = RatingValue['poor']
+@poor_rating = create_rating(:value => @rating_value)
+@second_poor_rating = create_rating(:value => @rating_value)
+
+      exists  app/models/
+      exists  app/controllers/
+      exists  app/controllers/
+      exists  app/helpers/
+      create  app/views/messions
+      create  app/views/muser_mailer
+      exists  app/controllers/
+      exists  app/helpers/
+      create  app/views/musers
+      exists  config/initializers
+      create  test/functional/
+      exists  test/functional/
+      exists  test/unit/
+      exists  test/fixtures/
+      create  app/models/muser.rb
+      create  app/models/muser_mailer.rb
+      create  app/models/muser_observer.rb
+      create  app/controllers/messions_controller.rb
+      create  app/controllers/musers_controller.rb
+      create  lib/authenticated_system.rb
+      create  lib/authenticated_test_helper.rb
+      create  config/initializers/site_keys.rb
+      create  test/functional/messions_controller_test.rb
+      create  test/functional/musers_controller_test.rb
+      create  test/unit/muser_test.rb
+      create  test/unit/muser_mailer_test.rb
+      create  test/fixtures/musers.yml
+      create  app/helpers/messions_helper.rb
+      create  app/helpers/musers_helper.rb
+      create  app/views/messions/new.html.erb
+      create  app/views/musers/new.html.erb
+      create  app/views/musers/_muser_bar.html.erb
+      create  app/views/muser_mailer/activation.erb
+      create  app/views/muser_mailer/signup_notification.erb
+      exists  db/migrate
+      create  db/migrate/20081207211816_create_musers.rb
+
+
+Once finished, don't forget to:
+
+- Add an observer to config/environment.rb
+config.active_record.observers = :muser_observer
+- Add routes to these resources. In config/routes.rb, insert routes like:
+map.signup '/signup', :controller => 'musers', :action => 'new'
+map.login  '/login',  :controller => 'messions', :action => 'new'
+map.logout '/logout', :controller => 'messions', :action => 'destroy'
+map.activate '/activate/:activation_code', :controller => 'musers', :action => 'activate', :activation_code => nil
+
+public set sharing function

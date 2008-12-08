@@ -11,6 +11,26 @@ class PeopleController < ApplicationController
       cookies[:nickname] = {:expires => 1000.hours.from_now, :value => current_person.nickname}
       return redirect_to(remembered_params)
     elsif request.post? then
+      logout_keeping_session!
+      person = Person.authenticate(params[:person][:nickname], params[:person][:password])
+      if person
+        # Protects against session fixation attacks, causes request forgery
+        # protection if user resubmits an earlier form using back
+        # button. Uncomment if you understand the tradeoffs.
+        # reset_session
+        self.current_person = person
+        new_cookie_flag = (params[:remember_me] == "1")
+        handle_remember_cookie! new_cookie_flag
+        redirect_back_or_default(dashboard_url)
+        flash[:success] = "Logged in successfully"
+      else
+        flash[:error] = "There was an error"
+        #note_failed_signin
+        #@login       = params[:login]
+        #@remember_me = params[:remember_me]
+        #render :action => 'new'
+      end
+=begin
       begin
         raise "is unknown" unless Person.exists?(:nickname => pending_person.nickname)
         response = openid_consumer.begin(Person.find_by_nickname(pending_person.nickname).normalize_identity_url)
@@ -21,6 +41,7 @@ class PeopleController < ApplicationController
         logger.debug(problem.backtrace.join("\n"))
         pending_person.errors.add(:nickname, problem)
       end
+=end
     else
       pending_person.nickname = cookies[:nickname]
     end
@@ -41,6 +62,19 @@ class PeopleController < ApplicationController
         return redirect_to(remembered_params)
       end
     elsif request.post? then
+      logout_keeping_session!
+      @person = Person.new(params[:person])
+logger.debug(@person.inspect)
+      @person.register! if @person && @person.valid?
+      success = @person && @person.valid?
+      if success && @person.errors.empty?
+        redirect_back_or_default(root_url)
+        flash[:success] = "Thanks for signing up!  We're sending you an email with your activation code."
+      #else
+      #  flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
+      #  render :action => 'new'
+      end
+=begin
       if pending_person.valid? then
         begin
           response = openid_consumer.begin(pending_person.identity_url)
@@ -55,6 +89,7 @@ class PeopleController < ApplicationController
           pending_person.errors.add(:identity_url, problem)
         end
       end
+=end
     else
       pending_person
       pending_person.identity_url = "Click the OpenID button to pick your service"
@@ -62,6 +97,23 @@ class PeopleController < ApplicationController
       pending_person.email = session[:email]
     end
   end
+  def activate
+    logout_keeping_session!
+    person = Person.find_by_activation_code(params[:activation_code]) unless params[:activation_code].blank?
+    case
+      when (!params[:activation_code].blank?) && person && !person.active?
+        person.activate!
+        flash[:success] = "Signup complete! Please sign in to continue."
+        redirect_to(login_url)
+      when params[:activation_code].blank?
+        flash[:error] = "The activation code was missing.  Please follow the URL from your email."
+        redirect_back_or_default(root_url)
+    else 
+      flash[:error]  = "We couldn't find a person with that activation code -- check your email? Or maybe you've already activated -- try signing in."
+      redirect_back_or_default(root_url)
+    end
+  end
+=begin
   def activate
     begin
       person_to_activate = Person.find_by_activation_code(params[:id])
@@ -73,6 +125,7 @@ class PeopleController < ApplicationController
       return redirect_to(root_url)
     end
   end
+=end
   protected
     def pending_person
       unless @person
@@ -105,3 +158,118 @@ class PeopleController < ApplicationController
       @openid_consumer ||= OpenID::Consumer.new(session, OpenID::Store::Filesystem.new("#{RAILS_ROOT}/tmp/openid"))
     end
 end
+
+=begin
+  # Be sure to include AuthenticationSystem in Application Controller instead
+  include AuthenticatedSystem
+
+  # render new.rhtml
+  def new
+  end
+
+  def create
+    logout_keeping_session!
+    muser = Muser.authenticate(params[:login], params[:password])
+    if muser
+      # Protects against session fixation attacks, causes request forgery
+      # protection if user resubmits an earlier form using back
+      # button. Uncomment if you understand the tradeoffs.
+      # reset_session
+      self.current_muser = muser
+      new_cookie_flag = (params[:remember_me] == "1")
+      handle_remember_cookie! new_cookie_flag
+      redirect_back_or_default('/')
+      flash[:notice] = "Logged in successfully"
+    else
+      note_failed_signin
+      @login       = params[:login]
+      @remember_me = params[:remember_me]
+      render :action => 'new'
+    end
+  end
+
+  def destroy
+    logout_killing_session!
+    flash[:notice] = "You have been logged out."
+    redirect_back_or_default('/')
+  end
+
+protected
+  # Track failed login attempts
+  def note_failed_signin
+    flash[:error] = "Couldn't log you in as '#{params[:login]}'"
+    logger.warn "Failed login for '#{params[:login]}' from #{request.remote_ip} at #{Time.now.utc}"
+  end
+=end
+
+=begin
+  # Protect these actions behind an admin login
+  # before_filter :admin_required, :only => [:suspend, :unsuspend, :destroy, :purge]
+  before_filter :find_cruser, :only => [:suspend, :unsuspend, :destroy, :purge]
+  
+
+  # render new.rhtml
+  def new
+    @cruser = Cruser.new
+  end
+ 
+  def create
+    logout_keeping_session!
+    @cruser = Cruser.new(params[:cruser])
+    @cruser.register! if @cruser && @cruser.valid?
+    success = @cruser && @cruser.valid?
+    if success && @cruser.errors.empty?
+      redirect_back_or_default('/')
+      flash[:notice] = "Thanks for signing up!  We're sending you an email with your activation code."
+    else
+      flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
+      render :action => 'new'
+    end
+  end
+
+  def activate
+    logout_keeping_session!
+    cruser = Cruser.find_by_activation_code(params[:activation_code]) unless params[:activation_code].blank?
+    case
+    when (!params[:activation_code].blank?) && cruser && !cruser.active?
+      cruser.activate!
+      flash[:notice] = "Signup complete! Please sign in to continue."
+      redirect_to '/login'
+    when params[:activation_code].blank?
+      flash[:error] = "The activation code was missing.  Please follow the URL from your email."
+      redirect_back_or_default('/')
+    else 
+      flash[:error]  = "We couldn't find a cruser with that activation code -- check your email? Or maybe you've already activated -- try signing in."
+      redirect_back_or_default('/')
+    end
+  end
+
+  def suspend
+    @cruser.suspend! 
+    redirect_to crusers_path
+  end
+
+  def unsuspend
+    @cruser.unsuspend! 
+    redirect_to crusers_path
+  end
+
+  def destroy
+    @cruser.delete!
+    redirect_to crusers_path
+  end
+
+  def purge
+    @cruser.destroy
+    redirect_to crusers_path
+  end
+  
+  # There's no page here to update or destroy a cruser.  If you add those, be
+  # smart -- make sure you check that the visitor is authorized to do so, that they
+  # supply their old password along with a new one to update it, etc.
+
+protected
+  def find_cruser
+    @cruser = Cruser.find(params[:id])
+  end
+=end

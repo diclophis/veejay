@@ -2,16 +2,19 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
+  include AuthenticatedSystem
+
   helper :all # include all helpers, all the time
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => 'a047736fbed40c89c719438ff6566708'
   
+  #security_components :security_policy, :access_control => [:login_required], :authentication => [:by_cookie_token, :by_password]
   # See ActionController::Base for details 
   # Uncomment this to filter the contents of submitted sensitive data parameters
   # from your application log (in this case, all fields with names like "password"). 
-  # filter_parameter_logging :password
+  filter_parameter_logging :password
 
   MOBILE_USER_AGENTS = 'palm|palmos|palmsource|iphone|blackberry|nokia|phone|midp|mobi|pda|' +
                        'wap|java|nokia|hand|symbian|chtml|wml|ericsson|lg|audiovox|motorola|' +
@@ -21,6 +24,15 @@ class ApplicationController < ActionController::Base
                        'xiino|mot-v|mot-e|portalmmm|sagem|sie-s|sie-m|android|ipod'
 
   protected
+    helper_method :current_page
+    def current_page
+      params[:page].to_i < 1 ? 1 : params[:page].to_i
+    end
+    helper_method :current_per_page
+    def current_per_page
+      10
+    end
+=begin
     def remember_params
       session[:remembered_params] = params
     end
@@ -46,14 +58,6 @@ class ApplicationController < ActionController::Base
         false
       end
     end
-    helper_method :current_page
-    def current_page
-      params[:page].to_i < 1 ? 1 : params[:page].to_i
-    end
-    helper_method :current_per_page
-    def current_per_page
-      10
-    end
     helper_method :recent_people
     def recent_people
       Person.paginate(
@@ -68,4 +72,5 @@ class ApplicationController < ActionController::Base
     def is_mobile?
       request.user_agent.to_s.downcase =~ Regexp.new(MOBILE_USER_AGENTS)
     end
-end
+=end
+    end

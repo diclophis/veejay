@@ -26,8 +26,9 @@ Rails::Initializer.run do |config|
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "aws-s3", :lib => "aws/s3"
   #config.gem "ruby-openid"
-  config.gem "yahoo-music"
-  #config.gem "mtv-music"
+  #config.gem "yahoo-music"
+  #config.gem "rubyist-aasm"
+  config.gem "rubyist-aasm", :lib => "aasm", :source => "http://gems.github.com"
 
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.
@@ -64,9 +65,12 @@ Rails::Initializer.run do |config|
   # This is necessary if your schema can't be completely dumped by the schema dumper,
   # like if you have constraints or database-specific column types
   # config.active_record.schema_format = :sql
+require 'validates_as_uri'
+require 'validates_as_email'
 
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector
+  config.active_record.observers = :person_observer
 
   config.action_mailer.default_url_options = { :host => "veejay.tv" }
   config.action_controller.page_cache_directory = RAILS_ROOT + "/public/cache"
@@ -103,6 +107,7 @@ ActiveRecord::Base.store_full_sti_class = true
 Fast::Cache.enable!
 TagList.delimiter = " "
 
+=begin
 class Yahoo::Music::Video
   yaml_as "tag:ruby.yaml.org,2002:Yahoo::Music::Video"
 end
@@ -112,3 +117,6 @@ end
 class Yahoo::Music::Image
   yaml_as "tag:ruby.yaml.org,2002:Yahoo::Music::Image"
 end
+=end
+
+

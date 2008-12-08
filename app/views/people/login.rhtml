@@ -1,20 +1,55 @@
 <% content_for :tagline do %>
   <%=link_to(:VeeJay, root_url)%>
 <% end %>
-<% form_tag do %>
-  <%=error_messages_for(:person)%>
-  <ul>
-  <% fields_for(:person) { |person| %>
-    <li>
-      <%=person.label(:nickname)%>
-      <%=person.text_field(:nickname)%>
-    </li>
-  <% } %>
-  <li>
-    <%=submit_tag("Login")%>
-    or
-    <%=link_to(:return, root_url)%>
-    or
-    <%=link_to(:register, register_url)%>
+<ul id="login_tabs" class="tabs">
+  <li class="tab">
+    <a href="#basic">Basic</a>
   </li>
-<% end %>
+  <li class="tab">
+    <a href="#openid">OpenID</a>
+  </li>
+</ul> 
+<div id="basic">
+  <% form_tag do %>
+    <%=error_messages_for(:person)%>
+    <ul>
+      <% fields_for(:person) { |person| %>
+        <li>
+          <%=person.label(:nickname)%>
+          <%=person.text_field(:nickname)%>
+        </li>
+        <li>
+          <%=person.label(:password)%>
+          <%=person.password_field(:password)%>
+        </li>
+      <% } %>
+      <li>
+        <%=submit_tag("Login")%>
+        or
+        <%=link_to(:return, root_url)%>
+        or
+        <%=link_to(:register, register_url)%>
+      </li>
+    </ul>
+  <% end %>
+</div>
+<div id="openid">
+  <% form_tag do %>
+    <%=error_messages_for(:person)%>
+    <ul>
+      <% fields_for(:person) { |person| %>
+        <li>
+          <%=person.label(:nickname)%>
+          <%=person.text_field(:nickname)%>
+        </li>
+      <% } %>
+      <li>
+        <%=submit_tag("Login")%>
+        or
+        <%=link_to(:return, root_url)%>
+        or
+        <%=link_to(:register, register_url)%>
+      </li>
+    </ul>
+  <% end %>
+</div>

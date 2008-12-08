@@ -5,11 +5,20 @@ var videos;
 var list;
 var youtube_remote_id;
 
+attach_to_preview_video_buttons = function () {
+  $$('a.preview_video').each(function(preview_video_button) {
+    Event.observe(preview_video_button, 'click', function (clicked) {
+      Event.stop(clicked);
+      window.open(this.href,"video_preview","height=420,width=572,location=no,menubar=no,resizable=no,scrollbars=no,status=yes,toolbar=no", false);
+    });
+  });
+}
+
 attach_to_add_remote_video_buttons = function () {
   $$('a.add_remote_video_button').each(function(add_remote_video_button) {
     Event.observe(add_remote_video_button, 'click', function (clicked) {
       Event.stop(clicked);
-      remote_video = $(this.parentNode.parentNode.parentNode.parentNode.parentNode.id).remove();
+      remote_video = $(this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id).remove();
       remote_video.getElementsBySelector('a.add_remote_video_button').invoke('toggle');
       remote_video.getElementsBySelector('a.remove_remote_video_button').invoke('toggle');
       attach_to_remove_remote_video_buttons();
@@ -24,7 +33,7 @@ attach_to_remove_remote_video_buttons = function () {
   $$('a.remove_remote_video_button').each(function(remove_remote_video_button) {
     Event.observe(remove_remote_video_button, 'click', function (clicked) {
       Event.stop(clicked);
-      remote_video = $(this.parentNode.parentNode.parentNode.parentNode.parentNode.id).remove();
+      remote_video = $(this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id).remove();
       Sortable.destroy('drop');
       Sortable.create('drop',{containment: ['results', 'drop'], dropOnEmpty: true, constraint: false});
     });
@@ -219,7 +228,7 @@ Event.observe(window, 'load', function () {
         play_video();
       });
     });
-    videos = $$('li.video').collect(function(video) { return video.id.replace("video_", ""); });
+    videos = $$('.video').collect(function(video) { return video.id.replace("video_", ""); });
     play_video();
   }
   /*
@@ -260,6 +269,7 @@ Event.observe(window, 'load', function () {
       new Ajax.Updater('results_container', search_form.action, {
         parameters : Form.serialize(search_form),
         onComplete : function () {
+          attach_to_preview_video_buttons();
           attach_to_add_remote_video_buttons();
           attach_to_remove_remote_video_buttons();
           $('artist_or_song').enable();
@@ -281,6 +291,7 @@ Event.observe(window, 'load', function () {
       $('search_button').disable();
       $('artist_or_song').addClassName('spinning');
     });
+    attach_to_preview_video_buttons();
     attach_to_remove_remote_video_buttons();
     Sortable.create('drop', {containment: ['results', 'drop'], dropOnEmpty:true, constraint:false});
   });
