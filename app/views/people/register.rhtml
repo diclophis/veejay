@@ -19,10 +19,13 @@
 <% end %>
 <ul id="register_tabs" class="tabs">
   <li class="tab">
-    <a href="#basic">Basic</a>
+    <%=link_to(image_tag("icon/home_plus.png") + "&nbsp;VeeJay", register_url({:anchor => :basic}))%>
+  </li>
+  <li>
+    <%=link_to(image_tag("facebook.gif") + "&nbsp;Facebook", register_url({:anchor => :facebook}))%>
   </li>
   <li class="tab">
-    <a href="#openid">OpenID</a>
+    <%=link_to(image_tag("openid.gif") + "&nbsp;OpenID", register_url({:anchor => :openid}))%>
   </li>
 </ul> 
 <div id="basic">
@@ -56,7 +59,10 @@
       </li>
     </ul>
   <% end %>
-</div>  
+</div>
+<div id="facebook">
+  <iframe src="/facebook/test.html"></iframe>
+</div>
 <div id="openid">
   <% form_tag({:anchor => "openid"}) do %>
     <%=error_messages_for(:person)%>
