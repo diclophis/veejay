@@ -53,33 +53,28 @@ class PeopleController < ApplicationController
         return redirect_to(remembered_params)
       end
     elsif request.post? then
-      logout_keeping_session!
-      #@person = Person.new(params[:person])
-      basic_person.register! if basic_person && basic_person.valid?
-      success = basic_person && basic_person.valid?
-      if success && basic_person.errors.empty?
-        flash[:success] = "Thanks for signing up!  We're sending you an email with your activation code."
-        redirect_back_or_default(root_url)
-      #else
-      #  flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
-      #  render :action => 'new'
-      end
-=begin
-      if pending_person.valid? then
-        begin
-          response = openid_consumer.begin(pending_person.identity_url)
-          #if Person.exists?(:identity_url => pending_person.normalize_identity_url) then
-          #  redirect_url = response.redirect_url(root_url, url_for(:login))
-          #else
+      if params[:person] then
+        if pending_person.valid? then
+          begin
+            response = openid_consumer.begin(pending_person.identity_url)
             remember_pending_person
             redirect_url = response.redirect_url(root_url, url_for(:register))
-          #end
-          return redirect_to redirect_url
-        rescue => problem
-          pending_person.errors.add(:identity_url, problem)
+            return redirect_to redirect_url
+          rescue => problem
+            pending_person.errors.add(:identity_url, problem)
+          end
+        end
+      else
+        logout_keeping_session!
+        basic_person.register! if basic_person && basic_person.valid?
+        success = basic_person && basic_person.valid?
+        if success && basic_person.errors.empty?
+          flash[:success] = "Thanks for signing up!  We're sending you an email with your activation code."
+          redirect_back_or_default(root_url)
+        else
+          basic_person.password = basic_person.password_confirmation = nil
         end
       end
-=end
     else
       basic_person
       basic_person.nickname = session[:nickname]
@@ -128,6 +123,8 @@ class PeopleController < ApplicationController
           @basic_person.identity_url = params[:basic_person][:identity_url]
           @basic_person.nickname = params[:basic_person][:nickname]
           @basic_person.email = params[:basic_person][:email]
+          @basic_person.password = params[:basic_person][:password]
+          @basic_person.password_confirmation = params[:basic_person][:password_confirmation]
           @basic_person.biography = ""
         end
       end

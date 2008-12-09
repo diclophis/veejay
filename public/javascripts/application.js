@@ -18,7 +18,7 @@ attach_to_add_remote_video_buttons = function () {
   $$('a.add_remote_video_button').each(function(add_remote_video_button) {
     Event.observe(add_remote_video_button, 'click', function (clicked) {
       Event.stop(clicked);
-      remote_video = $(this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id).remove();
+      remote_video = $(this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id).remove();
       remote_video.getElementsBySelector('a.add_remote_video_button').invoke('toggle');
       remote_video.getElementsBySelector('a.remove_remote_video_button').invoke('toggle');
       attach_to_remove_remote_video_buttons();

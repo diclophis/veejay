@@ -44,19 +44,17 @@ li input[type="submit"] { margin: 1em 0 -0.5em 0; }
 #content { background-color: #E8DDCB; margin: 1em; padding: 0em; width: 542px; float: left; }
 #drop { min-height: 7.5em; border: 1px dashed black; padding: 0.5em 1em 0 1em; }
 
-/*
 #player_container { width: 512px; height:322px; background-color: black; }
 #player { width: 512px; height:322px; }
-*/
 
 ul.grid { margin: 1em; }
 ul.grid li { display: inline; }
 ul.grid li img { margin: 2.1em; vertical-align: middle; }
 
-ul.tabs { margin: 1em 0 1em 0; }
+ul.tabs { margin: 1em 0 2em 0; }
 ul.tabs li { display: inline; }
-ul.tabs li a { text-decoration: none; padding: 0.8em; border: 1px solid #E8DDCB; }
-ul.tabs li a.active { /* -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; */ background: white; border: 1px solid #CAD8F3; padding: 0.8em; }
+ul.tabs li a { text-decoration: none; padding: 0.6em; border: 1px solid #E8DDCB; }
+ul.tabs li a.active { /* -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; */ background: white; border: 1px solid #CAD8F3; padding: 0.6em; }
 ul.tabs li img { margin: 0px 0 0px 0; padding: 0 0 0 0; vertical-align: middle; }
 
 #footer { padding: 1em; clear: both; width: 96em; }

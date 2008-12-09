@@ -40,6 +40,8 @@ ActionController::Routing::Routes.draw do |map|
 
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
   map.root :controller => "welcome"
+  map.facebook "/facebook", :controller => "facebook", :action => "index"
+  map.facebook_debug "/facebook/debug", :controller => "facebook", :action => "debug"
   map.page "/page/:page", :controller => "welcome", :action => "index"
   map.redirect "/redirect/:permalink", :controller => "welcome", :action => "redirect"
 

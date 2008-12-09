@@ -17,7 +17,6 @@
     <%=link_to("Learn More", "http://openid.net/", {:target => :_blank})%>
   </p>
 <% end %>
-<% @person.password = @person.password_confirmation = nil %>
 <ul id="register_tabs" class="tabs">
   <li class="tab">
     <a href="#basic">Basic</a>
@@ -27,10 +26,10 @@
   </li>
 </ul> 
 <div id="basic">
-  <% form_tag(:register) do %>
-    <%=error_messages_for(:person)%>
+  <% form_tag({:anchor => "basic"}) do %>
+    <%=error_messages_for(:basic_person, :header_message => "Fail")%>
     <ul>
-      <% fields_for(:person) { |person| %>
+       <% fields_for(:basic_person) { |person| %>
         <li>
           <%=person.label(:email)%>
           <%=person.text_field(:email)%>
@@ -59,7 +58,7 @@
   <% end %>
 </div>  
 <div id="openid">
-  <% form_tag(:register) do %>
+  <% form_tag({:anchor => "openid"}) do %>
     <%=error_messages_for(:person)%>
     <ul>
       <% fields_for(:person) { |person| %>
