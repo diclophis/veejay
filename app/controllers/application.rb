@@ -32,6 +32,21 @@ class ApplicationController < ActionController::Base
     def current_per_page
       10
     end
+    def authenticate (person)
+      #cookies[:personal_header] = {:expires => 1000.hours.from_now, :value => render_to_string({:partial => "shared/personal_header"})}
+      #cookies[:nickname] = {:expires => 1000.hours.from_now, :value => current_person.nickname}
+      #return redirect_to(remembered_params)
+          # Protects against session fixation attacks, causes request forgery
+          # protection if user resubmits an earlier form using back
+          # button. Uncomment if you understand the tradeoffs.
+          # reset_session
+      self.current_person = person
+      @new_cookie_flag = (params[:remember_me] == "1")
+      handle_remember_cookie!(@new_cookie_flag)
+      flash[:success] = "Logged in successfully"
+      cookies[:personal_header] = {:expires => 24.hours.from_now, :value => render_to_string({:partial => "shared/personal_header"})}
+      redirect_back_or_default(dashboard_url)
+    end
 =begin
     def remember_params
       session[:remembered_params] = params
@@ -43,9 +58,6 @@ class ApplicationController < ActionController::Base
     end
     def require_person
       flash[:notice] = "Please login first..." and remember_params and redirect_to login_url unless current_person
-    end
-    def authenticate (person)
-      session[:person_id] = person.id
     end
     def forget
       session.delete(:person_id)

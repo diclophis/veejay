@@ -2,47 +2,38 @@
 
 class PeopleController < ApplicationController
   def login
+    @new_cookie_flag = false
     if params["openid.mode"] then
       response = openid_consumer.complete(openid_params, url_for(:login))
       pending_person.errors.add(:nickname, "OpenID Failure, please retry") and return render unless response.status == :success
       flash[:notice] = "Please register first..." and return redirect_to({:action => :register, :person => pending_person.attributes}) unless Person.exists?(:nickname => pending_person.nickname)
-      authenticate(Person.find_by_nickname(pending_person.nickname))
-      cookies[:personal_header] = {:expires => 1000.hours.from_now, :value => render_to_string({:partial => "shared/personal_header"})}
-      cookies[:nickname] = {:expires => 1000.hours.from_now, :value => current_person.nickname}
-      return redirect_to(remembered_params)
+      return authenticate(Person.find_by_nickname(pending_person.nickname))
     elsif request.post? then
-      logout_keeping_session!
-      person = Person.authenticate(params[:person][:nickname], params[:person][:password])
-      if person
-        # Protects against session fixation attacks, causes request forgery
-        # protection if user resubmits an earlier form using back
-        # button. Uncomment if you understand the tradeoffs.
-        # reset_session
-        self.current_person = person
-        new_cookie_flag = (params[:remember_me] == "1")
-        handle_remember_cookie! new_cookie_flag
-        redirect_back_or_default(dashboard_url)
-        flash[:success] = "Logged in successfully"
+      if params[:person] then
+        begin
+          raise "is unknown" unless Person.exists?(:nickname => pending_person.nickname)
+          person = Person.find_by_nickname(pending_person.nickname)
+          raise "does not have an associated identity url" if person.identity_url.blank? 
+          response = openid_consumer.begin(person.normalize_identity_url)
+          remember_pending_person
+          redirect_url = response.redirect_url(root_url, url_for(:login))
+          return redirect_to redirect_url
+        rescue => problem
+          logger.debug(problem.backtrace.join("\n"))
+          pending_person.errors.add(:nickname, problem)
+        end
       else
-        flash[:error] = "There was an error"
-        #note_failed_signin
-        #@login       = params[:login]
-        #@remember_me = params[:remember_me]
-        #render :action => 'new'
+        logout_keeping_session!
+        person = Person.authenticate(params[:basic_person][:nickname], params[:basic_person][:password])
+        if person
+          return authenticate(person)
+        else
+          logger.warn "Failed login for '#{params.inspect}' from #{request.remote_ip} at #{Time.now.utc}"
+          basic_person.errors.add(:nickname, "is invalid")
+        end
       end
-=begin
-      begin
-        raise "is unknown" unless Person.exists?(:nickname => pending_person.nickname)
-        response = openid_consumer.begin(Person.find_by_nickname(pending_person.nickname).normalize_identity_url)
-        remember_pending_person
-        redirect_url = response.redirect_url(root_url, url_for(:login))
-        return redirect_to redirect_url
-      rescue => problem
-        logger.debug(problem.backtrace.join("\n"))
-        pending_person.errors.add(:nickname, problem)
-      end
-=end
     else
+      basic_person.nickname = cookies[:nickname]
       pending_person.nickname = cookies[:nickname]
     end
   end
@@ -63,13 +54,12 @@ class PeopleController < ApplicationController
       end
     elsif request.post? then
       logout_keeping_session!
-      @person = Person.new(params[:person])
-logger.debug(@person.inspect)
-      @person.register! if @person && @person.valid?
-      success = @person && @person.valid?
-      if success && @person.errors.empty?
-        redirect_back_or_default(root_url)
+      #@person = Person.new(params[:person])
+      basic_person.register! if basic_person && basic_person.valid?
+      success = basic_person && basic_person.valid?
+      if success && basic_person.errors.empty?
         flash[:success] = "Thanks for signing up!  We're sending you an email with your activation code."
+        redirect_back_or_default(root_url)
       #else
       #  flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
       #  render :action => 'new'
@@ -91,6 +81,10 @@ logger.debug(@person.inspect)
       end
 =end
     else
+      basic_person
+      basic_person.nickname = session[:nickname]
+      basic_person.email = session[:email]
+
       pending_person
       pending_person.identity_url = "Click the OpenID button to pick your service"
       pending_person.nickname = session[:nickname]
@@ -99,10 +93,10 @@ logger.debug(@person.inspect)
   end
   def activate
     logout_keeping_session!
-    person = Person.find_by_activation_code(params[:activation_code]) unless params[:activation_code].blank?
+    @person = Person.find_by_activation_code(params[:activation_code]) unless params[:activation_code].blank?
     case
-      when (!params[:activation_code].blank?) && person && !person.active?
-        person.activate!
+      when (!params[:activation_code].blank?) && @person && !@person.active?
+        @person.activate!
         flash[:success] = "Signup complete! Please sign in to continue."
         redirect_to(login_url)
       when params[:activation_code].blank?
@@ -127,6 +121,18 @@ logger.debug(@person.inspect)
   end
 =end
   protected
+    def basic_person
+      unless @basic_person
+        @basic_person = remembered_pending_person
+        if params[:basic_person] then
+          @basic_person.identity_url = params[:basic_person][:identity_url]
+          @basic_person.nickname = params[:basic_person][:nickname]
+          @basic_person.email = params[:basic_person][:email]
+          @basic_person.biography = ""
+        end
+      end
+      @basic_person
+    end
     def pending_person
       unless @person
         @person = remembered_pending_person

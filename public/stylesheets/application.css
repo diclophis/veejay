@@ -55,23 +55,15 @@ ul.grid li img { margin: 2.1em; vertical-align: middle; }
 
 ul.tabs { margin: 1em 0 1em 0; }
 ul.tabs li { display: inline; }
-ul.tabs li a { padding: 1px 6px 2px; }
-ul.tabs li a.active { -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; border: 1px solid #CAD8F3; background: #DEE7F8; padding: 1px 5px 2px; }
-
+ul.tabs li a { text-decoration: none; padding: 0.8em; border: 1px solid #E8DDCB; }
+ul.tabs li a.active { /* -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; */ background: white; border: 1px solid #CAD8F3; padding: 0.8em; }
+ul.tabs li img { margin: 0px 0 0px 0; padding: 0 0 0 0; vertical-align: middle; }
 
 #footer { padding: 1em; clear: both; width: 96em; }
 #footer p { text-align: right; }
-/*
-a { color: #001155; }
-*/
+
 a { color: #033649; }
 body { background-color: #CDB380; }
-/*
-#header .rounded { background-color: #e0e0e0; }
-#sidebar .rounded { background-color: #FBFAE9; }
-#content .rounded { background-color: #CED1EB; }
-#footer .rounded { background-color: #ababab; }
-*/
 
 /*
 .pagination { }

@@ -10,10 +10,10 @@
   </li>
 </ul> 
 <div id="basic">
-  <% form_tag do %>
-    <%=error_messages_for(:person)%>
+  <% form_tag({:anchor => "basic"}) do %>
+    <%=error_messages_for(:basic_person, {:header_message => "Fail", :message => ""})%>
     <ul>
-      <% fields_for(:person) { |person| %>
+      <% fields_for(:basic_person) { |person| %>
         <li>
           <%=person.label(:nickname)%>
           <%=person.text_field(:nickname)%>
@@ -34,8 +34,8 @@
   <% end %>
 </div>
 <div id="openid">
-  <% form_tag do %>
-    <%=error_messages_for(:person)%>
+  <% form_tag({:anchor => "openid"}) do %>
+    <%=error_messages_for(:person, {:header_message => "Fail", :message => ""})%>
     <ul>
       <% fields_for(:person) { |person| %>
         <li>
