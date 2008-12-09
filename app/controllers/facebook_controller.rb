@@ -32,25 +32,12 @@ class FacebookController < ApplicationController
   end
 
   def xd_receiver
-    #{
-    #"action"=>"xd_receiver", 
-    #"session"=>"{\"session_key\":\"2.0Zj09bqBGjcVsALRBzcEHA__.86400.1228906800-5005911\",\"uid\":\"5005911\",\"expires\":1228906800,\"secret\":\"mZjtaYQuQtD6_kOCIk2PuA__\",\"sig\":\"2c8bda3a89d58fa9edbe07b1e0cb2bbf\"}", 
-    #"controller"=>"facebook",
-    #"fb_login"=>nil, "fname"=>"_opener"
-    #}
-    if params[:session] then
+    if request.post? then
+
+    
+    elsif params[:session] then
       facebook_session = ActiveSupport::JSON.decode(params[:session])
-      logger.debug(facebook_session["session_key"])
-      @something = fbsession.activate_with_previous_session(facebook_session["session_key"])
-      logger.debug(@something)
-=begin
-      @something = fbsession.auth_getSession({
-        :v => "1.0",
-        :session_key => facebook_session["session_key"],
-        #:sig => params["session"]["sig"]
-      })
-      logger.debug(@something)
-=end
+      fbsession.activate_with_previous_session(facebook_session["session_key"])
       @user = fbsession.users_getInfo(
         :uids => facebook_session["uid"],
         :fields => [
@@ -60,7 +47,23 @@ class FacebookController < ApplicationController
       @person.nickname = @user.first_name.to_s
       @person.email = @user.proxied_email.to_s
       @person.biography = @user.music.to_s
+    end
+  end
 
+=begin
+    #{
+    #"action"=>"xd_receiver", 
+    #"session"=>"{\"session_key\":\"2.0Zj09bqBGjcVsALRBzcEHA__.86400.1228906800-5005911\",\"uid\":\"5005911\",\"expires\":1228906800,\"secret\":\"mZjtaYQuQtD6_kOCIk2PuA__\",\"sig\":\"2c8bda3a89d58fa9edbe07b1e0cb2bbf\"}", 
+    #"controller"=>"facebook",
+    #"fb_login"=>nil, "fname"=>"_opener"
+    #}
+=begin
+      @something = fbsession.auth_getSession({
+        :v => "1.0",
+        :session_key => facebook_session["session_key"],
+        #:sig => params["session"]["sig"]
+      })
+      logger.debug(@something)
       #logger.debug(@user.first_name)
       #logger.debug(@user.proxied_email)
       #logger.debug(@user.profile_url)
@@ -69,11 +72,6 @@ class FacebookController < ApplicationController
 #apps+57567691128.5005911.b8fac565105c0ab2a61333dbcb6ebb8c@proxymail.facebook.com
 #http://www.facebook.com/profile.php?id=5005911
 #http://profile.ak.facebook.com/v222/1444/24/q5005911_4365.jpg
-
-    end
-  end
-
-=begin
 auth.getSession 
 http://www.facebook.com/code_gen.php?v=1.0&api_key=YOUR_API_KEY
 require 'facebook_rails_controller_extensions'
@@ -121,6 +119,22 @@ http://wiki.developers.facebook.com/index.php/Creating_Your_First_Application
 98.210.154.226 - - [09/Dec/2008:09:21:57 +0000] "GET /dashboard HTTP/1.1" 302 97 "http://veejay.tv/facebook/test.html" "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.0.4) Gecko/2008102920 Firefox/3.0.4"
 98.210.154.226 - - [09/Dec/2008:09:21:58 +0000] "GET /login HTTP/1.1" 200 1372 "http://veejay.tv/facebook/test.html" "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.0.4) Gecko/2008102920 Firefox/3.0.4"
 98.210.154.226 - - [09/Dec/2008:09:21:58 +0000] "GET /javascripts/application.js?1228814093 HTTP/1.1" 200 3394 "http://veejay.tv/login" "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.0.4) Gecko/2008102920 Firefox/3.0.4"
+=end
+
+=begin
+        <div id="ctl00_Form_FacebookDiv" class="profileInnerContent editAccount">
+          <h4>Do you have a Facebook profile?  Bring your profile with you by signing in below.</h4>
+          <br />
+          <div class="row">
+              <center><fb:login-button onclick="GG.SN.sessionOnReady(true);"></fb:login-button></center>
+          </div>
+
+          
+        </div>
+
+  <script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
+  <script type="text/javascript">FB_RequireFeatures(["XFBML"],function(){FB.Facebook.init("baa677c60bdbb77e990795ba0d27ed71","/Pages/Auth/Connect/xd_receiver.htm");});</script>
+  http://wiki.developers.facebook.com/index.php/Extended_permissions
 =end
 
 

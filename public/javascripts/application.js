@@ -5,6 +5,10 @@ var videos;
 var list;
 var youtube_remote_id;
 
+on_facebook_register = function () {
+  alert('wangchung');
+};
+
 attach_to_preview_video_buttons = function () {
   $$('a.preview_video').each(function(preview_video_button) {
     Event.observe(preview_video_button, 'click', function (clicked) {
@@ -332,8 +336,6 @@ Event.observe(window, 'load', function () {
   DD_roundies.addRule("#header", 10);
   DD_roundies.addRule("#sidebar", 10);
   DD_roundies.addRule("#content", 10);
-  DD_roundies.addRule(".tabs", 10);
-  DD_roundies.addRule("ul.tabs li a.active", 10);
 
 
 });

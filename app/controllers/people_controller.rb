@@ -44,13 +44,17 @@ class PeopleController < ApplicationController
   end
   def register
     if params["openid.mode"] then
-      response = openid_consumer.complete(openid_params, url_for(:register))
+      response = openid_consumer.complete(openid_params, register_url)
       pending_person.errors.add(:identity_url, "OpenID Failure, please retry") and return render unless response.status == :success
       begin
-        pending_person.save!
-        Mercury.deliver_activation_code(pending_person)
-        authenticate(pending_person)
-        return redirect_to(remembered_params)
+        pending_person.register! if pending_person && pending_person.valid?
+        success = pending_person && pending_person.valid?
+        if success && pending_person.errors.empty?
+          flash[:success] = "Thanks for signing up!  We're sending you an email with your activation code."
+          return authenticate(pending_person)
+        else
+          basic_person.password = basic_person.password_confirmation = nil
+        end
       end
     elsif request.post? then
       if params[:person] then
@@ -70,7 +74,7 @@ class PeopleController < ApplicationController
         success = basic_person && basic_person.valid?
         if success && basic_person.errors.empty?
           flash[:success] = "Thanks for signing up!  We're sending you an email with your activation code."
-          redirect_back_or_default(root_url)
+          return authenticate(basic_person)
         else
           basic_person.password = basic_person.password_confirmation = nil
         end
@@ -79,7 +83,6 @@ class PeopleController < ApplicationController
       basic_person
       basic_person.nickname = session[:nickname]
       basic_person.email = session[:email]
-
       pending_person
       pending_person.identity_url = "Click the OpenID button to pick your service"
       pending_person.nickname = session[:nickname]
@@ -93,7 +96,8 @@ class PeopleController < ApplicationController
       when (!params[:activation_code].blank?) && @person && !@person.active?
         @person.activate!
         flash[:success] = "Signup complete! Please sign in to continue."
-        redirect_to(login_url)
+        #redirect_to(login_url)
+        return authenticate(@person)
       when params[:activation_code].blank?
         flash[:error] = "The activation code was missing.  Please follow the URL from your email."
         redirect_back_or_default(root_url)

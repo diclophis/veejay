@@ -114,3 +114,19 @@ map.logout '/logout', :controller => 'messions', :action => 'destroy'
 map.activate '/activate/:activation_code', :controller => 'musers', :action => 'activate', :activation_code => nil
 
 public set sharing function
+
+      <% form_tag do %>
+        <%=error_messages_for(:person, :header_message => "Fail")%>
+        <ul>
+           <% fields_for(:person) { |person| %>
+            <%=person.hidden_field(:email)%>
+            <li>
+              <%=person.label(:nickname)%>
+              <%=person.text_field(:nickname)%>
+            </li>
+          <% } %>
+          <li>
+            <%= submit_tag("Finish")%>
+          </li>
+        </ul>
+      <% end %>

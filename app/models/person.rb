@@ -4,16 +4,11 @@ class Person < ActiveRecord::Base
   include Authentication
   include Authentication::ByPassword
   include Authentication::ByCookieToken
-  include Authorization::AasmRoles
-
+  include AASM
+  attr_accessible :nickname, :email, :identity_url, :password, :password_confirmation
   serialize :email_autocompletions
   has_many_friends
   has_many :episodes
-
-  #before_validation_on_create :assign_activation_code
-  #before_validation :normalize_identity_url
-  #validates_presence_of :identity_url
-  #validates_as_uri :identity_url
   validates_as_email :email
   validates_presence_of :email
   validates_presence_of :nickname
@@ -23,25 +18,37 @@ class Person < ActiveRecord::Base
   validates_each :nickname do |record, key, value|
     record.errors.add(key, "is reserved") if %w{redirect logout pop activate stylesheets images javascripts dashboard register login about page update edit subscribe sets rss create search}.include?(value)
   end
-  validates_uniqueness_of :nickname
-  #validates_presence_of :activation_code
-
-  # HACK HACK HACK -- how to do attr_accessible from here?
-  # prevents a user from submitting a crafted form that bypasses activation
-  # anything else you want your user to change should be added here.
-  attr_accessible :nickname, :email, :identity_url, :password, :password_confirmation
-
-  #validates_presence_of     :login
-  #validates_length_of       :login,    :within => 3..40
-  #validates_uniqueness_of   :login
-  #validates_format_of       :login,    :with => Authentication.login_regex, :message => Authentication.bad_login_message
-  #validates_format_of       :name,     :with => Authentication.name_regex,  :message => Authentication.bad_name_message, :allow_nil => true
-  #validates_length_of       :name,     :maximum => 100
-  #validates_presence_of     :email
-  #validates_length_of       :email,    :within => 6..100 #r@a.wk
-  #validates_uniqueness_of   :email
-  #validates_format_of       :email,    :with => Authentication.email_regex, :message => Authentication.bad_email_message
-
+  aasm_column :state
+  aasm_initial_state :initial => :pending
+  aasm_state :passive
+  aasm_state :pending, :enter => :make_activation_code
+  aasm_state :active,  :enter => :do_activate
+  aasm_state :suspended
+  aasm_state :deleted, :enter => :do_delete
+  aasm_event :register do
+    transitions :from => :passive, :to => :pending #, :guard => Proc.new {|u| !(u.crypted_password.blank? && u.password.blank?) }
+  end
+  aasm_event :activate do
+    transitions :from => :pending, :to => :active 
+  end
+  aasm_event :suspend do
+    transitions :from => [:passive, :pending, :active], :to => :suspended
+  end
+  aasm_event :delete do
+    transitions :from => [:passive, :pending, :active, :suspended], :to => :deleted
+  end
+  aasm_event :unsuspend do
+    transitions :from => :suspended, :to => :active,  :guard => Proc.new {|u| !u.activated_at.blank? }
+    transitions :from => :suspended, :to => :pending, :guard => Proc.new {|u| !u.activation_code.blank? }
+    transitions :from => :suspended, :to => :passive
+  end
+  def password_required?
+    if identity_url.blank? then
+      (crypted_password.blank? || !password.blank?)
+    else
+      false
+    end
+  end
   def make_activation_code
     self.activation_code = UUID.random_create.to_s
   end
@@ -71,20 +78,12 @@ class Person < ActiveRecord::Base
     hash = MD5::md5(self.email)
     "http://www.gravatar.com/avatar/#{hash}?d=identicon"
   end
-  # Returns true if the user has just been activated.
   def recently_activated?
     @activated
   end
   def active?
-    # the existence of an activation code means they have not activated yet
     activation_code.nil?
   end
-  # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
-  #
-  # uff.  this is really an authorization, not authentication routine.  
-  # We really need a Dispatch Chain here or something.
-  # This will also let us return a human error message.
-  #
   def self.authenticate(nickname, password)
     return nil if nickname.blank? || password.blank?
     u = find :first, :conditions => ['nickname = ? and activated_at IS NOT NULL', nickname] # need to get the salt
@@ -96,9 +95,12 @@ class Person < ActiveRecord::Base
   def email=(value)
     write_attribute :email, (value ? value.downcase : nil)
   end
-#  protected
-#    
-#    def make_activation_code
-#        self.activation_code = self.class.make_token
-#    end
+  def do_delete
+    self.deleted_at = Time.now.utc
+  end
+  def do_activate
+    @activated = true
+    self.activated_at = Time.now.utc
+    self.deleted_at = self.activation_code = nil
+  end
 end
