@@ -42,6 +42,7 @@ ActionController::Routing::Routes.draw do |map|
   map.root :controller => "welcome"
   map.facebook "/facebook", :controller => "facebook", :action => "index"
   map.facebook_debug "/facebook/debug", :controller => "facebook", :action => "debug"
+  map.facebook_xd_receiver "/facebook/xd_receiver", :controller => "facebook", :action => "xd_receiver"
   map.facebook_authorize "/facebook/authorize", :controller => "facebook", :action => "authorize"
 
   map.page "/page/:page", :controller => "welcome", :action => "index"

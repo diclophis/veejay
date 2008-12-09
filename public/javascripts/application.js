@@ -329,10 +329,11 @@ Event.observe(window, 'load', function () {
   DD_roundies.addRule("div.rounded", 20);
   */
 
-  DD_roundies.addRule("#header", 20);
-  DD_roundies.addRule("#sidebar", 15);
+  DD_roundies.addRule("#header", 10);
+  DD_roundies.addRule("#sidebar", 10);
   DD_roundies.addRule("#content", 10);
-  DD_roundies.addRule("#footer", 5);
+  DD_roundies.addRule(".tabs", 10);
+  DD_roundies.addRule("ul.tabs li a.active", 10);
 
 
 });
