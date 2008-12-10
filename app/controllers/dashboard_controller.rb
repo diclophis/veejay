@@ -55,7 +55,7 @@ class DashboardController < ApplicationController
           @episode.description = params[:episode][:description]
           current_person.episodes << @episode
           @episode.save!
-          flash[:success] = "Saved!"
+          flash[:success] = render_to_string({:partial => "shared/created_set"}) 
           return redirect_to(dashboard_url)
         end
       rescue => problem

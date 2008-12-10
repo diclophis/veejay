@@ -27,7 +27,7 @@
             <%=link_to(image_tag("icon/pencil_plus.png") + "&nbsp;comments", "#comments_for_video_#{remote_video.remote_id}", {:class => "comments_remote_video_button"})%>
           </li>
         </ul>
-        <ul>
+        <ul class="panels">
           <li id="details_for_video_<%=remote_video.remote_id%>">
             <p>
               "<%=link_to(remote_video.title, preview_url(remote_video.remote_id), {:class => "preview_video", :title => remote_video.title})%>"

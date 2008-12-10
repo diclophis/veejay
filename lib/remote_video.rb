@@ -143,6 +143,7 @@ class RemoteVideo
     mtv_format = "http://api.mtvnservices.com/1/video/search/?term=%s&feed-format=mrss"
     mtv_data = self.fetch(mtv_format, artist_or_song)
     mtv_videos = self.extract_mtv_videos(mtv_data)
+#orderby=viewCount
     youtube_format = "http://gdata.youtube.com/feeds/api/videos?q=%s&alt=rss&v=2"
     youtube_data = self.fetch(youtube_format, artist_or_song)
     youtube_videos = self.extract_youtube_videos(youtube_data)

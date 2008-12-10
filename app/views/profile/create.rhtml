@@ -33,6 +33,10 @@
       </li>
     <% } %>
     <li>
+      <%=submit_tag("Create Set")%>
+      or <%=link_to(:return, dashboard_url)%>
+    </li>
+    <li>
       <%=label_tag(:videos)%>
       <% if @episode.videos.empty? then %>
       <% else %>
@@ -43,9 +47,11 @@
         <% } %>
       </ul>
     </li>
+    <!--
     <li>
       <%=submit_tag("Create Set")%>
       or <%=link_to(:return, dashboard_url)%>
     </li>
+    -->
   </ul>
 <% end %>
