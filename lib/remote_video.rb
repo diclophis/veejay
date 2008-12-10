@@ -100,6 +100,8 @@ class RemoteVideo
           image.attributes["url"]
         }.last
         RemoteVideo.new(remote_id, title, duration, artist_names, image_url)
+      }.delete_if { |video|
+        video.remote_id.blank? or video.remote_id == 0
       }
     rescue
       []

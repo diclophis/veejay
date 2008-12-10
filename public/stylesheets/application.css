@@ -51,7 +51,7 @@ ul.grid { margin: 1em; }
 ul.grid li { display: inline; }
 ul.grid li img { margin: 2.1em; vertical-align: middle; }
 
-ul.tabs { margin: 1em 0 2em 0; }
+ul.tabs { margin: 1em 0 1em 0; }
 ul.tabs li { display: inline; }
 ul.tabs li a { text-decoration: none; padding: 0.6em; border: 1px solid #E8DDCB; }
 ul.tabs li a.active { /* -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; */ background: white; border: 1px solid #CAD8F3; padding: 0.6em; }

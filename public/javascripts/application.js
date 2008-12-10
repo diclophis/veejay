@@ -28,6 +28,10 @@ attach_to_add_remote_video_buttons = function () {
       remote_video.getElementsBySelector('a.remove_remote_video_button').invoke('toggle');
       attach_to_remove_remote_video_buttons();
       $("drop").insert(remote_video);
+      remote_video.getElementsBySelector('ul.tabs').each(function(tabs) {
+        tabs.toggle();
+        new Control.Tabs(tabs);  
+      });
       Sortable.destroy('drop');
       Sortable.create('drop',{containment: ['results', 'drop'], dropOnEmpty: true, constraint: false});
     });

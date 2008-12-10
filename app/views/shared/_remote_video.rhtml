@@ -21,29 +21,29 @@
       <td class="remote_video_info" valign="top">
         <ul class="tabs" id="tabs_for_video_<%=remote_video.remote_id%>" style="<%=((@episode) ? "" : "display: none;")%>">
           <li class="tab">
-            <%=link_to(image_tag("icon/magnifier_left.png") + "&nbsp;details", "#details_for_video_#{remote_video.remote_id}", {:class => "details_remote_video_button", :style => (@episode) ? "" : "display: none;" })%>
+            <%=link_to(image_tag("icon/magnifier_left.png") + "&nbsp;details", "#details_for_video_#{remote_video.remote_id}", {:class => "details_remote_video_button"})%>
           </li>
           <li class="tab">
-            <%=link_to(image_tag("icon/pencil_plus.png") + "&nbsp;comments", "#comments_for_video_#{remote_video.remote_id}", {:class => "comments_remote_video_button", :style => (@episode) ? "" : "display: none;" })%>
+            <%=link_to(image_tag("icon/pencil_plus.png") + "&nbsp;comments", "#comments_for_video_#{remote_video.remote_id}", {:class => "comments_remote_video_button"})%>
           </li>
         </ul>
         <ul>
-        <li id="details_for_video_<%=remote_video.remote_id%>">
-          <p>
-            "<%=link_to(remote_video.title, preview_url(remote_video.remote_id), {:class => "preview_video", :title => remote_video.title})%>"
-            <br/>
-            <%=remote_video.artist_names.join(", ")%>
-            <br/>
-            <%=remote_video.formatted_duration%>
-            <br/>
-            <%=remote_video.remote_id.split("-").join(", ")%>
-          </p>
-        </li>
-        <li id="comments_for_video_<%=remote_video.remote_id%>" style="<%=((@episode) ? "" : "display: none;")%>">
-          <p>
-            <textarea></textarea>
-          </p>
-        </li>
+          <li id="details_for_video_<%=remote_video.remote_id%>">
+            <p>
+              "<%=link_to(remote_video.title, preview_url(remote_video.remote_id), {:class => "preview_video", :title => remote_video.title})%>"
+              <br/>
+              <%=remote_video.artist_names.join(", ")%>
+              <br/>
+              <%=remote_video.formatted_duration%>
+              <br/>
+              <%=remote_video.remote_id.split("-").join(", ")%>
+            </p>
+          </li>
+          <li id="comments_for_video_<%=remote_video.remote_id%>" style="<%=((@episode) ? "" : "display: none;")%>">
+            <p>
+              <textarea></textarea>
+            </p>
+          </li>
         </ul>
       </td>
     </tr>
