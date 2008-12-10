@@ -1,6 +1,25 @@
 <% content_for :tagline do %>
   <%=link_to(:VeeJay, root_url)%>
 <% end %>
+<% content_for :sidebar do %>
+  <h2>
+    Welcome to VeeJay.tv
+  </h2>
+  <p>
+    Currently, we support registration using OpenID.
+    If you aren't familiar with OpenID,
+    it's a technology that simplifies life by allowing you to login to thousands of websites using a single digital identity.
+    No more remembering a different ID and password for every single site! 
+  </p>
+  <p>
+    You probably don't know it, but most people already have an OpenID.
+    Many of the major internet services support OpenID.
+    If you have a Yahoo account, you automatically have an OpenID.
+  </p>
+  <p>
+    <%=link_to("Learn More", "http://openid.net/", {:target => :_blank})%>
+  </p>
+<% end %>
 <%=render({:partial => "authentication_modes"})%>
 <div id="basic">
   <% form_tag({:anchor => "basic"}) do %>

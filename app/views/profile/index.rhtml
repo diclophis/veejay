@@ -1,5 +1,6 @@
 <% content_for :tagline do %>
   VeeJay <%=link_to(@person.nickname, profile_url(@person)) %>'s channel
+  <%=link_to(image_tag("icon/feed.png"), sets_url(@person))%>
 <% end %>
 <% content_for :instructions do %>
   Watch or Subscribe to this VeeJay's sets
