@@ -120,6 +120,17 @@ class PeopleController < ApplicationController
   end
 =end
   protected
+    def determine_title
+      case params[:action]
+        when "register"
+          @title = "Register for VeeJay.tv"
+        when "login"
+          @title = "Login to VeeJay.tv"
+      else
+        super
+      end
+    end
+
     def basic_person
       unless @basic_person
         @basic_person = remembered_pending_person

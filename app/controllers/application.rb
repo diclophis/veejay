@@ -9,7 +9,9 @@ class ApplicationController < ActionController::Base
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => 'a047736fbed40c89c719438ff6566708'
-  
+ 
+  before_filter :determine_title
+
   #security_components :security_policy, :access_control => [:login_required], :authentication => [:by_cookie_token, :by_password]
   # See ActionController::Base for details 
   # Uncomment this to filter the contents of submitted sensitive data parameters
@@ -24,6 +26,10 @@ class ApplicationController < ActionController::Base
                        'xiino|mot-v|mot-e|portalmmm|sagem|sie-s|sie-m|android|ipod'
 
   protected
+    def determine_title
+      @title = "VeeJay.tv"
+    end
+
     helper_method :current_page
     def current_page
       params[:page].to_i < 1 ? 1 : params[:page].to_i

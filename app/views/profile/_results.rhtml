@@ -12,7 +12,7 @@
       </h4>
     </li>
     <% @videos.each { |video| %>
-      <%=render({:partial => "shared/remote_video", :locals => {:remote_video => video}})%>
+      <%=render({:partial => "shared/remote_video", :locals => {:remote_video => video, :comment => ""}})%>
     <% } %>
   <% end %>
 </ul>

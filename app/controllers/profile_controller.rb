@@ -28,9 +28,10 @@ class ProfileController < ApplicationController
       begin
         Person.transaction do
           if params[:episode][:videos] then
-            params[:episode][:videos].each { |video_as_yaml|
+            params[:episode][:videos].each_with_index { |video_as_yaml, index|
               remote_video = YAML.load(video_as_yaml)
               @episode.videos << Video.create({
+                :comment => params[:episode][:comments][index],
                 :remote_video => remote_video
               })
             }

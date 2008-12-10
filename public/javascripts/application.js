@@ -38,6 +38,7 @@ attach_to_add_remote_video_buttons = function () {
       remote_video = $(remote_id).remove();
       remote_video.getElementsBySelector('a.add_remote_video_button').invoke('toggle');
       remote_video.getElementsBySelector('a.remove_remote_video_button').invoke('toggle');
+      remote_video.getElementsBySelector('a.handle_remote_video_button').invoke('toggle');
       attach_to_remove_remote_video_buttons();
       $("drop").insert(remote_video);
       remote_video.getElementsBySelector('ul.tabs').each(function(tabs) {
@@ -57,7 +58,7 @@ attach_to_remove_remote_video_buttons = function () {
       remote_id = "video_" + this.id.replace("remove_video_", "");
       remote_video = $(remote_id).remove();
       Sortable.destroy('drop');
-      Sortable.create('drop',{containment: ['results', 'drop'], dropOnEmpty: true, constraint: false});
+      Sortable.create('drop',{handle:"handle_remote_video_button",  containment: ['results', 'drop'], dropOnEmpty: true, constraint: false});
     });
   });
 }
@@ -304,7 +305,7 @@ Event.observe(window, 'load', function () {
           //Sortable.destroy('results');
           //Sortable.create('results',{containment: ['results', 'drop'], dropOnEmpty: true, constraint: false, revert: false, scroll: window});
           Sortable.destroy('drop');
-          Sortable.create('drop',{containment: ['results', 'drop'], dropOnEmpty: true, constraint: false});
+          Sortable.create('drop',{handle:"handle_remote_video_button", containment: ['results', 'drop'], dropOnEmpty: true, constraint: false});
         },
         onFailure : function () {
           alert('an error has occured');
@@ -319,7 +320,7 @@ Event.observe(window, 'load', function () {
     });
     attach_to_preview_video_buttons();
     attach_to_remove_remote_video_buttons();
-    Sortable.create('drop', {containment: ['results', 'drop'], dropOnEmpty:true, constraint:false});
+    Sortable.create('drop', {handle:"handle_remote_video_button", containment: ['results', 'drop'], dropOnEmpty:true, constraint:false});
   });
 
   $$('div.edge').each(function(edge) {

@@ -37,7 +37,7 @@
       <% end %>
       <ul id="drop" class="videos">
         <% @episode.videos.each { |video| %>
-          <%=render({:partial => "shared/remote_video", :locals => {:remote_video => video.remote_video}})%>
+          <%=render({:partial => "shared/remote_video", :locals => {:remote_video => video.remote_video, :comment => video.comment}})%>
         <% } %>
       </ul>
     </li>

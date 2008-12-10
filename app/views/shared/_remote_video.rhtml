@@ -7,6 +7,9 @@
             <%=link_to(image_tag("icon/control.png"), preview_url(remote_video.remote_id), {:class => "preview_video", :title => remote_video.title})%>
           </li>
           <li>
+            <%=link_to(image_tag("icon/clock.png"), "#", {:id => "", :class => "handle_remote_video_button", :style => (@episode) ? "" : "display: none;" })%>
+          </li>
+          <li>
             <%=link_to(image_tag("icon/plus_circle.png"), "#", {:id => "add_video_#{remote_video.remote_id}", :class => "add_remote_video_button", :style => (@episode) ? "display: none;" : "" })%>
           </li>
           <li>
@@ -36,12 +39,12 @@
               <br/>
               <%=remote_video.formatted_duration%>
               <br/>
-              <%=remote_video.remote_id.split("-").join(", ")%>
+              id: <%=remote_video.remote_id.split("-", 2).join(", ")%>
             </p>
           </li>
           <li id="comments_for_video_<%=remote_video.remote_id%>" style="<%=((@episode) ? "" : "display: none;")%>">
             <p>
-              <textarea></textarea>
+              <textarea name="episode[comments][]"><%=comment%></textarea>
             </p>
           </li>
         </ul>
