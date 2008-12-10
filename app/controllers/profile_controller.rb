@@ -41,7 +41,7 @@ class ProfileController < ApplicationController
           current_person.episodes << @episode
           @episode.save!
           flash[:success] = render_to_string({:partial => "shared/created_set"}) 
-          return redirect_to(profile_url(current_person))
+          return redirect_to(dashboard_url)
         end
       rescue => problem
         logger.debug(problem)

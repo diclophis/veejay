@@ -9,6 +9,18 @@ on_facebook_register = function () {
   alert('wangchung');
 };
 
+attach_to_confirmable_buttons = function () {
+  $$('.confirm').each(function(confirmable) {
+    Event.observe(confirmable, 'click', function(clicked) {
+      if (confirm("Are you sure?")) {
+        return true;
+      } else {
+        Event.stop(clicked);
+      }
+    });
+  });
+};
+
 attach_to_preview_video_buttons = function () {
   $$('a.preview_video').each(function(preview_video_button) {
     Event.observe(preview_video_button, 'click', function (clicked) {
@@ -335,13 +347,10 @@ Event.observe(window, 'load', function () {
     new Control.Tabs(tab_group);  
   });  
 
-  /*
-  DD_roundies.addRule("div.rounded", 20);
-  */
+  attach_to_confirmable_buttons();
 
   DD_roundies.addRule("#header", 10);
   DD_roundies.addRule("#sidebar", 10);
   DD_roundies.addRule("#content", 10);
-
 
 });

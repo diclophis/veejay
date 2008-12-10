@@ -112,4 +112,14 @@ class DashboardController < ApplicationController
       }
     }.to_json
   end
+  def delete
+    @episode = Episode.find_by_id(params[:id])
+    unless @episode.person == current_person
+      flash[:notice] = "This Is Not Your Video"
+      return redirect_to(dashboard_url)
+    end
+    @episode.destroy
+    flash[:success] = "Success!  Set has been deleted."
+    return redirect_to(dashboard_url)
+  end
 end

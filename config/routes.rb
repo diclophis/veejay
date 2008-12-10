@@ -49,6 +49,7 @@ ActionController::Routing::Routes.draw do |map|
   map.redirect "/redirect/:permalink", :controller => "welcome", :action => "redirect"
 
   map.episode "/:nickname/watch/:slug", :controller => "episode", :action => "watch"
+  map.share "/:nickname/share/:slug", :controller => "dashboard", :action => "share"
   map.pop '/pop', :controller => "episode", :action => "pop"
 
   map.login '/login', :controller => "people", :action => "login"
@@ -63,21 +64,22 @@ ActionController::Routing::Routes.draw do |map|
   #map.cloud '/cloud', :controller => "welcome", :action => "cloud"
   #map.random '/random', :controller => "welcome", :action => "random"
   #map.random '/plist_of_images_to_rate', :controller => "welcome", :action => "plist_of_images_to_rate"
+  #make a share controller
 
   #map.philosophy '/philosophy', :controller => "welcome", :action => "philosophy"
   #map.findings '/findings', :controller => "welcome", :action => "findings"
   #map.image '/image/:permalink', :controller => "welcome", :action => "image"
   #map.similarities '/similarities/:permalink', :controller => "welcome", :action => "similarities"
   map.dashboard '/dashboard', :controller => "dashboard", :action => "index"
-  map.share "/:nickname/share/:slug", :controller => "dashboard", :action => "share"
-  map.email_autocompletions "/email_autocompletions", :controller => "dashboard", :action => "email_autocompletions"
-  #map.update '/update', :controller => "dashboard", :action => "update"
-  map.edit '/edit/:id', :controller => "dashboard", :action => "edit"
-  map.subscribe '/subscribe/:id', :controller => "dashboard", :action => "subscribe"
-  map.create '/create', :controller => "profile", :action => "create"
-  map.search '/search', :controller => "profile", :action => "search"
-  map.preview '/preview/:id', :controller => "episode", :action => "preview"
-  map.play '/play/:id', :controller => "episode", :action => "play"
+  map.edit '/dashboard/edit/:id', :controller => "dashboard", :action => "edit"
+  map.delete "/dashboard/delete/:id", :controller => "dashboard", :action => "delete"
+  map.subscribe '/dashboard/subscribe/:id', :controller => "dashboard", :action => "subscribe"
+  map.create '/dashboard/create', :controller => "profile", :action => "create"
+  map.search '/dashboard/search', :controller => "profile", :action => "search"
+  map.preview '/dashboard/preview/:id', :controller => "episode", :action => "preview"
+  map.email_autocompletions "/dashboard/email_autocompletions", :controller => "dashboard", :action => "email_autocompletions"
+  
+#map.play '/play/:id', :controller => "episode", :action => "play"
 
   map.sets '/sets/:nickname', :controller => "profile", :action => "index", :format => "rss"
   map.rss '/rss', :controller => "welcome", :action => "index", :format => "rss"

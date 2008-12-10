@@ -1,0 +1,19 @@
+<h1>xWhat are you doing?</h1>
+
+<%= image_tag @user.pic_square, :align => 'left' %>
+
+<b><%= @user.first_name + " " + @user.last_name %></b>
+<%= @user.status.message %>
+
+<script>
+FB.Facebook.apiClient.users_hasAppPermission("offline_access", function(result) {
+  // prompt offline permission
+  if (result == 0) {
+    // render the permission dialog
+    FB.Connect.showPermissionDialog("offline_access");
+  } else {
+    // the user has a infinite session key, call back to the app.
+    // then we are done
+  }
+});
+</script>

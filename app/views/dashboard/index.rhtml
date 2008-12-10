@@ -59,6 +59,19 @@
         <table>
           <tr>
             <td>
+              <ul>
+                <li>
+                  <%=link_to(image_tag("icon/control.png"), episode_url(*episode.to_param), {:title => "watch"})%>
+                </li>
+                <li>
+                  <%=link_to(image_tag("icon/mail.png"), share_url(*episode.to_param), {:title => "share"})%>
+                </li>
+                <li>
+                  <%=link_to(image_tag("icon/cross_circle.png"), delete_url(episode.id), {:class => "confirm", :title => "delete"})%>
+                </li>
+              </ul>
+            </td>
+            <td>
               <%=image_tag(episode.videos.first.remote_video.image_url, {:width => 120})%>
             </td>
             <td>
