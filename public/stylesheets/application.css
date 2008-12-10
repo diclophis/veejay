@@ -21,14 +21,14 @@ li input[type="submit"] { margin: 0 0 0 0; }
 
 .emptyPlaceMarker { border: 1px dashed red; }
 
-.errorExplanation, .error { background-color:#ffcccc; border: 0.25em solid red; vertical-align:top; padding: 1em; }
+.errorExplanation /*, .error */ { border: 0.25em solid red; vertical-align:top; background: #ffcccc url(/images/icon/slash.png) no-repeat 0.5em 0.5em; padding: 0.5em 1em 1em 2.5em; }
 .errorExplanation h2 { color: maroon; margin: 0; }
 .errorExplanation ul li { list-style: square; margin: 0 0 0 2em; font-size: 1.25em; }
 
 .flash { margin: 1em 0 1em 0; }
 .fieldWithErrors input[type="text"], .fieldWithErrors input[type="password"] { background-color: yellow; }
-.success { padding: 1em; border: 0.25em solid green; background-color: #ccffcc; }
-.notice { padding: 1em; border: 0.25em solid gold; background-color: yellow; }
+.success { background: url(/images/icon/tick.png) no-repeat 0.5em 0.5em; padding: 1em 1em 1em 2.5em; border: 0.25em solid green; background-color: #ccffcc; }
+.notice { background: url(/images/icon/exclamation.png) no-repeat 0.5em 0.5em; padding: 1em 1em 1em 2.5em;  border: 0.25em solid gold; background-color: yellow; }
 .spinning { background: white url(/images/spinner.gif) no-repeat top right; }
 .rounded { margin: 1.5em; padding: 0em; }
 
@@ -53,8 +53,8 @@ ul.grid li img { margin: 2.1em; vertical-align: middle; }
 
 ul.tabs { margin: -2em 0 2em 0; }
 ul.tabs li { display: inline; margin: 0 1em 0 0; }
-ul.tabs li a { text-decoration: none; padding: 0.6em 0.6em 1em 0.6em; background: #E8DDCB; border: 1px solid #E8DDCB; }
-ul.tabs li a.active { /* -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; */ background: #CDB380; border: 1px solid #E8DDCB; padding: 0.6em 0.6em 1em 0.6em; }
+ul.tabs li a { text-decoration: none; padding: 0.6em 0.6em 1em 0.6em; background: #CDB380; border: 0px solid #E8DDCB; }
+ul.tabs li a.active { /* -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; */ background: #E8DDCB; border: 0px solid #E8DDCB; padding: 0.6em 0.6em 1em 0.6em; }
 ul.tabs li img { margin: 0px 0 0px 0; padding: 0 0 0 0; vertical-align: middle; }
 
 #drop ul.tabs { margin: 0 0 0 0; }

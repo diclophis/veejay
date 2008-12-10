@@ -44,7 +44,9 @@
     <li>
       <%=submit_tag("Update Set")%>
       or <%=link_to(:return, dashboard_url)%>
+      <% if @episode.valid? then %>
       or <%=link_to("share", share_url(*@episode.to_param))%>
+      <% end %>
       or <%=link_to("delete", "#")%>
     </li>
   </ul>

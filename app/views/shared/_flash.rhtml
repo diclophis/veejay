@@ -1,7 +1,11 @@
 <% self.flash.each { |type, message| %>
   <div class="flash <%=type%>">
-    <h4>
+    <% if type == :error then %>
       <%=message%>
-    </h4>
+    <% else %>
+      <h4>
+        <%=message%>
+      </h4>
+    <% end %>
   </div>
 <% } %>

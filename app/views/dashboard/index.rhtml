@@ -61,6 +61,9 @@
             <td>
               <ul>
                 <li>
+                  <%=link_to(image_tag("icon/pencil.png"), edit_url(episode.id), {:title => "edit"})%>
+                </li>
+                <li>
                   <%=link_to(image_tag("icon/control.png"), episode_url(*episode.to_param), {:title => "watch"})%>
                 </li>
                 <li>

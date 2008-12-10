@@ -9,10 +9,10 @@
   <% form_tag(:share) do %>
     <ul id="share_tabs" class="tabs">  
       <li class="tab">
-        <a href="#one">Basic</a>
+        <%=link_to(image_tag("icon/screwdriver.png") + "&nbsp;Basic", "#one")%>
       </li>  
       <li class="tab">
-        <a href="#two">Advanced</a>
+        <%=link_to(image_tag("icon/gear.png") + "&nbsp;Advanced", "#two")%>
       </li>  
     </ul>  
     <div id="one">

@@ -19,6 +19,7 @@
       -<%=@episode.person.nickname%>
     </p>
   <% end %>
+  <%=rating_stars(@episode, current_person, "#")%>
   <% form_tag(:pop, {:id => "pop_form"}) do %>
     <%=hidden_field_tag(:video_id)%>
     <div id="pop_container">
@@ -35,4 +36,3 @@
     </li>
   <% } %>
 </ul>
-<%=rating_stars(@episode, current_person, "#")%>
