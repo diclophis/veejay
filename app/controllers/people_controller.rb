@@ -50,7 +50,7 @@ class PeopleController < ApplicationController
         pending_person.register! if pending_person && pending_person.valid?
         success = pending_person && pending_person.valid?
         if success && pending_person.errors.empty?
-          flash[:success] = "Thanks for signing up!  We're sending you an email with your activation code."
+          flash[:success] = "Thanks!  Please check your email to verify your email address."
           return authenticate(pending_person)
         else
           basic_person.password = basic_person.password_confirmation = nil
@@ -73,7 +73,7 @@ class PeopleController < ApplicationController
         basic_person.register! if basic_person && basic_person.valid?
         success = basic_person && basic_person.valid?
         if success && basic_person.errors.empty?
-          flash[:success] = "Thanks for signing up!  We're sending you an email with your activation code."
+          flash[:success] = "Thanks!  Please check your email to verify your email address."
           return authenticate(basic_person)
         else
           basic_person.password = basic_person.password_confirmation = nil

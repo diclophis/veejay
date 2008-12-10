@@ -1,14 +1,7 @@
 <% content_for :tagline do %>
   <%=link_to(:VeeJay, root_url)%>
 <% end %>
-<ul id="login_tabs" class="tabs">
-  <li class="tab">
-    <a href="#basic">Basic</a>
-  </li>
-  <li class="tab">
-    <a href="#openid">OpenID</a>
-  </li>
-</ul> 
+<%=render({:partial => "authentication_modes"})%>
 <div id="basic">
   <% form_tag({:anchor => "basic"}) do %>
     <%=error_messages_for(:basic_person, {:header_message => "Fail", :message => ""})%>
@@ -33,7 +26,12 @@
     </ul>
   <% end %>
 </div>
-<div id="openid">
+<div id="facebook" style="display: none;">
+  <fb:login-button onlogin="on_facebook_register();"></fb:login-button>
+  <script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
+  <script type="text/javascript">FB_RequireFeatures(["XFBML"],function(){FB.Facebook.init("974a573be253946712b3d0ab6f3c5c85", "/facebook/xd_receiver");});</script>
+</div>
+<div id="openid" style="display: none;">
   <% form_tag({:anchor => "openid"}) do %>
     <%=error_messages_for(:person, {:header_message => "Fail", :message => ""})%>
     <ul>

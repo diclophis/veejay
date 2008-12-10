@@ -5,12 +5,12 @@ a { text-decoration: none; outline: none; }
 a:active { outline: none; }
 form,div,li,h1,h2,h3,h4,h5,h6,p,a { font-family: sans-serif; margin: 0; padding: 0; }
 ul { list-style: none; margin: 0 0 0 0; padding: 0; }
-li { margin: 0.5em 0 0.5em 0; }
-p, pre { font-size: 1.25em; margin: 0; }
-h1 { font-size: 2.5em; color: #031634; }
-h2 { font-size: 2em; margin: 0 0 0.5em 0; }
-h3 { font-size: 1.75em; margin: 0 0 0em 0; }
-h4 { font-size: 1.5em; margin: 0 0 0.5em 0; }
+li { margin: 0 0 0.5em 0; }
+p, pre { font-size: 1.25em; margin: 0 0 0.5em 0; }
+h1 { /* font-size: 2.5em; */ color: #031634; }
+h2 { /* font-size: 2em; */ margin: 0 0 0.5em 0; }
+h3 { /* font-size: 1.75em; */ margin: 0 0 0em 0; }
+h4 { /* font-size: 1.5em; */ }
 img, iframe { border: 0; margin: 0; padding: 0; }
 label { margin: 0 0 0.5em 0; clear: right; display: block; font-weight: bold; }
 body { font-size: 62.5%; width: 101em; margin: 0; padding: 0.5em; -webkit-text-size-adjust: none; }
@@ -23,7 +23,7 @@ li input[type="submit"] { margin: 1em 0 -0.5em 0; }
 
 .errorExplanation, .error { background-color:#ffcccc; border: 0.25em solid red; vertical-align:top; padding: 1em; }
 .errorExplanation h2 { color: maroon; margin: 0; }
-.errorExplanation ul li { list-style: square; margin: 0 0 0 2em; }
+.errorExplanation ul li { list-style: square; margin: 0 0 0 2em; font-size: 1.25em; }
 
 .flash { margin: 1em 0 1em 0; }
 .fieldWithErrors input[type="text"], .fieldWithErrors input[type="password"] { background-color: yellow; }
@@ -79,17 +79,17 @@ body { background-color: #CDB380; }
 ul.holder { margin: 0; overflow: hidden; height: auto !important; height: 1%; padding: 0; }
 *:first-child+html ul.holder { padding-bottom: 2px; } * html ul.holder { padding-bottom: 2px; }
 ul.holder li { float: left; list-style-type: none; margin: 0 0.25em; }
-ul.holder li.bit-box, ul.holder li.bit-input input { font: 11px "Lucida Grande", "Verdana"; }
+ul.holder li.bit-box, ul.holder li.bit-input input { }
 ul.holder li.bit-box { -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; border: 1px solid #CAD8F3; background: #DEE7F8; padding: 1px 5px 2px; }
 ul.holder li.bit-box-focus { border-color: #598BEC; background: #598BEC; color: #fff; }
 ul.holder li.bit-input input { width: 150px; margin: 0; border: none; outline: 0; padding: 3px 0 2px; }
 ul.holder li.bit-input input.smallinput { width: 20px; }
 
 #add { border: 1px solid #999; width: 550px; margin: 50px; padding: 20px 30px 10px; }
-form ol { font: 11px "Lucida Grande", "Verdana"; margin: 0; padding: 0; }
+form ol { margin: 0; padding: 0; }
 form ol li.input-text { margin-bottom: 10px; list-style-type: none; border-bottom: 1px dotted #999; padding-bottom: 10px; }
-form ol li.input-text label { font-weight: bold; cursor: pointer; display: block; font-size: 13px; margin-bottom: 10px; }
-form ol li.input-text input { width: 500px; padding: 5px 5px 6px; font: 11px "Lucida Grande", "Verdana"; border: 1px solid #999; }
+form ol li.input-text label { cursor: pointer; display: block; margin-bottom: 1em; }
+form ol li.input-text input { width: 500px; padding: 5px 5px 6px; border: 1px solid #999; }
 form ul.holder { width: 500px; }
 #autocomplete-list ul.holder li.bit-box, #apple-list ul.holder li.bit-box { padding-right: 15px; position: relative; }
 #apple-list ul.holder li.bit-input { margin: 0; }
@@ -102,7 +102,7 @@ ul.holder li.bit-box-focus a.closebutton, ul.holder li.bit-box-focus a.closebutt
 #autocomplete { display: none; position: absolute; width: 512px; background: #eee; }
 #autocomplete .default { padding: 5px 7px; border: 1px solid #ccc; border-width: 0 1px 1px; }
 #autocomplete ul { display: none; margin: 0; padding: 0; overflow: auto; }
-#autocomplete ul li { padding: 5px 12px; z-index: 1000; cursor: pointer; margin: 0; list-style-type: none; border: 1px solid #ccc; border-width: 0 1px 1px; font: 11px "Lucida Grande", "Verdana"; }
+#autocomplete ul li { padding: 5px 12px; z-index: 1000; cursor: pointer; margin: 0; list-style-type: none; border: 1px solid #ccc; border-width: 0 1px 1px; }
 #autocomplete ul li em { font-weight: bold; font-style: normal; background: #ccc; }
 #autocomplete ul li.auto-focus { background: #4173CC; color: #fff; }
 #autocomplete ul li.auto-focus em { background: none; }

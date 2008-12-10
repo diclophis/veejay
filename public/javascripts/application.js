@@ -22,7 +22,8 @@ attach_to_add_remote_video_buttons = function () {
   $$('a.add_remote_video_button').each(function(add_remote_video_button) {
     Event.observe(add_remote_video_button, 'click', function (clicked) {
       Event.stop(clicked);
-      remote_video = $(this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id).remove();
+      remote_id = "video_" + this.id.replace("add_video_", "");
+      remote_video = $(remote_id).remove();
       remote_video.getElementsBySelector('a.add_remote_video_button').invoke('toggle');
       remote_video.getElementsBySelector('a.remove_remote_video_button').invoke('toggle');
       attach_to_remove_remote_video_buttons();
@@ -37,7 +38,8 @@ attach_to_remove_remote_video_buttons = function () {
   $$('a.remove_remote_video_button').each(function(remove_remote_video_button) {
     Event.observe(remove_remote_video_button, 'click', function (clicked) {
       Event.stop(clicked);
-      remote_video = $(this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id).remove();
+      remote_id = "video_" + this.id.replace("remove_video_", "");
+      remote_video = $(remote_id).remove();
       Sortable.destroy('drop');
       Sortable.create('drop',{containment: ['results', 'drop'], dropOnEmpty: true, constraint: false});
     });

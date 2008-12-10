@@ -6,13 +6,17 @@
 <% end %>
 <% content_for :sidebar do %>
   <% form_tag(:search, {:id => "search"}) do %>
-    <%=label_tag("Search by Artist or Song")%>
-    <%=text_field_tag(:artist_or_song)%>
-    <%=submit_tag("Search", {:id => :search_button})%>
-    <div id="results_container">
-      <ul id="results">
-      </ul>
-    </div>
+    <ul>
+      <li>
+        <%=label_tag("Search by Artist or Song")%>
+        <%=text_field_tag(:artist_or_song)%>
+        <%=submit_tag("Search", {:id => :search_button})%>
+      </li>
+      <li id="results_container">
+        <ul id="results">
+        </ul>
+      </li>
+    </ul>
   <% end %>
 <% end %>
 <% form_tag(:create, {:id => "create"}) do %>

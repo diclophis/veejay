@@ -17,17 +17,7 @@
     <%=link_to("Learn More", "http://openid.net/", {:target => :_blank})%>
   </p>
 <% end %>
-<ul id="register_tabs" class="tabs">
-  <li class="tab">
-    <%=link_to(image_tag("icon/home_plus.png") + "&nbsp;VeeJay", register_url({:anchor => :basic}))%>
-  </li>
-  <li>
-    <%=link_to(image_tag("facebook.gif") + "&nbsp;Facebook", register_url({:anchor => :facebook}))%>
-  </li>
-  <li class="tab">
-    <%=link_to(image_tag("openid.gif") + "&nbsp;OpenID", register_url({:anchor => :openid}))%>
-  </li>
-</ul> 
+<%=render({:partial => "authentication_modes"})%>
 <div id="basic">
   <% form_tag({:anchor => "basic"}) do %>
     <%=error_messages_for(:basic_person, :header_message => "Fail")%>
@@ -60,12 +50,12 @@
     </ul>
   <% end %>
 </div>
-<div id="facebook">
+<div id="facebook" style="display: none;">
   <fb:login-button onlogin="on_facebook_register();"></fb:login-button>
   <script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
   <script type="text/javascript">FB_RequireFeatures(["XFBML"],function(){FB.Facebook.init("974a573be253946712b3d0ab6f3c5c85", "/facebook/xd_receiver");});</script>
 </div>
-<div id="openid">
+<div id="openid" style="display: none;">
   <% form_tag({:anchor => "openid"}) do %>
     <%=error_messages_for(:person)%>
     <ul>
