@@ -59,26 +59,22 @@
         <table>
           <tr>
             <td>
-              <ul>
-                <li>
-                  <%=link_to(image_tag("icon/pencil.png"), edit_url(episode.id), {:title => "edit"})%>
-                </li>
-                <li>
-                  <%=link_to(image_tag("icon/control.png"), episode_url(*episode.to_param), {:title => "watch"})%>
-                </li>
-                <li>
-                  <%=link_to(image_tag("icon/mail.png"), share_url(*episode.to_param), {:title => "share"})%>
-                </li>
-                <li>
-                  <%=link_to(image_tag("icon/cross_circle.png"), delete_url(episode.id), {:class => "confirm", :title => "delete"})%>
-                </li>
-              </ul>
+              <%=link_to(image_tag("icon/pencil.png"), edit_url(episode.id), {:title => "edit"})%>
+              <%=link_to(image_tag("icon/control.png"), episode_url(*episode.to_param), {:title => "watch"})%>
+              <%=link_to(image_tag("icon/mail.png"), share_url(*episode.to_param), {:title => "share"})%>
+              <%=link_to(image_tag("icon/cross_circle.png"), delete_url(episode.id), {:class => "confirm", :title => "delete"})%>
             </td>
             <td>
               <%=image_tag(episode.videos.first.remote_video.image_url, {:width => 120})%>
             </td>
-            <td>
-              <%=link_to(episode.title, edit_url(episode.id))%>
+            <td class="remote_video_info">
+              <p>
+                <%=link_to(episode.title, edit_url(episode.id))%>
+                <br/>
+                <%=episode.videos.length%> videos
+                <br/>
+                <%=formatted_duration(episode.total_duration)%>
+              </p>
             </td>
           </tr>
         </table>

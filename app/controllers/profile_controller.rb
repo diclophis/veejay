@@ -27,6 +27,7 @@ class ProfileController < ApplicationController
     if request.post? then
       begin
         Person.transaction do
+          @episode.total_duration = 0
           if params[:episode][:videos] then
             params[:episode][:videos].each_with_index { |video_as_yaml, index|
               remote_video = YAML.load(video_as_yaml)
@@ -34,9 +35,9 @@ class ProfileController < ApplicationController
                 :comment => params[:episode][:comments][index],
                 :remote_video => remote_video
               })
+              @episode.total_duration += remote_video.duration
             }
           end
-          @episode.total_duration = 0
           @episode.title = params[:episode][:title]
           @episode.description = params[:episode][:description]
           current_person.episodes << @episode

@@ -43,6 +43,7 @@ class DashboardController < ApplicationController
         Person.transaction do
           @episode.videos.delete_all
           @episode.videos.clear
+          @episode.total_duration = 0
           if params[:episode][:videos] then
             params[:episode][:videos].each_with_index { |video_as_yaml, index|
               remote_video = YAML.load(video_as_yaml)
@@ -50,6 +51,7 @@ class DashboardController < ApplicationController
                 :comment => params[:episode][:comments][index],
                 :remote_video => remote_video
               })
+              @episode.total_duration += remote_video.duration
             }
           end
           @episode.title = params[:episode][:title]

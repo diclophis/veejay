@@ -30,7 +30,7 @@ body { background-color: #CDB380; }
 .flash { margin: 1em 0 1em 0; }
 .fieldWithErrors input[type="text"], .fieldWithErrors input[type="password"] { background-color: yellow; }
 .success { background: url(/images/icon/tick.png) no-repeat 0.5em 0.5em; padding: 1em 1em 1em 2.5em; border: 0.25em solid green; background-color: #ccffcc; }
-.notice { background: url(/images/icon/exclamation.png) no-repeat 0.5em 0.5em; padding: 1em 1em 1em 2.5em;  border: 0.25em solid gold; background-color: yellow; }
+.notice { background: url(/images/icon/exclamation.png) no-repeat 0.5em 0.5em; padding: 1em 1em 1em 2.5em; border: 0.25em solid gold; background-color: yellow; }
 .spinning { background: white url(/images/spinner.gif) no-repeat top right; }
 .rounded { margin: 1.5em; padding: 0em; }
 
@@ -53,68 +53,17 @@ ul.grid { margin: 1em; }
 ul.grid li { display: inline; }
 ul.grid li img { margin: 2.1em; vertical-align: middle; }
 
-/*
-ul.tabs { margin: -2em 0 2em 0; }
-*/
-
-/*
-ul.tabs, .tabs * { margin: 0; padding:0; }
-*/
 ul.tabs {  margin: 0px -15px 10px -15px; padding: 0 0 14px 0; border-bottom: 2px solid #CDB380; }
-/*
-ul.tabs { margin: -20px 0 20px 0; *margin: -30px 0 20px 0; }
-*/
-
 ul.tabs li { display: inline; margin: 0 0 0 10px; padding: 0; }
 ul.tabs li a { margin: 0 0 0 20px; padding: 5px 10px 0 10px; float:left; height: 20px; text-decoration: none; border: 2px solid #CDB380; }
 ul.tabs li a.active { border-bottom: 2px solid #E8DDCB; } 
-/*
-ul.tabs li a { position: relative; zoom:1; float:left; *float:none; *display: inline-block; margin: 10px; *margin-right:1px; padding: 10px; background:#DDD; text-decoration:none;}
-*/
-ul.tabs li a:hover { color: #FFF; }
+ul.tabs li a:hover { }
 ul.tabs li a * { cursor: pointer; }
 ul.tabs li img { margin: 0; padding: 0; vertical-align: middle; }
-
-
-ul.xtabs li { display: inline; float: left; margin: 1em; padding: 1em; background-color: green; } 
-/*
-ul.tabs li a .rounded { padding: 0em; margin: 2em; border: 1px solid red; }
-*/
-/*
-ul.tabs li { display: inline; margin: 0 1em 0 0; background: #CDB380; border: 1px solid #E8DDCB; }
-ul.tabs li div.rounded { display: inline; border: 1px solid red; margin: 2em; }
-*/
-
-ul.xtabs li a { text-decoration: none;  /* padding: 0.6em 0.6em 1em 0.6em; */ /* background: #CDB380; */ border: 1px solid purple; clear: left; }
-ul.xtabs li a.active { /* background: #E8DDCB; */ border: 0px solid #E8DDCB; /* padding: 0.6em 0.6em 1em 0.6em; */ }
-ul.xtabs li img { margin: 0; padding: 0; vertical-align: middle; }
-
-
-
-#drop ul.tabs { margin: 0 0 -0.25em 0; }
-#drop ul.tabs li { display: inline; margin: 0 1em 0 0; }
-#drop ul.tabs li a { text-decoration: none; padding: 0.6em 0.6em 1em 0.6em; background: #E8DDCB; border: 0px solid #E8DDCB; }
-#drop ul.tabs li a.active { /* -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; */ background: #ffffff; border: 0px solid #E8DDCB; padding: 0.6em 0.6em 1em 0.6em; }
-#drop ul.tabs li img { margin: 0px 0 0px 0; padding: 0 0 0 0; vertical-align: middle; }
-#drop ul.panels { background: #ffffff; }
-#drop ul.panels li { padding: 1em; }
-#drop ul.panels textarea { border: 0px; width: 100%; }
 
 #footer { padding: 1em; clear: both; width: 96em; }
 #footer p { text-align: right; }
 
-
-/*
-.pagination { }
-.pagination a, .pagination span { font-size: 1.5em; display: block; float: left; padding: 0.25em; }
-.pagination span.disabled { }
-.pagination span.current { font-weight: bold; color: red; }
-.pagination a { text-decoration: none; }
-.pagination a:hover, .pagination a:focus { }
-.pagination:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-* html .pagination { height: 1%; }
-*:first-child+html .pagination { overflow: hidden; }
-*/
 
 /* TextboxList sample CSS */
 ul.holder { margin: 0; overflow: hidden; height: auto !important; height: 1%; padding: 0; }
@@ -151,19 +100,12 @@ ul.holder li.bit-input input { padding: 2px 0 1px; border: 1px solid #999; }
 #add a { color: #666; }
 #add-test { width: 100px; padding: 2px; }
 
-td.remote_video_info {
-  width: 99%;
-}
-
-td.remote_video_controls {
-}
-
 table, tbody, tr, td { margin: 0; padding: 0.25em; border-collapse: collapse; }
-/*
-td { padding: 0.25em; border: 1px solid blue; }
-ul { border: 1px solid red; }
-li { border: 1px solid green; margin: 0; padding: 1em; }
-*/
+table, td.remote_video_info { width: 100%; }
+td { vertical-align: top; }
+#drop ul.panels textarea { width: 98%; }
+
+
 
 .rating {
   position: relative; float: left; width: 150px; height: 25px; margin: 1em; padding: 0; list-style:none; background: url(/images/star.gif) top left repeat-x;

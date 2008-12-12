@@ -172,3 +172,23 @@ roundie padding
    </div>
 
 http://www.feedforall.com/social-bookmarking-icons.htm
+
+#drop ul.tabs { margin: 0 0 -0.25em 0; }
+#drop ul.tabs li { display: inline; margin: 0 1em 0 0; }
+#drop ul.tabs li a { text-decoration: none; padding: 0.6em 0.6em 1em 0.6em; background: #E8DDCB; border: 0px solid #E8DDCB; }
+#drop ul.tabs li a.active { /* -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; */ background: #ffffff; border: 0px solid #E8DDCB; padding: 0.6em 0.6em 1em 0.6em; }
+#drop ul.tabs li img { margin: 0px 0 0px 0; padding: 0 0 0 0; vertical-align: middle; }
+#drop ul.panels { background: #ffffff; }
+#drop ul.panels li { padding: 1em; }
+#drop ul.panels textarea { border: 0px; width: 100%; }
+/*
+.pagination { }
+.pagination a, .pagination span { font-size: 1.5em; display: block; float: left; padding: 0.25em; }
+.pagination span.disabled { }
+.pagination span.current { font-weight: bold; color: red; }
+.pagination a { text-decoration: none; }
+.pagination a:hover, .pagination a:focus { }
+.pagination:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+* html .pagination { height: 1%; }
+*:first-child+html .pagination { overflow: hidden; }
+*/
