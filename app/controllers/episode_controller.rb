@@ -22,7 +22,7 @@ class EpisodeController < ApplicationController
     render :partial => @type
   end
   def preview
-    @type, @remote_id = params[:id].split("-")
+    @remote_id = params[:id]
     render :layout => "vanilla"
   end
 end

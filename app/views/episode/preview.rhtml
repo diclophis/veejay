@@ -1,2 +1,4 @@
-<a name="video_top" class="video" id="video_<%=@type%>-<%=@remote_id%>">
+<a name="video_top" class="video" id="video_<%=@remote_id%>">
 <%=render({:partial => "shared/player"})%>
+<br/>
+<%=link_to(image_tag("icon/plus_circle.png"), "#", {:id => "add_video_#{@remote_id}", :class => "parent_add_remote_video_button"})%>

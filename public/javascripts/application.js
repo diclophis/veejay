@@ -38,7 +38,7 @@ attach_to_preview_video_buttons = function () {
   $$('a.preview_video').each(function(preview_video_button) {
     Event.observe(preview_video_button, 'click', function (clicked) {
       Event.stop(clicked);
-      window.open(this.href,"video_preview","height=420,width=572,location=no,menubar=no,resizable=no,scrollbars=no,status=yes,toolbar=no", false);
+      preview_w = window.open(this.href,"video_preview","height=420,width=572,location=no,menubar=no,resizable=no,scrollbars=no,status=yes,toolbar=no", false);
     });
   });
 }
@@ -60,6 +60,32 @@ attach_to_add_remote_video_buttons = function () {
       });
       Sortable.destroy('drop');
       Sortable.create('drop',{handle:"handle_remote_video_button", containment: ['results', 'drop'], dropOnEmpty: true, constraint: false});
+    });
+  });
+}
+
+add_remote_video = function(remote_id) {
+    remote_video = $(remote_id).remove();
+    remote_video.getElementsBySelector('a.add_remote_video_button').invoke('toggle');
+    remote_video.getElementsBySelector('a.remove_remote_video_button').invoke('toggle');
+    remote_video.getElementsBySelector('a.handle_remote_video_button').invoke('toggle');
+    attach_to_remove_remote_video_buttons();
+    $("drop").insert(remote_video);
+    remote_video.getElementsBySelector('ul.tabs').each(function(tabs) {
+      tabs.toggle();
+      new Control.Tabs(tabs);  
+    });
+    Sortable.destroy('drop');
+    Sortable.create('drop',{handle:"handle_remote_video_button", containment: ['results', 'drop'], dropOnEmpty: true, constraint: false});
+};
+
+attach_to_parent_add_remote_video_buttons = function () {
+  $$('a.parent_add_remote_video_button').each(function(add_remote_video_button) {
+    Event.observe(add_remote_video_button, 'click', function (clicked) {
+      Event.stop(clicked);
+      remote_id = "video_" + this.id.replace("add_video_", "");
+      window.opener.add_remote_video(remote_id);
+      window.close();
     });
   });
 }
@@ -389,4 +415,6 @@ Event.observe(window, 'load', function () {
       });
     });
   } 
+
+  attach_to_parent_add_remote_video_buttons();
 });
