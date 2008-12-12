@@ -370,9 +370,6 @@ Event.observe(window, 'load', function () {
 
   attach_to_confirmable_buttons();
 
-  //DD_roundies.addRule("ul.tabs li", 10);
-  //DD_roundies.addRule("ul.tabs li.tab a", 10);
-
   DD_roundies.addRule("#header", 10);
   DD_roundies.addRule("#sidebar", 10);
   DD_roundies.addRule("#content", 10);

@@ -74,8 +74,8 @@ ActionController::Routing::Routes.draw do |map|
   map.edit '/dashboard/edit/:id', :controller => "dashboard", :action => "edit"
   map.delete "/dashboard/delete/:id", :controller => "dashboard", :action => "delete"
   map.subscribe '/dashboard/subscribe/:id', :controller => "dashboard", :action => "subscribe"
-  map.create '/dashboard/create', :controller => "profile", :action => "create"
-  map.search '/dashboard/search', :controller => "profile", :action => "search"
+  map.create '/dashboard/create', :controller => "dashboard", :action => "create"
+  map.search '/dashboard/search', :controller => "dashboard", :action => "search"
   map.preview '/dashboard/preview/:id', :controller => "episode", :action => "preview"
   map.email_autocompletions "/dashboard/email_autocompletions", :controller => "dashboard", :action => "email_autocompletions"
   

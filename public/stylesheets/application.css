@@ -7,10 +7,10 @@ form,div,li,h1,h2,h3,h4,h5,h6,p,a { font-family: sans-serif; margin: 0; padding:
 ul { list-style: none; margin: 0 0 0 0; padding: 0; }
 li { margin: 0 0 0.5em 0; }
 p, pre { font-size: 1.25em; margin: 0 0 0.5em 0; }
-h1 { /* font-size: 2.5em; */ color: #031634; }
-h2 { /* font-size: 2em; */ margin: 0 0 0.5em 0; }
-h3 { /* font-size: 1.75em; */ margin: 0 0 0em 0; }
-h4 { /* font-size: 1.5em; */ }
+h1 { font-size: 2.25em; color: #031634; }
+h2 { font-size: 2.0em; margin: 0 0 0.5em 0; }
+h3 { font-size: 1.75em; margin: 0 0 0em 0; }
+h4 { font-size: 1.5em; }
 img, iframe { border: 0; margin: 0; padding: 0; }
 label { margin: 0 0 0.5em 0; clear: right; display: block; font-weight: bold; }
 body { font-size: 62.5%; width: 101em; margin: 0; padding: 0.5em; -webkit-text-size-adjust: none; }
@@ -23,14 +23,14 @@ body { background-color: #CDB380; }
 
 .emptyPlaceMarker { border: 1px dashed red; }
 
-.errorExplanation /*, .error */ { border: 0.25em solid red; vertical-align:top; background: #ffcccc url(/images/icon/slash.png) no-repeat 0.5em 0.5em; padding: 0.5em 1em 1em 2.5em; }
+.errorExplanation { border: 0.25em solid red; background: #ffcccc url(/images/icon/slash.png) no-repeat 0.5em 1em; padding: 0.5em 1em 1em 2.5em; }
 .errorExplanation h2 { color: maroon; margin: 0; }
 .errorExplanation ul li { list-style: square; margin: 0 0 0 2em; font-size: 1.25em; }
 
-.flash { margin: 1em 0 1em 0; }
+.flash { margin: 0em 0 1em 0; }
 .fieldWithErrors input[type="text"], .fieldWithErrors input[type="password"] { background-color: yellow; }
-.success { background: url(/images/icon/tick.png) no-repeat 0.5em 0.5em; padding: 1em 1em 1em 2.5em; border: 0.25em solid green; background-color: #ccffcc; }
-.notice { background: url(/images/icon/exclamation.png) no-repeat 0.5em 0.5em; padding: 1em 1em 1em 2.5em; border: 0.25em solid gold; background-color: yellow; }
+.success { background: url(/images/icon/tick.png) no-repeat 0.5em 1em; padding: 1em 1em 1em 2.5em; border: 0.25em solid green; background-color: #ccffcc; }
+.notice { background: url(/images/icon/exclamation.png) no-repeat 0.5em 1em; padding: 1em 1em 1em 2.5em; border: 0.25em solid gold; background-color: yellow; }
 .spinning { background: white url(/images/spinner.gif) no-repeat top right; }
 .rounded { margin: 1.5em; padding: 0em; }
 
@@ -41,7 +41,8 @@ body { background-color: #CDB380; }
 #header ul { float: right; margin: 0 0 0 0; }
 #header li { display: inline; }
 #sidebar { background-color: #E8DDCB; margin: 1em; padding: 0em; width: 42em; float: left; }
-#results_container { margin: 1em 0 1em 0; }
+#results_container { margin: 0em 0 0em 0; }
+#results { margin: 0em 0 0em 0; }
 #subscriptions { margin: 1em 0 1em 0; }
 #content { background-color: #E8DDCB; margin: 1em; padding: 0em; width: 542px; float: left; }
 #drop { min-height: 7.5em; border: 1px dashed black; padding: 0.5em 1em 0 1em; }
