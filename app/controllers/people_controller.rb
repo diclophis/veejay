@@ -2,6 +2,7 @@
 
 class PeopleController < ApplicationController
   def login
+    return authenticate(current_facebook_person) if current_facebook_person
     @new_cookie_flag = false
     if params["openid.mode"] then
       response = openid_consumer.complete(openid_params, url_for(:login))
@@ -39,6 +40,10 @@ class PeopleController < ApplicationController
   end
   def logout
     cookies[:personal_header] = nil
+    if current_facebook_person then
+      revoked = fbsession.auth_revokeAuthorization
+      logger.debug(revoked)
+    end
     reset_session
     return redirect_to(root_url)
   end
@@ -57,7 +62,16 @@ class PeopleController < ApplicationController
         end
       end
     elsif request.post? then
-      if params[:person] then
+      if params[:facebook_person] then
+        logout_keeping_session!
+        facebook_person.register! if facebook_person && facebook_person.valid?
+        success = facebook_person && facebook_person.valid?
+        if success && facebook_person.errors.empty?
+          flash[:success] = "Thanks!  Please check your email to verify your email address."
+          return authenticate(facebook_person)
+        else
+        end
+      elsif params[:person] then
         if pending_person.valid? then
           begin
             response = openid_consumer.begin(pending_person.identity_url)
@@ -87,6 +101,13 @@ class PeopleController < ApplicationController
       pending_person.identity_url = "Click the OpenID button to pick your service"
       pending_person.nickname = session[:nickname]
       pending_person.email = session[:email]
+      current_facebook_person
+      facebook_person
+      if request.xhr? then
+        return render({:partial => "people/facebook"})
+      elsif current_facebook_person
+        return redirect_to(login_url)
+      end
     end
   end
   def activate
@@ -157,6 +178,18 @@ class PeopleController < ApplicationController
         @person.identity_url = params["openid.identity"] if @person.identity_url.blank?
       end
       @person
+    end
+    def facebook_person
+      unless @facebook_person
+        @facebook_person = session[:facebook_person] or Person.new
+        if params[:facebook_person] then
+          @facebook_person.facebook_user_id = params[:facebook_person][:facebook_user_id]
+          @facebook_person.nickname = params[:facebook_person][:nickname]
+          @facebook_person.email = params[:facebook_person][:email]
+          @facebook_person.biography = params[:facebook_person][:biography]
+        end
+      end
+      @facebook_person
     end
     def remembered_pending_person
       remembered = session[:pending_person] || Person.new

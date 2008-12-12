@@ -19,8 +19,17 @@ push_to_facebook = function () {
 }
 
 on_facebook_register = function () {
-  alert('wangchung');
 };
+
+on_facebook_login = function () {
+  new Ajax.Updater('facebook', "/register", {
+    evalScripts: true,
+    method: 'get',
+    onComplete: function () {
+      window.location.hash = "facebook";
+    }
+  });
+}
 
 attach_to_confirmable_buttons = function () {
   $$('.confirm').each(function(confirmable) {
@@ -403,15 +412,6 @@ Event.observe(window, 'load', function () {
   if ($("facebook")) {
     FB.ensureInit(function() {
       FB.Facebook.get_sessionState().waitUntilReady(function(session) {
-        alert('wtf');
-        //var is_now_logged_into_facebook = session ? true : false;
-        // if the new state is the same as the old (i.e., nothing changed)
-        // then do nothing
-        //if (is_now_logged_into_facebook == already_logged_into_facebook) {
-        //  return;
-        //}
-    //// otherwise, refresh to pick up the state change
-    //refresh_page();
       });
     });
   } 

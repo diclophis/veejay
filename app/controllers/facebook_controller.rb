@@ -33,8 +33,6 @@ class FacebookController < ApplicationController
 
   def xd_receiver
     if request.post? then
-
-    
     elsif params[:session] then
       facebook_session = ActiveSupport::JSON.decode(params[:session])
       fbsession.activate_with_previous_session(facebook_session["session_key"])
@@ -47,11 +45,12 @@ class FacebookController < ApplicationController
         current_person.facebook_user_id = facebook_session["uid"]
         current_person.save!
       else
-        @person = Person.new
-        @person.nickname = @user.first_name.to_s
-        @person.email = @user.proxied_email.to_s
-        @person.biography = @user.music.to_s
-        logger.debug(@person)
+        facebook_person = Person.new
+        facebook_person.facebook_user_id = facebook_session["uid"]
+        facebook_person.nickname = @user.first_name.to_s
+        facebook_person.email = @user.proxied_email.to_s
+        facebook_person.biography = @user.music.to_s
+        session[:facebook_person] = facebook_person
       end
     end
   end

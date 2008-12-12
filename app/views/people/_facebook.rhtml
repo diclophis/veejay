@@ -1,29 +1,34 @@
-<a href="#" onclick="FB.Connect.requireSession(); return false;" >
-<img id="fb_login_image" src="http://static.ak.fbcdn.net/images/fbconnect/login-buttons/connect_light_medium_long.gif" alt="Connect"/>
-</a>
-<a href="#" onclick="push_to_facebook();">wtf</a>
-<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
-<script type="text/javascript">
-//  FB_RequireFeatures(["XFBML", "Api", "Connect", "Integration"], function () {
-    FB.init("974a573be253946712b3d0ab6f3c5c85", "http://veejay.tv/facebook/xd_receiver");
-//  });
-</script>
-
-<!--
-  <a href="#" onclick="FB.Connect.requireSession(function() {alert('wtf');}); return false;">
-  <img id="fb_login_image" src="http://static.ak.fbcdn.net/images/fbconnect/login-buttons/connect_light_medium_long.gif" alt="Connect" />
-  </a>
-  <fb:login-button onlogin='window.location="/home.php";'></fb:login-button>
+<% if current_facebook_person then %>
+  <p>
+    Please wait while you are logged in...
+  </p>
+  <script type="text/javascript">window.location = "<%=login_url%>";</script>
+<% elsif @facebook_person then %>
+  <p>
+    Please complete this form
+  </p>
+  <% form_tag({:anchor => "facebook"}) do %>
+    <%=error_messages_for(:facebook_person, :header_message => "Fail")%>
+    <ul>
+       <% fields_for(:facebook_person) { |person| %>
+        <%=person.hidden_field(:email)%>
+        <%=person.hidden_field(:facebook_user_id)%>
+        <li>
+          <%=person.label(:nickname)%>
+          <%=person.text_field(:nickname)%>
+        </li>
+      <% } %>
+      <li>
+        <%= submit_tag("Register")%>
+        or
+        <%=link_to(:login, login_url)%>
+      </li>
+    </ul>
+  <% end %>
+<% else %>
+  <fb:login-button onlogin="on_facebook_login();"></fb:login-button>
   <script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
   <script type="text/javascript">
-    FB_RequireFeatures(["XFBML", "Api", "Connect"], function () {
-      alert('init facebook');
-      FB.Facebook.init("974a573be253946712b3d0ab6f3c5c85", "http://veejay.tv/facebook/xd_receiver");
-      FB.Connect.ifUserConnected(function () {
-        alert('abc');
-      }, function () {
-        alert('wtf');
-      });
-    });
+    FB.init("974a573be253946712b3d0ab6f3c5c85", "http://veejay.tv/facebook/xd_receiver");
   </script>
--->
+<% end %>

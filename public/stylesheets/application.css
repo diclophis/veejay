@@ -5,7 +5,7 @@ a { text-decoration: none; outline: none; }
 a { outline: none; }
 form,div,li,h1,h2,h3,h4,h5,h6,p,a { font-family: sans-serif; margin: 0; padding: 0; }
 ul { list-style: none; margin: 0 0 0 0; padding: 0; }
-li { margin: 0 0 0.5em 0; }
+li { margin: 0 0 0.75em 0; }
 p, pre { font-size: 1.25em; margin: 0 0 0.5em 0; }
 h1 { font-size: 2.25em; color: #031634; }
 h2 { font-size: 2.0em; margin: 0 0 0.5em 0; }
@@ -14,7 +14,8 @@ h4 { font-size: 1.5em; }
 img, iframe { border: 0; margin: 0; padding: 0; }
 label { margin: 0 0 0.5em 0; clear: right; display: block; font-weight: bold; }
 body { font-size: 62.5%; width: 101em; margin: 0; padding: 0.5em; -webkit-text-size-adjust: none; }
-input, textarea { width: 75%; }
+input[type="text"], input[type="password"], textarea { width: 75%; }
+input[type="checkbox"] { margin: 0px 0 0px 0; padding: 0 0 0 0; border: 0px solid blue; vertical-align: middle; }
 textarea.copypaste { width: 100%; }
 input[type="submit"] { width: 22%; }
 li input[type="submit"] { margin: 0 0 0 0; }
@@ -42,7 +43,7 @@ body { background-color: #CDB380; }
 #header li { display: inline; }
 #sidebar { background-color: #E8DDCB; margin: 1em; padding: 0em; width: 42em; float: left; }
 #results_container { margin: 0em 0 0em 0; }
-#results { margin: 0em 0 0em 0; }
+#results { margin: 1em 0 0em 0; }
 #subscriptions { margin: 1em 0 1em 0; }
 #content { background-color: #E8DDCB; margin: 1em; padding: 0em; width: 542px; float: left; }
 #drop { min-height: 7.5em; border: 1px dashed black; padding: 0.5em 1em 0 1em; }

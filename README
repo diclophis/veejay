@@ -192,3 +192,11 @@ http://www.feedforall.com/social-bookmarking-icons.htm
 * html .pagination { height: 1%; }
 *:first-child+html .pagination { overflow: hidden; }
 */
+  <a href="#" onclick="FB.Connect.requireSession(); return false;" >
+  <img id="fb_login_image" src="http://static.ak.fbcdn.net/images/fbconnect/login-buttons/connect_light_medium_long.gif" alt="Connect"/>
+  </a>
+  <a href="#" onclick="push_to_facebook();">wtf</a>
+
+  <fb:login-button onlogin="on_facebook_register();"></fb:login-button>
+  <script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
+  <script type="text/javascript">FB_RequireFeatures(["XFBML"],function(){FB.Facebook.init("974a573be253946712b3d0ab6f3c5c85", "/facebook/xd_receiver");});</script>

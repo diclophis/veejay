@@ -15,6 +15,7 @@ class Person < ActiveRecord::Base
   validates_length_of :nickname, :within => 3..40
   validates_format_of :nickname, :with => /^[a-zA-Z0-9]+$/, :message => "may only be letters (a-z,A-Z) and numbers (0-9)"
   validates_uniqueness_of :nickname
+  validates_uniqueness_of :facebook_user_id
   validates_each :nickname do |record, key, value|
     record.errors.add(key, "is reserved") if %w{redirect logout pop activate stylesheets images javascripts dashboard register login about page update edit subscribe sets rss create search}.include?(value)
   end
@@ -43,7 +44,7 @@ class Person < ActiveRecord::Base
     transitions :from => :suspended, :to => :passive
   end
   def password_required?
-    if identity_url.blank? then
+    if identity_url.blank? and facebook_user_id.blank? then
       (crypted_password.blank? || !password.blank?)
     else
       false

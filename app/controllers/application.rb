@@ -50,8 +50,32 @@ class ApplicationController < ActionController::Base
       @new_cookie_flag = (params[:remember_me] == "1")
       handle_remember_cookie!(@new_cookie_flag)
       flash[:success] = "Logged in successfully"
-      cookies[:personal_header] = {:expires => 24.hours.from_now, :value => render_to_string({:partial => "shared/personal_header"})}
+      if @new_cookie_flag then
+        cookies[:personal_header] = {:expires => 24.hours.from_now, :value => render_to_string({:partial => "shared/personal_header"})}
+      else
+        cookies[:personal_header] = {:value => render_to_string({:partial => "shared/personal_header"})}
+      end
       redirect_back_or_default(dashboard_url)
+    end
+    helper_method :current_facebook_person
+    def current_facebook_person
+      begin
+        unless @current_facebook_person
+          logger.debug(cookies.inspect)
+          logger.debug(fbsession.inspect)
+          @facebook_user = fbsession.users_getInfo(
+            :uids => fbsession.session_user_id,
+            :fields => ["first_name","last_name", "pic_square", "status"]
+          )
+          if Person.exists?(:facebook_user_id => fbsession.session_user_id) then
+            @current_facebook_person = Person.find_by_facebook_user_id(fbsession.session_user_id)
+          end
+        end
+        return @current_facebook_person
+      rescue => problem
+        logger.debug(problem)
+      end
+      nil
     end
 =begin
     def remember_params
