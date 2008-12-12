@@ -1,24 +1,15 @@
 <ul>
   <li>
-    Hello
+    <%=link_to(current_person.nickname, profile_url(current_person.nickname))%>
   </li>
   <li>
-    <%=link_to(current_person.nickname, profile_url(current_person))%>
-  </li>
-  <li>
-    you can
-  </li>
-  <li>
-    <%=link_to("create a new set", create_url)%>
-  </li>
-  <li>
-    or view your
+    |
   </li>
   <li>
     <%=link_to(:dashboard, dashboard_url)%>
   </li>
   <li>
-    or
+    |
   </li>
   <li>
     <%=link_to(:logout, logout_url)%>

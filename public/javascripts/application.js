@@ -16,9 +16,21 @@ push_to_facebook = function () {
     //alert(w);
     //alert('done');
   }); 
-}
+};
 
 on_facebook_register = function () {
+};
+
+attach_to_share_episode_buttons = function () {
+  $$('a.share_episode_button').each(function(share_episode_button) {
+    Event.observe(share_episode_button, 'click', function(clicked) {
+      Event.stop(clicked);
+      var post_data = {"title":"wang chung", "episode_url":"http://veejay.tv/diclophis15/watch/hmm", "videos":"7", "description":"wang chubng", "duration":"07:11", "profile_url":"http://veejay.tv/diclophis"};
+      FB.Connect.showFeedDialog(58089846128, post_data, null, null, FB.FeedStorySize.full, FB.RequireConnect.promptConnect, function (w) {
+        alert('shared');
+      });
+    });
+  });
 };
 
 on_facebook_login = function () {
@@ -29,7 +41,7 @@ on_facebook_login = function () {
       window.location.hash = "facebook";
     }
   });
-}
+};
 
 attach_to_confirmable_buttons = function () {
   $$('.confirm').each(function(confirmable) {
@@ -417,4 +429,6 @@ Event.observe(window, 'load', function () {
   } 
 
   attach_to_parent_add_remote_video_buttons();
+  attach_to_share_episode_buttons()
+
 });
