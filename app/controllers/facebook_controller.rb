@@ -8,9 +8,15 @@ class FacebookController < ApplicationController
   end
   def index
     #render_with_facebook_debug_panel
-  @user = fbsession.users_getInfo(
-    :uids => fbsession.session_user_id,
-    :fields => ["first_name","last_name", "pic_square", "status"] )
+    @user = fbsession.users_getInfo(
+      :uids => fbsession.session_user_id,
+      :fields => ["first_name","last_name", "pic_square", "status"]
+    )
+    if current_facebook_person then
+      redirect_to(dashboard_url)
+    else
+      redirect_to(register_url({:anchor => "facebook"}))
+    end
   end
   def debug
     return render_with_facebook_debug_panel

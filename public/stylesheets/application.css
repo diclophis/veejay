@@ -178,7 +178,7 @@ td { vertical-align: top; }
   width: 150px;
 }
  
-.rating li.current-rating {
+.rating li.current_rating {
   position: absolute;
   display: block;
   height: 25px;

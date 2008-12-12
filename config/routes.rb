@@ -49,6 +49,7 @@ ActionController::Routing::Routes.draw do |map|
   map.redirect "/redirect/:permalink", :controller => "welcome", :action => "redirect"
 
   map.episode "/:nickname/watch/:slug", :controller => "episode", :action => "watch"
+  map.rate "/:nickname/rate/:slug/:rating", :controller => "episode", :action => "rate"
   map.share "/:nickname/share/:slug", :controller => "dashboard", :action => "share"
   map.pop '/pop', :controller => "episode", :action => "pop"
 

@@ -1,5 +1,6 @@
 <% content_for :tagline do %>
   VeeJay.tv - What MTV used to be...
+  <%=link_to(image_tag("icon/feed.png"), rss_url)%>
 <% end %>
 <% content_for :instructions do %>
   You can become a VeeJay too. Just <%=link_to(:register, register_url)%> to mix up your own sets!
@@ -8,6 +9,11 @@
   <h2>
     Recently Created Sets
   </h2>
+  <ul>
+    <% @recent_episodes.each { |episode| %>
+      <%=render({:partial => "shared/episode", :locals => {:episode => episode, :editable => false, :url => episode_url(*episode.to_param), :nickname => true}})%>
+    <% } %>
+  </ul>
 <% end %>
 <h2>
   Hottest Set This Week

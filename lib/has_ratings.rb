@@ -1,15 +1,35 @@
   module Ratings
     module ActionView
-      def rating_stars(object, person, url)
-        rating = object.rating
-        css_names = %w(zero one two three four five)
-        css_rating = css_names[rating.to_i]
-        diff = ('%.1f' % (rating.to_f - rating.to_i)).to_f
-        if (0.1..0.5).include?(diff)
-          css_rating << '-half'
-        elsif (0.6..0.9).include?(diff)
-          css_rating = css_names[rating.to_i + 1]
-        end
+      def rating_stars(episode, person)
+        rating = episode.rating
+        css_names = %w(one two three four five)
+        lis = ""
+        css_names.each_with_index { |rating_name, value|
+          value += 1
+          css_class = rating_name
+          logger.debug(rating_name)
+          logger.debug(rating)
+          logger.debug(value)
+          if rating.to_i == value then
+            css_class += " current_rating"
+            css_style = "width: #{(rating * 30).to_i}px;"
+          else
+            css_style = ""
+          end
+
+          lis += content_tag("li", link_to(rating, rate_url(*episode.to_param + [value]), {:class => css_class}), {:class => css_class, :style => css_style})
+        }
+        content_tag("ul", lis, {:class => "rating"})
+      end
+#        css_rating = css_names[rating.to_i]
+#        diff = ('%.1f' % (rating.to_f - rating.to_i)).to_f
+#        if (0.1..0.5).include?(diff)
+#          css_rating << '-half'
+#        elsif (0.6..0.9).include?(diff)
+#          css_rating = css_names[rating.to_i + 1]
+#        end
+        
+=begin
         if object.rated?(person)
           %(
             <ul class="rating #{css_rating} rated">
@@ -21,17 +41,20 @@
             </ul>
           )
         else
+=end
+=begin
           %(
             <ul class="rating #{css_rating}">
-              <li class="one"><a class="one" href="#{url}?r=1" title="1 Star" rel="no-follow">1</a></li>
-              <li class="two"><a class="two" href="#{url}?r=2" title="2 Stars" rel="no-follow">2</a></li>
-              <li class="three"><a class="three" href="#{url}?r=3" title="3 Stars" rel="no-follow">3</a></li>
-              <li class="four"><a class="four" href="#{url}?r=4" title="4 Stars" rel="no-follow">4</a></li>
-              <li class="five"><a class="five" href="#{url}?r=5" title="5 Stars" rel="no-follow">5</a></li>
+              <li class="one"><a class="one" href="#{rate_url(*episode.to_param + [1])}" title="1 Star" rel="no-follow">1</a></li>
+              <li class="two"><a class="two" href="#{rate_url(*episode.to_param + [2])}" title="2 Stars" rel="no-follow">2</a></li>
+              <li class="three current_rating" style="width: 105px; "><a class="three" href="#{rate_url(*episode.to_param + [3])}" title="3 Stars" rel="no-follow">3</a></li>
+              <li class="four"><a class="four" href="#{rate_url(*episode.to_param + [4])}" title="4 Stars" rel="no-follow">4</a></li>
+              <li class="five"><a class="five" href="#{rate_url(*episode.to_param + [5])}" title="5 Stars" rel="no-follow">5</a></li>
             </ul>
           )
-        end
+#        end
       end
+=end
     end
     
     module ActiveRecord
@@ -73,10 +96,10 @@
             }
           })
         end
-        def rate(options)
-          options[:person_id] = options.delete(:person).id if options[:person]
-          self.ratings.create(options)
-        end
+        #def rate(options)
+        #  options[:person_id] = options.delete(:person).id if options[:person]
+        #  self.ratings.create(options)
+        #end
         def find_people_that_rated(options={})
           options = {
             :limit => 10,

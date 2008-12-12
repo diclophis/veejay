@@ -7,7 +7,7 @@ xml.rss :version => "2.0" do
     @recent_episodes.each { |episode|
       xml.item do
         xml.title(episode.title)
-        xml.description(link_to(content_tag(:p, episode.description) + image_tag(episode.videos.first.yahoo_video.images.first.url), episode_url(*episode.to_param)))
+        xml.description(link_to(content_tag(:p, episode.description) + image_tag(episode.videos.first.remote_video.image_url), episode_url(*episode.to_param)))
         xml.pubDate(episode.created_at.to_s(:rfc822))
         xml.link(episode_url(*episode.to_param))
       end

@@ -34,18 +34,7 @@
 <% else %>
   <ul>
     <% @episodes.each { |episode| %>
-      <li>
-        <table>
-          <tr>
-            <td>
-              <%=image_tag(episode.videos.first.remote_video.image_url, {:width => 120})%>
-            </td>
-            <td>
-              <%=link_to(episode.title, episode_url(*episode.to_param))%>
-            </td>
-          </tr>
-        </table>
-      </li>
+      <%=render({:partial => "shared/episode", :locals => {:episode => episode, :editable => false, :url => episode_url(*episode.to_param), :nickname => false}})%>
     <% } %>
   </ul>
 <% end %>
