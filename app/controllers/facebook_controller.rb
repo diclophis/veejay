@@ -43,10 +43,16 @@ class FacebookController < ApplicationController
         :fields => [
           "first_name", "profile_url", "proxied_email", "pic_square", "music"
         ])
-      @person = Person.new
-      @person.nickname = @user.first_name.to_s
-      @person.email = @user.proxied_email.to_s
-      @person.biography = @user.music.to_s
+      if current_person then
+        current_person.facebook_user_id = facebook_session["uid"]
+        current_person.save!
+      else
+        @person = Person.new
+        @person.nickname = @user.first_name.to_s
+        @person.email = @user.proxied_email.to_s
+        @person.biography = @user.music.to_s
+        logger.debug(@person)
+      end
     end
   end
 

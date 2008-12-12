@@ -130,3 +130,45 @@ public set sharing function
           </li>
         </ul>
       <% end %>
+
+IE style
+flash messages
+add existing video
+roundie padding
+
+
+    <%  current_uri = u(request.protocol << request.host_with_port << request.request_uri)
+        title = u(@title)
+ 
+        bookmarklets = {
+            :delicious =>   ['del.icio.us', 'delicious.gif' ,'http://del.icio.us/post?url={{url}}&amp;title={{url_encoded_title}}'],
+            :digg =>        ['digg it', 'digg.gif', 'http://digg.com/submit?phase=2&amp;url={{url}}&amp;title={{url_encoded_title}}'],
+            :spurl =>       ['spurl', 'spurl.gif', 'http://www.spurl.net/spurl.php?title={{url_encoded_title}}&amp;url={{url}}'],
+         #  :wists =>       ['wists', 'wists.gif', 'http://wists.com/r.php?c=&amp;r={{url}}&amp;title={{url_encoded_title}}'],
+            :simpy =>       ['simpy', 'simpy.gif', 'http://www.simpy.com/simpy/LinkAdd.do?href={{url}}&amp;title={{url_encoded_title}}'],
+         #  :newsvine =>    ['newsvine', 'newsvine.gif', 'http://www.newsvine.com/_tools/seed&amp;save?u={{url}}&amp;h={{url_encoded_title}}'],
+            :blinklist =>   ['blinklist', 'blinklist.gif', 'http://www.blinklist.com/index.php?Action=Blink/addblink.php&amp;Description=&amp;Url={{url}}&amp;Title={{url_encoded_title}}'],
+            :furl =>        ['furl', 'furl.gif', 'http://www.furl.net/storeIt.jsp?u={{url}}&amp;t={{url_encoded_title}}'],
+            :reddit =>      ['reddit', 'reddit.gif', 'http://reddit.com/submit?url={{url}}&amp;title={{url_encoded_title}}'],
+         #  :fark =>        ['fark','fark.gif', 'http://cgi.fark.com/cgi/fark/edit.pl?new_url={{url}}&amp;new_comment={{url_encoded_title}}&amp;linktype={{category}}'],
+            :blogmarks =>   ['blogmarks', 'blogmarks.gif', 'http://blogmarks.net/my/new.php?mini=1&amp;simple=1&amp;url={{url}}&amp;title={{url_encoded_title}}'],
+            :yahoo =>       ['yahoo', 'yahoo.gif', 'http://myweb2.search.yahoo.com/myresults/bookmarklet?u={{url}}&amp;t={{url_encoded_title}}'],
+         #  :smarking =>    ['smarking', 'smarking.gif', 'http://smarking.com'],
+         #  :segnalo =>     ['segnalo', 'segnalo.gif', 'http://segnalo.com/post.html.php?url={{url}}&amp;title={{url_encoded_title}}'],
+            :magnolia =>    ['magnolia', 'magnolia.gif', 'http://ma.gnolia.com/bookmarklet/add?url={{url}}&amp;title={{url_encoded_title}}']
+        }
+ 
+     %>
+ 
+   <div>
+      <% bookmarklets.each_value { |bookmarklet|
+            bookmarklet[2].gsub!(/\\{\\{url\\}\\}/, current_uri)
+            bookmarklet[2].gsub!(/(\\{\\{url_encoded_title\\}\\})|(\\{\\{title\\}\\})/, title) -%>
+ 
+        <p><a href="<%= bookmarklet[-1] %>" title="<%= bookmarklet[0] %>:<%= title %>">
+            <img src="/images/social/<%= bookmarklet[1] %>" alt="<%= bookmarklet[0] %>" /> <%= bookmarklet[0] %>
+        </a></p>
+      <% } %>
+   </div>
+
+http://www.feedforall.com/social-bookmarking-icons.htm

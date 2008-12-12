@@ -5,6 +5,19 @@ var videos;
 var list;
 var youtube_remote_id;
 
+push_to_facebook = function () {
+//626675667
+//57768276128
+//FB.FeedStorySize.oneLine
+//FB.RequireConnect.promptConnect
+//var comment_data = {"verb":'commented on the video ', "noun":'Sample Video', "body":'Here is text for the sample body.', "fullbody":'Here is the sample body text for a full story.', "images":[{'src':'http://www.somethingtoputhere.com/therunaround/images/runaround_image.jpg', 'href':'http://www.facebook.com'}]};
+  var post_data = {"title":"wang chung"};
+  FB.Connect.showFeedDialog(57768276128, post_data, null, null, FB.FeedStorySize.oneLine, FB.RequireConnect.promptConnect, function (w) {
+    //alert(w);
+    //alert('done');
+  }); 
+}
+
 on_facebook_register = function () {
   alert('wangchung');
 };
@@ -46,7 +59,7 @@ attach_to_add_remote_video_buttons = function () {
         new Control.Tabs(tabs);  
       });
       Sortable.destroy('drop');
-      Sortable.create('drop',{containment: ['results', 'drop'], dropOnEmpty: true, constraint: false});
+      Sortable.create('drop',{handle:"handle_remote_video_button", containment: ['results', 'drop'], dropOnEmpty: true, constraint: false});
     });
   });
 }
@@ -212,7 +225,10 @@ function readCookie(name) {
 
 
 Event.observe(window, 'load', function () {
-  $$("#person_nickname").each(function(element) {
+  //$$("#person_nickname").each(function(element) {
+  //  element.focus();
+  //});
+  $$("#artist_or_song").each(function(element) {
     element.focus();
   });
   if ($('pause_button')) {
@@ -340,7 +356,7 @@ Event.observe(window, 'load', function () {
   if ($('emails')) {
     list = new FacebookList('emails', 'autocomplete', {
       newValues: true,
-      fetchFile: '/email_autocompletions'
+      fetchFile: '/dashboard/email_autocompletions'
     });
     Event.observe($('share_form'), 'submit', function(submitted) {
       list.update();
@@ -354,9 +370,26 @@ Event.observe(window, 'load', function () {
 
   attach_to_confirmable_buttons();
 
-  DD_roundies.addRule("ul.tabs li a", 10);
+  //DD_roundies.addRule("ul.tabs li", 10);
+  //DD_roundies.addRule("ul.tabs li.tab a", 10);
+
   DD_roundies.addRule("#header", 10);
   DD_roundies.addRule("#sidebar", 10);
   DD_roundies.addRule("#content", 10);
 
+  if ($("facebook")) {
+    FB.ensureInit(function() {
+      FB.Facebook.get_sessionState().waitUntilReady(function(session) {
+        alert('wtf');
+        //var is_now_logged_into_facebook = session ? true : false;
+        // if the new state is the same as the old (i.e., nothing changed)
+        // then do nothing
+        //if (is_now_logged_into_facebook == already_logged_into_facebook) {
+        //  return;
+        //}
+    //// otherwise, refresh to pick up the state change
+    //refresh_page();
+      });
+    });
+  } 
 });

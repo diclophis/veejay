@@ -52,9 +52,7 @@
   <% end %>
 </div>
 <div id="facebook" style="display: none;">
-  <fb:login-button onlogin="on_facebook_register();"></fb:login-button>
-  <script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
-  <script type="text/javascript">FB_RequireFeatures(["XFBML"],function(){FB.Facebook.init("974a573be253946712b3d0ab6f3c5c85", "/facebook/xd_receiver");});</script>
+  <%=render({:partial => "facebook"})%>
 </div>
 <div id="openid" style="display: none;">
   <% form_tag({:anchor => "openid"}) do %>
