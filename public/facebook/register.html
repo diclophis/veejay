@@ -1,0 +1,16 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+  <head>
+    <script type="text/javascript">
+      on_facebook_register = function () {
+        alert('wangchung');
+      };
+    </script>
+  </head>
+  <body>
+    <script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
+    <fb:login-button size="large" background="white" length="long" onlogin="on_facebook_register();"></fb:login-button>
+    <script type="text/javascript">
+      FB.init("974a573be253946712b3d0ab6f3c5c85", "/facebook/xd_receiver");
+    </script>
+  </body>
+</html>

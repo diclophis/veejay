@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+  <head>
+  </head>
+  <body>
+    <script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
+    <!--
+    <a href="#" onclick="FB.Connect.requireSession(); return false;">wang</a>
+    <a href="#" onclick="javascript: FB.Connect.showPermissionDialog('offline_access');">wang</a>
+    -->
+    <fb:login-button size="large" background="white" length="long" onlogin="window.location='/dashboard';"></fb:login-button>
+<!--
+    <fb:login-button onclick="FB.Connect.requireSession(); return false;"></fb:login-button>
+-->
+    <script type="text/javascript">
+      FB.init("974a573be253946712b3d0ab6f3c5c85", "/facebook/xd_receiver.htm");
+      //FB.Connect.ifUserConnected("/wang", "/chung");
+      //FB.Connect.logout or FB.Connect.logoutAndRedirect. 
+      //auth.revokeAuthorization 
+
+/*
+      FB.Connect.get_sessionState().waitUntilReady(function(status) {
+        alert(status);
+      }); 
+*/
+    </script>
+  </body>
+</html>
