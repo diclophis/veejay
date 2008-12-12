@@ -1,0 +1,31 @@
+
+<li class="episode" id="episode_<%=episode.id%>">
+  <table>
+    <tr>
+      <% if editable then %>
+        <td>
+          <%=link_to(image_tag("icon/pencil.png"), edit_url(episode.id), {:title => "edit"})%>
+          <%=link_to(image_tag("icon/control.png"), episode_url(*episode.to_param), {:title => "watch"})%>
+          <%=link_to(image_tag("icon/mail.png"), share_url(*episode.to_param), {:title => "share"})%>
+          <%=link_to(image_tag("icon/cross_circle.png"), delete_url(episode.id), {:class => "confirm", :title => "delete"})%>
+        </td>
+      <% end %>
+      <td>
+        <%=link_to(image_tag(episode.videos.first.remote_video.image_url, {:width => 120}), url)%>
+      </td>
+      <td class="remote_video_info">
+        <p>
+          <%=link_to(episode.title, url)%>
+          <br/>
+          <%=episode.videos.length%> videos
+          <br/>
+          <%=formatted_duration(episode.total_duration)%>
+          <% if nickname then %>
+            <br/>
+            <%=link_to(episode.person.nickname, profile_url(episode.person))%>
+          <% end %>
+        </p>
+      </td>
+    </tr>
+  </table>
+</li>

@@ -32,16 +32,20 @@ class EpisodeController < ApplicationController
       flash[:notice] = "Set Not Found"
       return redirect_to(root_url)
     end
-    rating_value = RatingValue[params[:rating].to_i]
-    rating = Rating.new({
-      :rater_id => current_person.id,
-      :rater_type => current_person.class.to_s,
-      :ratable_id => @episode.id,
-      :ratable_type => @episode.class.to_s,
-      :value_id => rating_value.id
-    })
-    rating.save!
-    flash[:success] = "Rated!"
+    unless @episode.rated?(current_person)
+      rating_value = RatingValue[params[:rating].to_i]
+      rating = Rating.new({
+        :rater_id => current_person.id,
+        :rater_type => current_person.class.to_s,
+        :ratable_id => @episode.id,
+        :ratable_type => @episode.class.to_s,
+        :value_id => rating_value.id
+      })
+      rating.save!
+      @episode.rating = @episode.rating!
+      @episode.ratings_count = Rating.count({:conditions => ["ratable_id = ? and ratable_type = ?", @episode.id, @episode.class.to_s]})
+      @episode.save!
+    end
     redirect_to(episode_url(*@episode.to_param))
   end
 end
