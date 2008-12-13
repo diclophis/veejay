@@ -2,7 +2,7 @@
 
 class Episode < ActiveRecord::Base
   belongs_to :person
-  has_many :videos
+  has_many :videos, :dependent => :destroy
   has_ratings
   before_validation :normalize_slug
   validates_presence_of :title

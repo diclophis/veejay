@@ -18,11 +18,13 @@
 <h2>
   Hottest Set This Week
 </h2>
-<%=render({:partial => "shared/player"})%>
-<ul class="grid">
-  <% @episode.videos.each { |video| %>
-    <li class="video" id="video_<%=video.remote_video.remote_id%>">
-      <%=link_to(image_tag(video.remote_video.image_url, {:width => "120"}), "#", {:title => video.remote_video.title})%>
-    </li>
-  <% } %>
-</ul>
+<% if @episode then %>
+  <%=render({:partial => "shared/player"})%>
+  <ul class="grid">
+    <% @episode.videos.each { |video| %>
+      <li class="video" id="video_<%=video.remote_video.remote_id%>">
+        <%=link_to(image_tag(video.remote_video.image_url, {:width => "120"}), "#", {:title => video.remote_video.title})%>
+      </li>
+    <% } %>
+  </ul>
+<% end %>

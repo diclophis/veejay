@@ -1,6 +1,7 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 var last_video = current_video = 0;
+var auto = false;
 var videos;
 var list;
 var youtube_remote_id;
@@ -146,19 +147,19 @@ play_video = function () {
       flashvars.shareEnabled = '0';
       flashvars.enableFullScreen = '0';
       flashvars.controlsEnable = '1';
-      flashvars.autoStart = '1';
+      flashvars.autoStart = (auto) ? '1' : '0';
       flashvars.eh = 'yahoo_event_handler';
       swfobject.embedSWF("http://d.yimg.com/cosmos.bcst.yahoo.com/up/fop/embedflv/swf/fop.swf", "player", "512", "332", "9.0.0", false, flashvars, params, attributes);
     break;
     case "mtv":
       var flashvars = {};
-      flashvars.autoPlay = 'true';
+      flashvars.autoPlay = auto ? 'true' : 'false';
       swfobject.embedSWF("http://media.mtvnservices.com/mgid:uma:video:api.mtvnservices.com:" + remote_id, "player", "512", "332", "9.0.0", false, flashvars, params, attributes);
     break;
     case "youtube":
       var flashvars = {};
       youtube_remote_id = remote_id;
-      swfobject.embedSWF("http://www.youtube.com/v/" + remote_id + "&enablejsapi=1&playerapiid=" + attributes.id + "&autoplay=1&rel=0", "player", "512", "332", "9.0.0", false, flashvars, params, attributes);
+      swfobject.embedSWF("http://www.youtube.com/v/" + remote_id + "&enablejsapi=1&playerapiid=" + attributes.id + "&autoplay=" + (auto ? '1' : '0') + "&rel=0", "player", "512", "332", "9.0.0", false, flashvars, params, attributes);
       //alert("http://www.youtube.com/v/" + remote_id + "&enablejsapi=1&playerapiid=" + attributes.id + "&autoplay=1&rel=0");
       //alert("http://www.youtube.com/v/" + remote_id + "&enablejsapi=1&playerapiid=the_player&autoplay=1&rel=0");
       //swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&playerapiid=" + attributes.id + "&rel=0", "player", "512", "332", "9.0.0", false, flashvars, params, attributes);
@@ -166,6 +167,7 @@ play_video = function () {
   }
   last_video = current_video;
   current_video++;
+  auto = true;
 }
 
 function youtube_state_change (state) {
