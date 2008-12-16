@@ -15,7 +15,7 @@ class Person < ActiveRecord::Base
   validates_length_of :nickname, :within => 3..40
   validates_format_of :nickname, :with => /^[a-zA-Z0-9]+$/, :message => "may only be letters (a-z,A-Z) and numbers (0-9)"
   validates_uniqueness_of :nickname
-  validates_uniqueness_of :facebook_user_id
+  validates_uniqueness_of :facebook_user_id, :if => Proc.new { |person| !person.facebook_user_id.blank? }
   validates_each :nickname do |record, key, value|
     record.errors.add(key, "is reserved") if %w{redirect logout pop activate stylesheets images javascripts dashboard register login about page update edit subscribe sets rss create search}.include?(value)
   end

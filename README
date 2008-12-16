@@ -200,3 +200,43 @@ http://www.feedforall.com/social-bookmarking-icons.htm
   <fb:login-button onlogin="on_facebook_register();"></fb:login-button>
   <script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
   <script type="text/javascript">FB_RequireFeatures(["XFBML"],function(){FB.Facebook.init("974a573be253946712b3d0ab6f3c5c85", "/facebook/xd_receiver");});</script>
+
+ul.tabs { /* general settings */
+text-align: left; /* set to left, right or center */
+margin: 1px 0 1px 0; /* set margins as desired */
+border-bottom: 1px solid #6c6; /* set border COLOR as desired */
+list-style-type: none;
+padding: 10px 10px 10px 10px; /* THIRD number must change with respect to padding-top (X) below */
+}
+
+ul.tabs li { /* do not change */
+  display: inline;
+}
+
+ul.tabs li.active {
+  border: 1px solid red;
+  padding: 0px;
+  margin: 0px;
+  background-color: #E8DDCB;
+}
+
+ul.tabs li.active a {
+color: #000; /* set selected tab link color as desired */
+position: relative;
+top: 1px;
+padding-top: 10px; /* must change with respect to padding (X) above and below */
+background-color: #E8DDCB;
+}
+
+ul.tabs li a { /* settings for all tab links */
+padding: 10px 10px 10px 10px; /* set padding (tab size) as desired; FIRST number must change with respect to padding-top (X) above */
+border: 1px solid #6c6; /* set border COLOR as desired; usually matches border color specified in #tabnav */
+color: #666; /* set unselected tab link color as desired */
+margin-right: 0px; /* set additional spacing between tabs as desired */
+text-decoration: none;
+border-bottom: none;
+}
+
+ul.tabs li a:hover { /* settings for hover effect */
+background: #fff; /* set desired hover color */
+}

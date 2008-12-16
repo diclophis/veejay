@@ -4,14 +4,14 @@
       <td>
         <ul class="tabs" id="tabs_for_video_<%=remote_video.remote_id%>" style="<%=((@episode) ? "" : "display: none;")%>">
           <li class="tab">
-            <%=link_to(image_tag("icon/magnifier_left.png") + "&nbsp;details", "#details_for_video_#{remote_video.remote_id}", {:class => "details_remote_video_button"})%>
+            <%=link_to(image_tag("icon/magnifier_left.png") + "", "#details_for_video_#{remote_video.remote_id}", {:class => "details_remote_video_button"})%>
           </li>
           <li class="tab">
-            <%=link_to(image_tag("icon/pencil_plus.png") + "&nbsp;comments", "#comments_for_video_#{remote_video.remote_id}", {:class => "comments_remote_video_button"})%>
+            <%=link_to(image_tag("icon/pencil_plus.png") + "", "#comments_for_video_#{remote_video.remote_id}", {:class => "comments_remote_video_button"})%>
           </li>
         </ul>
         <ul class="panels">
-          <li id="details_for_video_<%=remote_video.remote_id%>">
+          <li class="details" id="details_for_video_<%=remote_video.remote_id%>">
             <table>
               <tr>
                 <td>
@@ -38,7 +38,7 @@
               </tr>
             </table>
           </li>
-          <li id="comments_for_video_<%=remote_video.remote_id%>" style="<%=((@episode) ? "display: none;" : "display: none;")%>">
+          <li class="comments" id="comments_for_video_<%=remote_video.remote_id%>" style="<%=((@episode) ? "display: none;" : "display: none;")%>">
             <table>
               <tr>
                 <td>

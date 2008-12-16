@@ -80,6 +80,17 @@ attach_to_add_remote_video_buttons = function () {
         tabs.toggle();
         new Control.Tabs(tabs);  
       });
+    /*
+    alert('wtf');
+    remote_video.getElementsBySelector('.panels').each(function(panels) {
+      alert(panels);
+      Event.observe(panels, 'mouseover', function(moused_over) {
+        Event.stop(moused_over);
+        this.getElementsBySelector('li.details').invoke('toggle');
+        this.getElementsBySelector('li.comments').invoke('toggle');
+      });
+    });
+    */
       Sortable.destroy('drop');
       Sortable.create('drop',{handle:"handle_remote_video_button", containment: ['results', 'drop'], dropOnEmpty: true, constraint: false});
     });

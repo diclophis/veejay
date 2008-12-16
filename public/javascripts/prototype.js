@@ -5137,7 +5137,7 @@ Control.Tabs = Class.create({
 			afterChange: Prototype.emptyFunction,
 			hover: false,
 			linkSelector: 'li a',
-			setClassOnContainer: false,
+			setClassOnContainer: true,
 			activeClassName: 'active',
 			defaultTab: 'first',
 			autoLinkExternal: true,

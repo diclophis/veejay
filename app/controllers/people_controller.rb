@@ -70,6 +70,8 @@ class PeopleController < ApplicationController
           flash[:success] = "Thanks!  Please check your email to verify your email address."
           return authenticate(facebook_person)
         else
+          logger.debug("facebook error")
+          logger.debug(facebook_person.inspect)
         end
       elsif params[:person] then
         if pending_person.valid? then

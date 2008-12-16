@@ -13,7 +13,7 @@
           <td>
             <%=image_tag(@person.gravatar_url)%>
           </td>
-          <td>
+          <td class="puff">
             <p>
               <% unless @person.biography.blank? %>
                 <%=h(@person.biography)%>
