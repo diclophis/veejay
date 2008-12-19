@@ -3,19 +3,10 @@
     <%=link_to(current_person.nickname, profile_url(current_person.nickname))%>
   </li>
   <li>
-    |
-  </li>
-  <li>
     <%=link_to("create", create_url)%>
   </li>
   <li>
-    |
-  </li>
-  <li>
     <%=link_to(:dashboard, dashboard_url)%>
-  </li>
-  <li>
-    |
   </li>
   <li>
     <%=link_to(:logout, logout_url)%>

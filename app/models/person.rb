@@ -8,7 +8,7 @@ class Person < ActiveRecord::Base
   attr_accessible :nickname, :email, :identity_url, :password, :password_confirmation
   serialize :email_autocompletions
   has_many_friends
-  has_many :episodes
+  has_many :episodes, :dependent => :destroy
   validates_as_email :email
   validates_presence_of :email
   validates_presence_of :nickname

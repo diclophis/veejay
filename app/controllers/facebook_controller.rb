@@ -2,12 +2,13 @@
 
 class FacebookController < ApplicationController
   layout "facebook"
-  before_filter :require_facebook_login, :only => :index
+  #before_filter :require_facebook_login, :only => :index
   def finish_facebook_login
     #redirect_to(facebook_url)
   end
   def index
     #render_with_facebook_debug_panel
+=begin
     @user = fbsession.users_getInfo(
       :uids => fbsession.session_user_id,
       :fields => ["first_name","last_name", "pic_square", "status"]
@@ -17,27 +18,28 @@ class FacebookController < ApplicationController
     else
       redirect_to(register_url({:anchor => "facebook"}))
     end
+=end
   end
-  def debug
-    return render_with_facebook_debug_panel
-  end
-  #def require_configuration
-  #  @user = FacebookUser.find_by_user_id(fbsession.session_user_id)
-  #  redirect_to :action => :configure unless @user
-  #end
   
-  def configure
-    #@user = FacebookUser.find_or_initialize_by_user_id(fbsession.session_user_id)
-    #unless fbsession.session_expires
-    #  @user.infinite_session = fbsession.session_key
-    #  @user.save!
-    #end
+  def redirect
   end
 
   def authorize
   end
 
+  def remove
+  end
+
+#{\"session_key\":\"3.q8O6YtxM8F1FShOmlsVzqg__.86400.1229796000-5005911\",\"uid\":\"5005911\",\"expires\":1229796000,\"secret\":\"ymRyTEojXcDPhONIbQ_7LA__\",\"sig\":\"d8a98c693feb7770c244b0dc9fde4b77\"}", "controller"=>"facebook", "fb_login"=>nil, "fname"=>"_opener"}
+
   def xd_receiver
+    if request.post? then
+    elsif params[:session] then
+      facebook_session = ActiveSupport::JSON.decode(params[:session])
+      session[:facebook_user_id] = facebook_session["uid"]
+      session[:facebook_session] = facebook_session
+    end
+=begin
     if request.post? then
     elsif params[:session] then
       facebook_session = ActiveSupport::JSON.decode(params[:session])
@@ -59,6 +61,7 @@ class FacebookController < ApplicationController
         session[:facebook_person] = facebook_person
       end
     end
+=end
   end
 
 =begin

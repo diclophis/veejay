@@ -1,30 +1,21 @@
-<% if current_facebook_person then %>
-  <p>
-    Please wait while you are logged in...
-  </p>
-  <script type="text/javascript">window.location = "<%=login_url%>";</script>
-<% elsif @facebook_person then %>
-  <p>
-    Please complete this form
-  </p>
-  <% form_tag({:anchor => "facebook"}) do %>
-    <%=error_messages_for(:facebook_person, :header_message => "Fail")%>
-    <ul>
-       <% fields_for(:facebook_person) { |person| %>
-        <%=person.hidden_field(:email)%>
-        <%=person.hidden_field(:facebook_user_id)%>
-        <li>
-          <%=person.label(:nickname)%>
-          <%=person.text_field(:nickname)%>
-        </li>
-      <% } %>
+<% form_tag({:anchor => "facebook"}) do %>
+  <%=error_messages_for(:facebook_person, :header_message => "Fail")%>
+  <ul style="<%=(@facebook_person ? "" : "display: none;")%>">
+     <% fields_for(:facebook_person) { |person| %>
+      <%=person.hidden_field(:email, {:id => "proxied_email"})%>
+      <%=person.hidden_field(:facebook_user_id, {:id => "uid"})%>
       <li>
-        <%= submit_tag("Register")%>
-        or
-        <%=link_to(:login, login_url)%>
+        <%=person.label(:nickname)%>
+        <%=person.text_field(:nickname)%>
       </li>
-    </ul>
+    <% } %>
+    <li>
+      <%= submit_tag("Register")%>
+      or
+      <%=link_to(:login, login_url)%>
+    </li>
+  </ul>
+  <% unless @facebook_person %>
+    <fb:login-button onlogin="on_facebook_login();"></fb:login-button>
   <% end %>
-<% else %>
-  <fb:login-button onlogin="on_facebook_login();"></fb:login-button>
 <% end %>

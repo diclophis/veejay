@@ -26,15 +26,42 @@ attach_to_share_episode_buttons = function () {
   $$('a.share_episode_button').each(function(share_episode_button) {
     Event.observe(share_episode_button, 'click', function(clicked) {
       Event.stop(clicked);
-      var post_data = {"title":"wang chung", "episode_url":"http://veejay.tv/diclophis15/watch/hmm", "videos":"7", "description":"wang chubng", "duration":"07:11", "profile_url":"http://veejay.tv/diclophis"};
+      episode_id = this.id.replace("share_episode_", "episode_");
+      episode = $(episode_id);
+      episode_thumbnail = episode.getElementsBySelector('img.episode_thumbnail').detect(function(episode_detail) {
+        return true;
+      });
+      episode_link = episode.getElementsBySelector('a.episode_url').detect(function(episode_detail) {
+        return true;
+      });
+      episode_videos = episode.getElementsBySelector('span.episode_videos').detect(function(episode_detail) {
+        return true;
+      });
+      episode_duration = episode.getElementsBySelector('li.episode_duration').detect(function(episode_detail) {
+        return true;
+      });
+      episode_description = episode.getElementsBySelector('li.episode_description').detect(function(episode_detail) {
+        return true;
+      });
+      profile_link = episode.getElementsBySelector('a.profile_url').detect(function(episode_detail) {
+        return true;
+      });
+      var post_data = {
+        "title": episode_link.innerHTML,
+        "episode_url": episode_link.href,
+        "videos": episode_videos.innerHTML,
+        "description": episode_description.innerHTML,
+        "duration": episode_duration.innerHTML,
+        "profile_url": profile_link.href 
+      };
       FB.Connect.showFeedDialog(58089846128, post_data, null, null, FB.FeedStorySize.full, FB.RequireConnect.promptConnect, function (w) {
-        alert('shared');
       });
     });
   });
 };
 
 on_facebook_login = function () {
+  /*
   new Ajax.Updater('facebook', "/register", {
     evalScripts: true,
     method: 'get',
@@ -42,6 +69,9 @@ on_facebook_login = function () {
       window.location.hash = "facebook";
     }
   });
+  */
+  window.location.hash = "facebook";
+  window.location.reload();
 };
 
 attach_to_confirmable_buttons = function () {
@@ -71,15 +101,20 @@ attach_to_add_remote_video_buttons = function () {
       Event.stop(clicked);
       remote_id = "video_" + this.id.replace("add_video_", "");
       remote_video = $(remote_id).remove();
+      remote_video.getElementsBySelector('.hidden_unless_added').invoke('toggle');
+      /*
       remote_video.getElementsBySelector('a.add_remote_video_button').invoke('toggle');
       remote_video.getElementsBySelector('a.remove_remote_video_button').invoke('toggle');
       remote_video.getElementsBySelector('a.handle_remote_video_button').invoke('toggle');
+      */
       attach_to_remove_remote_video_buttons();
       $("drop").insert(remote_video);
+      /*
       remote_video.getElementsBySelector('ul.tabs').each(function(tabs) {
         tabs.toggle();
         new Control.Tabs(tabs);  
       });
+      */
     /*
     alert('wtf');
     remote_video.getElementsBySelector('.panels').each(function(panels) {
@@ -430,13 +465,22 @@ Event.observe(window, 'load', function () {
 
   attach_to_confirmable_buttons();
 
+/*
   DD_roundies.addRule("#header", 10);
   DD_roundies.addRule("#sidebar", 10);
   DD_roundies.addRule("#content", 10);
+*/
 
   if ($("facebook")) {
     FB.ensureInit(function() {
       FB.Facebook.get_sessionState().waitUntilReady(function(session) {
+        FB.Facebook.apiClient.users_getInfo([FB.Facebook.apiClient.get_session().uid], ["first_name", "proxied_email", "pic"], function(unifoo, ex){
+          if (ex == null) {
+            alert("User Info :"+Object.toJSON(unifoo));
+          } else {
+            alert("Exception :"+ex);
+          }
+        });
       });
     });
   } 

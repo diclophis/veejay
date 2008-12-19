@@ -61,15 +61,18 @@ class ApplicationController < ActionController::Base
     def current_facebook_person
       begin
         unless @current_facebook_person
-          logger.debug(cookies.inspect)
-          logger.debug(fbsession.inspect)
-          @facebook_user = fbsession.users_getInfo(
-            :uids => fbsession.session_user_id,
-            :fields => ["first_name","last_name", "pic_square", "status"]
-          )
-          if Person.exists?(:facebook_user_id => fbsession.session_user_id) then
-            @current_facebook_person = Person.find_by_facebook_user_id(fbsession.session_user_id)
+          if session[:facebook_user_id] then
+            if Person.exists?(:facebook_user_id => session[:facebook_user_id]) then
+              @current_facebook_person = Person.find_by_facebook_user_id(session[:facebook_user_id])
+            end
           end
+          #@facebook_user = fbsession.users_getInfo(
+          #  :uids => fbsession.session_user_id,
+          #  :fields => ["first_name","last_name", "pic_square", "status"]
+          #)
+          #if Person.exists?(:facebook_user_id => fbsession.session_user_id) then
+          #  @current_facebook_person = Person.find_by_facebook_user_id(fbsession.session_user_id)
+          #end
         end
         return @current_facebook_person
       rescue => problem

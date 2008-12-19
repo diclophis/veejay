@@ -12,20 +12,29 @@
         </td>
       <% end %>
       <td>
-        <%=link_to(image_tag(episode.videos.first.remote_video.image_url, {:width => 120}), url)%>
+        <%=link_to(image_tag(episode.videos.first.remote_video.image_url, {:class => "episode_thumbnail", :width => 120}), url)%>
       </td>
-      <td class="remote_video_info">
-        <p>
-          <%=link_to(episode.title, url)%>
-          <br/>
-          <%=episode.videos.length%> videos
-          <br/>
-          <%=formatted_duration(episode.total_duration)%>
-          <% if nickname then %>
-            <br/>
-            <%=link_to(episode.person.nickname, profile_url(episode.person))%>
-          <% end %>
-        </p>
+      <td class="puff">
+        <li>
+          <li>
+            <%=link_to(episode.title, url, {:class => "episode_url"})%>
+          </li>
+          <li>
+            <span class="episode_videos"><%=episode.videos.length%></span> videos
+          </li>
+          <li class="episode_duration">
+            <%=formatted_duration(episode.total_duration)%>
+          </li>
+          <li class="episode_description">
+            <% if episode.description.blank? then %>
+            <% else %>
+              <%=h(episode.description)%>
+            <% end %>
+          </li>
+          <li>
+            <%=link_to(episode.person.nickname, profile_url(episode.person), {:class => "profile_url"})%>
+          </li>
+        </ul>
       </td>
     </tr>
   </table>

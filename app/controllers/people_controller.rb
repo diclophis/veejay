@@ -2,6 +2,10 @@
 
 class PeopleController < ApplicationController
   def login
+    logger.debug("---")
+    logger.debug(session.inspect)
+    logger.debug(cookies.inspect)
+    logger.debug("---")
     return authenticate(current_facebook_person) if current_facebook_person
     @new_cookie_flag = false
     if params["openid.mode"] then
@@ -41,8 +45,8 @@ class PeopleController < ApplicationController
   def logout
     cookies[:personal_header] = nil
     if current_facebook_person then
-      revoked = fbsession.auth_revokeAuthorization
-      logger.debug(revoked)
+      #revoked = fbsession.auth_revokeAuthorization
+      #logger.debug(revoked)
     end
     reset_session
     return redirect_to(root_url)
@@ -183,12 +187,13 @@ class PeopleController < ApplicationController
     end
     def facebook_person
       unless @facebook_person
-        @facebook_person = session[:facebook_person] or Person.new
-        if params[:facebook_person] then
-          @facebook_person.facebook_user_id = params[:facebook_person][:facebook_user_id]
-          @facebook_person.nickname = params[:facebook_person][:nickname]
-          @facebook_person.email = params[:facebook_person][:email]
-          @facebook_person.biography = params[:facebook_person][:biography]
+        if session[:facebook_user_id] then
+          @facebook_person = Person.new
+          @facebook_person.facebook_user_id = session[:facebook_user_id]
+          if params[:facebook_person] then
+            @facebook_person.nickname = params[:facebook_person][:nickname]
+            @facebook_person.email = params[:facebook_person][:email]
+          end
         end
       end
       @facebook_person

@@ -1,55 +1,33 @@
 <li class="video" id="video_<%=remote_video.remote_id%>">
-  <table>
+  <table border="1">
     <tr>
+      <td rowspan="2">
+        <%=link_to(image_tag("icon/control.png"), preview_url(remote_video.remote_id), {:class => "preview_video", :title => remote_video.title})%>
+        <%=link_to(image_tag("icon/clock.png"), "#", {:id => "", :class => "handle_remote_video_button hidden_unless_added", :style => (@episode) ? "" : "display: none;" })%>
+        <%=link_to(image_tag("icon/plus_circle.png"), "#", {:id => "add_video_#{remote_video.remote_id}", :class => "add_remote_video_button hidden_unless_added", :style => (@episode) ? "display: none;" : "" })%>
+        <%=link_to(image_tag("icon/cross_circle.png"), "#", {:id => "remove_video_#{remote_video.remote_id}", :class => "remove_remote_video_button hidden_unless_added", :style => (@episode) ? "" : "display: none;" })%>
+        <%=hidden_field_tag("episode[videos][]",  remote_video.to_yaml, {:id => nil})%>
+      </td>
       <td>
-        <ul class="tabs" id="tabs_for_video_<%=remote_video.remote_id%>" style="<%=((@episode) ? "" : "display: none;")%>">
-          <li class="tab">
-            <%=link_to(image_tag("icon/magnifier_left.png") + "", "#details_for_video_#{remote_video.remote_id}", {:class => "details_remote_video_button"})%>
-          </li>
-          <li class="tab">
-            <%=link_to(image_tag("icon/pencil_plus.png") + "", "#comments_for_video_#{remote_video.remote_id}", {:class => "comments_remote_video_button"})%>
-          </li>
-        </ul>
-        <ul class="panels">
-          <li class="details" id="details_for_video_<%=remote_video.remote_id%>">
-            <table>
-              <tr>
-                <td>
-                  <%=link_to(image_tag("icon/control.png"), preview_url(remote_video.remote_id), {:class => "preview_video", :title => remote_video.title})%>
-                  <%=link_to(image_tag("icon/clock.png"), "#", {:id => "", :class => "handle_remote_video_button", :style => (@episode) ? "" : "display: none;" })%>
-                  <%=link_to(image_tag("icon/plus_circle.png"), "#", {:id => "add_video_#{remote_video.remote_id}", :class => "add_remote_video_button", :style => (@episode) ? "display: none;" : "" })%>
-                  <%=link_to(image_tag("icon/cross_circle.png"), "#", {:id => "remove_video_#{remote_video.remote_id}", :class => "remove_remote_video_button", :style => (@episode) ? "" : "display: none;" })%>
-                  <%=hidden_field_tag("episode[videos][]",  remote_video.to_yaml, {:id => nil})%>
-                </td>
-                <td>
-                  <%=link_to(image_tag(remote_video.image_url, {:width => "120"}), preview_url(remote_video.remote_id), {:class => "preview_video", :title => remote_video.title})%>
-                </td>
-                <td class="remote_video_info">
-                  <p>
-                    "<%=link_to(remote_video.title, preview_url(remote_video.remote_id), {:class => "preview_video", :title => remote_video.title})%>"
-                    <br/>
-                    <%=remote_video.artist_names.join(", ")%>
-                    <br/>
-                    <%=remote_video.formatted_duration%>
-                    <br/>
-                    id: <%=remote_video.remote_id.split("-", 2).join(", ")%>
-                  </p>
-                </td>
-              </tr>
-            </table>
-          </li>
-          <li class="comments" id="comments_for_video_<%=remote_video.remote_id%>" style="<%=((@episode) ? "display: none;" : "display: none;")%>">
-            <table>
-              <tr>
-                <td>
-                  <p>
-                    <textarea name="episode[comments][]" rows="4"><%=h(comment)%></textarea>
-                  </p>
-                </td>
-              </tr>
-            </table>
-          </li>
-        </ul>
+        <%=link_to(image_tag(remote_video.image_url, {:width => "120"}), preview_url(remote_video.remote_id), {:class => "preview_video", :title => remote_video.title})%>
+      </td>
+      <td class="remote_video_info">
+        <p>
+          "<%=link_to(remote_video.title, preview_url(remote_video.remote_id), {:class => "preview_video", :title => remote_video.title})%>"
+          <br/>
+          <%=remote_video.artist_names.join(", ")%>
+          <br/>
+          <%=remote_video.formatted_duration%>
+          <br/>
+          id: <%=remote_video.remote_id.split("-", 2).join(", ")%>
+        </p>
+      </td>
+    </tr>
+    <tr class="hidden_unless_added" style="<%=((@episode) ? "" : "display: none;")%>">
+      <td colspan="2">
+        <p>
+          <textarea name="episode[comments][]" rows="4"><%=h(comment)%></textarea>
+        </p>
       </td>
     </tr>
   </table>
