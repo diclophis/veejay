@@ -10,7 +10,7 @@
     <% end %>
     <% @bad_emails.each { |bad_email| %>
       <li>
-        <%=h(bad_email)%> is an invalid email address
+        <em><%=h(bad_email)%></em> is an invalid email address
       </li>
     <% } %>
   </ul>

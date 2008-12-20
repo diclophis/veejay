@@ -70,8 +70,9 @@ on_facebook_login = function () {
     }
   });
   */
-  window.location.hash = "facebook";
-  window.location.reload();
+  //window.location.hash = "facebook";
+  //window.location.reload();
+  //alert('wang');
 };
 
 attach_to_confirmable_buttons = function () {
@@ -476,9 +477,14 @@ Event.observe(window, 'load', function () {
       FB.Facebook.get_sessionState().waitUntilReady(function(session) {
         FB.Facebook.apiClient.users_getInfo([FB.Facebook.apiClient.get_session().uid], ["first_name", "proxied_email", "pic"], function(unifoo, ex){
           if (ex == null) {
-            alert("User Info :"+Object.toJSON(unifoo));
+            if ($("uid").value == "") {
+              $("facebook_person_nickname").value = unifoo[0].first_name;
+              $("uid").value = unifoo[0].uid;
+              $("proxied_email").value = unifoo[0].proxied_email;
+              $("facebook_register_form").submit();
+            }
           } else {
-            alert("Exception :"+ex);
+            throw("Exception :" + ex);
           }
         });
       });
