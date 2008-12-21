@@ -5,7 +5,7 @@
       <% if editable then %>
         <td>
           <%=link_to(image_tag("icon/pencil.png"), edit_url(episode.id), {:title => "edit"})%>
-          <%=link_to(image_tag("icon/control.png"), episode_url(*episode.to_param), {:class => "episode_url", :title => "watch"})%>
+          <%=link_to(image_tag("icon/control.png"), episode_url(*episode.to_param), {:title => "watch"})%>
           <%=link_to(image_tag("icon/mail.png"), share_url(*episode.to_param), {:title => "share"})%>
           <%=link_to(image_tag("icon/cross_circle.png"), delete_url(episode.id), {:class => "confirm", :title => "delete"})%>
           <%=link_to(image_tag("facebook.gif", {:height => 16}), "#", {:class => "share_episode_button", :id => "share_episode_#{episode.id}"})%>
@@ -15,7 +15,7 @@
         <%=link_to(image_tag(episode.videos.first.remote_video.image_url, {:class => "episode_thumbnail", :width => 120}), url)%>
       </td>
       <td class="puff">
-        <li>
+        <ul>
           <li>
             <%=link_to(episode.title, url)%>
           </li>
@@ -25,13 +25,14 @@
           <li class="episode_duration">
             <%=formatted_duration(episode.total_duration)%>
           </li>
-          <li class="episode_description" style="display: none;">
-            <% if episode.description.blank? then %>
-            <% else %>
-              <%=h(episode.description)%>
-            <% end %>
-          </li>
-          <li>
+          <li style="display: none;">
+            <p class="episode_description">
+              <% if episode.description.blank? then %>
+              <% else %>
+                <%=h(episode.description)%>
+              <% end %>
+            </p>
+            <%=link_to(episode.title, episode_url(*episode.to_param), {:class => "episode_url"})%>
             <%=link_to(episode.person.nickname, profile_url(episode.person), {:class => "profile_url"})%>
           </li>
         </ul>

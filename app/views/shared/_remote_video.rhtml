@@ -6,7 +6,7 @@
         <%=link_to(image_tag("icon/arrow_circle_double.png"), "#", {:id => "", :class => "handle_remote_video_button hidden_unless_added", :style => (@episode) ? "" : "display: none;" })%>
         <%=link_to(image_tag("icon/plus_circle.png"), "#", {:id => "add_video_#{remote_video.remote_id}", :class => "add_remote_video_button hidden_unless_added", :style => (@episode) ? "display: none;" : "" })%>
         <%=link_to(image_tag("icon/cross_circle.png"), "#", {:id => "remove_video_#{remote_video.remote_id}", :class => "remove_remote_video_button hidden_unless_added", :style => (@episode) ? "" : "display: none;" })%>
-        <%=hidden_field_tag("episode[videos][]",  remote_video.to_yaml, {:id => nil})%>
+        <%=hidden_field_tag("episode[videos][]",  remote_video.to_yaml)%>
       </td>
       <td>
         <%=link_to(image_tag(remote_video.image_url, {:width => "120"}), preview_url(remote_video.remote_id), {:class => "preview_video", :title => remote_video.title})%>
@@ -26,7 +26,7 @@
     <tr class="hidden_unless_added" style="<%=((@episode) ? "" : "display: none;")%>">
       <td colspan="2">
         <p>
-          <textarea name="episode[comments][]" rows="4"><%=h(comment)%></textarea>
+          <textarea name="episode[comments][]" rows="4" cols="55"><%=h(comment)%></textarea>
         </p>
       </td>
     </tr>

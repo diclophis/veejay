@@ -8,11 +8,14 @@
 <% end %>
 <% content_for :sidebar do %>
   <% form_tag(:search, {:id => "search"}) do %>
-    <%=label_tag(:search)%>
+    <label>
+      Search by Artist or Song
+    </label>
     <%=text_field_tag(:artist_or_song)%>
     <%=submit_tag(:go, {:id => :search_button})%>
     <div id="results_container">
       <ul id="results">
+        <li></li>
       </ul>
     </div>
   <% end %>

@@ -240,3 +240,10 @@ border-bottom: none;
 ul.tabs li a:hover { /* settings for hover effect */
 background: #fff; /* set desired hover color */
 }
+  <% form_tag(:pop, {:id => "pop_form"}) do %>
+    <%=hidden_field_tag(:video_id)%>
+    <div id="pop_container">
+      <h2>
+      </h2>
+    </div>
+  <% end %>

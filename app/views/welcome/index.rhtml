@@ -14,12 +14,26 @@
       <%=render({:partial => "shared/episode", :locals => {:episode => episode, :editable => false, :url => episode_url(*episode.to_param), :nickname => true}})%>
     <% } %>
   </ul>
+  <%=will_paginate(@recent_episodes)%>
 <% end %>
 <h2>
   Hottest Set This Week
 </h2>
 <% if @episode then %>
   <%=render({:partial => "shared/player"})%>
+  <% if @episode.description.blank? then %>
+  <% else %>
+    <div class="quote">
+      <div class="quoted">
+        <p>
+          <%=h(@episode.description)%>
+          <br/>
+          <br/>
+          -<%=@episode.person.nickname%>
+        </p>
+      </div>
+    </div>
+  <% end %>
   <ul class="grid">
     <% @episode.videos.each { |video| %>
       <li class="video" id="video_<%=video.remote_video.remote_id%>">

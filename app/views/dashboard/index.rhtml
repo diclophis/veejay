@@ -10,7 +10,9 @@
     <ul>
       <% fields_for(:current_person) { |person| %>
         <li>
-          <%=person.label("Tell everyone a little about yourself")%>
+          <label>
+            Tell everyone a little about yourself")
+          </label>
           <%=person.text_area(:biography, {:rows => 5})%>
         </li>
       <% } %>

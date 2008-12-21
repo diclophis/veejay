@@ -10,6 +10,16 @@ class EpisodeController < ApplicationController
       flash[:notice] = "Set Not Found"
       return redirect_to(root_url)
     end
+    @lyrics = {}
+    @artists = {}
+    @episode.videos.each { |video|
+      if video.remote_video.artist_names.first then
+        @artists[video.remote_video.title] = RemoteArtist.search(video.remote_video.artist_names.first).first
+      else
+        @artists[video.remote_video.title] = RemoteArtist.search(video.remote_video.title).first
+      end
+      @lyrics[video.remote_video.title] = Lyrics.for(video.remote_video.artist_names.first, video.remote_video.title)
+    }
   end
   def pop
     @video = Yahoo::Music::Video.item(params[:video_id]).first

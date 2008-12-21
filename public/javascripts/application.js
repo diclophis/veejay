@@ -6,18 +6,20 @@ var videos;
 var list;
 var youtube_remote_id;
 
+/*
 push_to_facebook = function () {
 //626675667
 //57768276128
 //FB.FeedStorySize.oneLine
 //FB.RequireConnect.promptConnect
-//var comment_data = {"verb":'commented on the video ', "noun":'Sample Video', "body":'Here is text for the sample body.', "fullbody":'Here is the sample body text for a full story.', "images":[{'src':'http://www.somethingtoputhere.com/therunaround/images/runaround_image.jpg', 'href':'http://www.facebook.com'}]};
-  var post_data = {"title":"wang chung"};
+  var comment_data = {"verb":'commented on the video ', "noun":'Sample Video', "body":'Here is text for the sample body.', "fullbody":'Here is the sample body text for a full story.', "images":[{'src':'http://www.somethingtoputhere.com/therunaround/images/runaround_image.jpg', 'href':'http://www.facebook.com'}]};
+  //var post_data = {"title":"wang chung"};
   FB.Connect.showFeedDialog(57768276128, post_data, null, null, FB.FeedStorySize.oneLine, FB.RequireConnect.promptConnect, function (w) {
     //alert(w);
     //alert('done');
   }); 
 };
+*/
 
 on_facebook_register = function () {
 };
@@ -40,7 +42,7 @@ attach_to_share_episode_buttons = function () {
       episode_duration = episode.getElementsBySelector('li.episode_duration').detect(function(episode_detail) {
         return true;
       });
-      episode_description = episode.getElementsBySelector('li.episode_description').detect(function(episode_detail) {
+      episode_description = episode.getElementsBySelector('p.episode_description').detect(function(episode_detail) {
         return true;
       });
       profile_link = episode.getElementsBySelector('a.profile_url').detect(function(episode_detail) {
@@ -169,6 +171,10 @@ play_video = function () {
   swfobject.removeSWF("the_player_" + last_video);
   $("player_container").insert('<div id="player"></div>');
   remote_id = videos[current_video];
+  if ($('pops')) {
+    $$('li.pop').invoke('hide');
+    $('pop_' + remote_id).show();
+  }
   chunks = remote_id.split("-");
   type = chunks[0];
   remote_id = remote_id.replace(type + "-", "");
@@ -364,6 +370,7 @@ Event.observe(window, 'load', function () {
     videos = $$('.video').collect(function(video) { return video.id.replace("video_", ""); });
     play_video();
   }
+
   /*
   if ($('uvp_fop_container')) {
     videos = $$('li.video').collect(function(video) { return 'v' + video.id.replace("video_", ""); });

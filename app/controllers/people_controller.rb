@@ -112,7 +112,7 @@ class PeopleController < ApplicationController
       basic_person.nickname = session[:nickname]
       basic_person.email = session[:email]
       pending_person
-      pending_person.identity_url = "Click the OpenID button to pick your service"
+      #pending_person.identity_url = "Click the OpenID button to pick your service"
       pending_person.nickname = session[:nickname]
       pending_person.email = session[:email]
       current_facebook_person

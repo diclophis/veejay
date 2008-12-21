@@ -3,32 +3,56 @@
   by
   <%=link_to(@episode.person.nickname, profile_url(@episode.person))%>
 <% end %>
-<% content_for :sidebar do %>
-  <% if @episode.description.blank? then %>
-    <h2>
-      Details
-    </h2>
-  <% else %>
-    <h2>
-      Background on Set
-    </h2>
-    <p>
-      <%=h(@episode.description)%>
-      <br/>
-      <br/>
-      -<%=@episode.person.nickname%>
-    </p>
-  <% end %>
+<% content_for :extra do %>
   <%=rating_stars(@episode, current_person)%>
-  <% form_tag(:pop, {:id => "pop_form"}) do %>
-    <%=hidden_field_tag(:video_id)%>
-    <div id="pop_container">
-      <h2>
-      </h2>
-    </div>
-  <% end %>
+<% end %>
+<% content_for :sidebar do %>
+  <ul id="pops">
+    <% @episode.videos.each { |video| %>
+      <li class="pop" id="pop_<%=video.remote_video.remote_id%>" style="display: none;">
+        <% if @artists[video.remote_video.title] then %>
+          <h3>
+            <%=video.remote_video.title%>
+            -
+            <% if @artists[video.remote_video.title].website.blank? then %>
+              <%=@artists[video.remote_video.title].name%>
+            <% else %>
+              <%=link_to(@artists[video.remote_video.title].name, @artists[video.remote_video.title].website)%>
+            <% end %>
+          </h3>
+        <% else %>
+          <h3>
+            <%=video.remote_video.title%>
+          </h3>
+        <% end %>
+
+        <% if video.comment.blank? then %>
+        <% else %>
+          <p>
+            <%=h(video.comment)%>
+          </p>
+        <% end %>
+        <% if @lyrics[video.remote_video.title] then %>
+          <pre><%=@lyrics[video.remote_video.title]%></pre>
+        <% end %>
+      </li>
+    <% } %>
+  </ul>
 <% end %>
 <%=render({:partial => "shared/player"})%>
+  <% if @episode.description.blank? then %>
+  <% else %>
+    <div class="quote">
+      <div class="quoted">
+        <p>
+          <%=h(@episode.description)%>
+          <br/>
+          <br/>
+          -<%=@episode.person.nickname%>
+        </p>
+      </div>
+    </div>
+  <% end %>
 <ul class="grid">
   <% @episode.videos.each { |video| %>
     <li class="video" id="video_<%=video.remote_video.remote_id%>">

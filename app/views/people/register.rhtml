@@ -6,6 +6,10 @@
     Welcome to VeeJay.tv
   </h2>
   <p>
+    You can register 3 ways, via normal password creation, facebook connect or openid
+  </p>
+  <!--
+  <p>
     Currently, we support registration using OpenID.
     If you aren't familiar with OpenID,
     it's a technology that simplifies life by allowing you to login to thousands of websites using a single digital identity.
@@ -16,8 +20,12 @@
     Many of the major internet services support OpenID.
     If you have a Yahoo account, you automatically have an OpenID.
   </p>
+  -->
   <p>
-    <%=link_to("Learn More", "http://openid.net/", {:target => :_blank})%>
+    <%=link_to("About Facebook Connect", "http://developers.facebook.com/connect.php", {:target => :_blank})%>
+  </p>
+  <p>
+    <%=link_to("About OpenID", "http://openid.net/", {:target => :_blank})%>
   </p>
 <% end %>
 <!--

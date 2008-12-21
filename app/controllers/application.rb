@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
     end
     helper_method :current_per_page
     def current_per_page
-      10
+      6
     end
     def authenticate (person)
       #cookies[:personal_header] = {:expires => 1000.hours.from_now, :value => render_to_string({:partial => "shared/personal_header"})}
