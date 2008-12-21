@@ -78,7 +78,7 @@ on_facebook_login = function () {
 attach_to_confirmable_buttons = function () {
   $$('.confirm').each(function(confirmable) {
     Event.observe(confirmable, 'click', function(clicked) {
-      if (confirm("Are you sure?")) {
+      if (confirm("Are you sure you want to delete this set?")) {
         return true;
       } else {
         Event.stop(clicked);
@@ -135,15 +135,9 @@ attach_to_add_remote_video_buttons = function () {
 
 add_remote_video = function(remote_id) {
     remote_video = $(remote_id).remove();
-    remote_video.getElementsBySelector('a.add_remote_video_button').invoke('toggle');
-    remote_video.getElementsBySelector('a.remove_remote_video_button').invoke('toggle');
-    remote_video.getElementsBySelector('a.handle_remote_video_button').invoke('toggle');
+    remote_video.getElementsBySelector('.hidden_unless_added').invoke('toggle');
     attach_to_remove_remote_video_buttons();
     $("drop").insert(remote_video);
-    remote_video.getElementsBySelector('ul.tabs').each(function(tabs) {
-      tabs.toggle();
-      new Control.Tabs(tabs);  
-    });
     Sortable.destroy('drop');
     Sortable.create('drop',{handle:"handle_remote_video_button", containment: ['results', 'drop'], dropOnEmpty: true, constraint: false});
 };

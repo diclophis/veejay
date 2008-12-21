@@ -24,12 +24,17 @@ class DashboardController < ApplicationController
     }
   end
   def subscribe
-    friend = Person.find_by_nickname(params[:id])
-    raise unless friend
-    raise if friend.id == current_person.id
-    current_person.become_friends_with(friend) 
-    flash[:success] = "Subscribed!"
-    return redirect_to(profile_url(friend))
+    begin
+      friend = Person.find_by_nickname(params[:id])
+      raise unless friend
+      raise if friend.id == current_person.id
+      current_person.become_friends_with(friend) 
+      flash[:success] = "Subscribed!"
+      return redirect_to(dashboard_url)
+    rescue => problem
+      flash[:notice] = "You cannot subscribe to yourself"
+      return redirect_to(dashboard_url)
+    end
   end
   def create
     @episode = Episode.new

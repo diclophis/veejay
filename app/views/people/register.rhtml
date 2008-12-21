@@ -20,76 +20,93 @@
     <%=link_to("Learn More", "http://openid.net/", {:target => :_blank})%>
   </p>
 <% end %>
+<!--
 <%=render({:partial => "authentication_modes"})%>
-<div id="basic">
-  <% form_tag({:anchor => "basic"}) do %>
-    <%=error_messages_for(:basic_person, :header_message => "Fail")%>
-    <ul>
-       <% fields_for(:basic_person) { |person| %>
+-->
+<%=error_messages_for(:basic_person, :header_message => "Fail")%>
+<%=error_messages_for(:person)%>
+<div class="authentication_modes">
+  <div id="basic">
+    <p>
+    <%=link_to(image_tag("icon/home_plus.png") + "VeeJay", "#basic")%>
+    </p>
+    <% form_tag({:anchor => "basic"}) do %>
+      <ul>
+         <% fields_for(:basic_person) { |person| %>
+          <li>
+            <%=person.label(:email)%>
+            <%=person.text_field(:email)%>
+          </li>
+          <li>
+            <%=person.label(:nickname)%>
+            <%=person.text_field(:nickname)%>
+          </li>
+          <li>
+            <%=person.label(:password)%>
+            <%=person.password_field(:password)%>
+          </li>
+          <li>
+            <%=person.label(:password_confirmation)%>
+            <%=person.password_field(:password_confirmation)%>
+          </li>
+        <% } %>
         <li>
-          <%=person.label(:email)%>
-          <%=person.text_field(:email)%>
+          <%= submit_tag("go")%>
+          or
+          <%=link_to(:login, login_url)%>
         </li>
+      </ul>
+    <% end %>
+  </div>
+  <div id="facebook">
+    <p>
+    <%=link_to(image_tag("facebook.gif", {:height => 16}) + "Facebook", "#facebook")%>
+    </p>
+    <%=render({:partial => "facebook"})%>
+  </div>
+  <div id="openid">
+    <p>
+    <%=link_to(image_tag("openid.gif") + "OpenID", "#openid")%>
+    </p>
+    <% form_tag({:anchor => "openid"}) do %>
+      <ul>
+        <% fields_for(:person) { |person| %>
+        <!--
+          <li>
+            <p>
+              To register using OpenID,
+              click the button to pick the service you want to use to validate your OpenID (e.g., if you have a Yahoo account, you can click the Yahoo link).
+              This will automatically fill in the Identity URL field. 
+            </p>
+          </li>
+        -->
+          <li>
+            <%=person.label(:identity_url)%>
+            <%=person.text_field(:identity_url, {:id => :openid_identifier})%>
+          </li>
+          <li>
+        <!--
+            <p>
+              <br/>
+              Next, enter your email address, pick a nickname, and click Continue.
+              You'll be directed to the service that you picked, where you can validate your OpenID.
+            </p>
+         -->
+            <%=person.label(:email)%>
+            <%=person.text_field(:email)%>
+          </li>
+          <li>
+            <%=person.label(:nickname)%>
+            <%=person.text_field(:nickname)%>
+          </li>
+        <% } %>
         <li>
-          <%=person.label(:nickname)%>
-          <%=person.text_field(:nickname)%>
+          <%= submit_tag("go")%>
+          or
+          <%=link_to(:login, login_url)%>
         </li>
-        <li>
-          <%=person.label(:password)%>
-          <%=person.password_field(:password)%>
-        </li>
-        <li>
-          <%=person.label(:password_confirmation)%>
-          <%=person.password_field(:password_confirmation)%>
-        </li>
-      <% } %>
-      <li>
-        <%= submit_tag("Register")%>
-        or
-        <%=link_to(:login, login_url)%>
-      </li>
-    </ul>
-  <% end %>
+      </ul>
+    <% end %>
+  </div>  
 </div>
-<div id="facebook" style="display: none;">
-  <%=render({:partial => "facebook"})%>
-</div>
-<div id="openid" style="display: none;">
-  <% form_tag({:anchor => "openid"}) do %>
-    <%=error_messages_for(:person)%>
-    <ul>
-      <% fields_for(:person) { |person| %>
-        <li>
-          <p>
-            To register using OpenID,
-            click the button to pick the service you want to use to validate your OpenID (e.g., if you have a Yahoo account, you can click the Yahoo link).
-            This will automatically fill in the Identity URL field. 
-          </p>
-        </li>
-        <li>
-          <%=person.label(:identity_url)%>
-          <%=person.text_field(:identity_url, {:id => :openid_identifier})%>
-        </li>
-        <li>
-          <p>
-            <br/>
-            Next, enter your email address, pick a nickname, and click Continue.
-            You'll be directed to the service that you picked, where you can validate your OpenID.
-          </p>
-          <%=person.label(:email)%>
-          <%=person.text_field(:email)%>
-        </li>
-        <li>
-          <%=person.label(:nickname)%>
-          <%=person.text_field(:nickname)%>
-        </li>
-      <% } %>
-      <li>
-        <%= submit_tag("Continue")%>
-        or
-        <%=link_to(:login, login_url)%>
-      </li>
-    </ul>
-  <% end %>
-</div>  
 <%=render :partial => "shared/openid_selector"%>

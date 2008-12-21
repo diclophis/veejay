@@ -2,10 +2,10 @@
 
 class PeopleController < ApplicationController
   def login
-    logger.debug("---")
-    logger.debug(session.inspect)
-    logger.debug(cookies.inspect)
-    logger.debug("---")
+    #logger.debug("---")
+    #logger.debug(session.inspect)
+    #logger.debug(cookies.inspect)
+    #logger.debug("---")
     return authenticate(current_facebook_person) if current_facebook_person
     @new_cookie_flag = false
     if params["openid.mode"] then
@@ -38,6 +38,14 @@ class PeopleController < ApplicationController
         end
       end
     else
+      if session[:return_to] then
+        case session[:return_to]
+          when /rate/
+            flash.now[:notice] = render_to_string({:partial => "shared/rating_notice"})
+        else
+          flash.now[:notice] = "You need to be logged in to do that"
+        end
+      end
       basic_person.nickname = cookies[:nickname]
       pending_person.nickname = cookies[:nickname]
     end
