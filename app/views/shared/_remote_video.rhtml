@@ -13,7 +13,7 @@
       </td>
       <td class="puff">
         <p>
-          "<%=link_to(remote_video.title, preview_url(remote_video.remote_id), {:class => "preview_video", :title => remote_video.title})%>"
+          <%=link_to(remote_video.title, preview_url(remote_video.remote_id), {:class => "preview_video", :title => remote_video.title})%>
           <br/>
           <%=remote_video.artist_names.join(", ")%>
           <br/>

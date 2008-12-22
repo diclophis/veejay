@@ -2,7 +2,7 @@
   Share <%=link_to(@episode.title, episode_url(*@episode.to_param))%>
 <% end %>
 <% content_for :instructions do %>
-  You can use the code on the left, or send the set by email to any of your friends.
+  You can use the code on the right, or send the set by email to any of your friends.
   Or you can <%=link_to("return to your dashboard", dashboard_url)%>
 <% end %>
 <% content_for :sidebar do %>
@@ -18,7 +18,12 @@
     <div id="one">
       <ul>
         <li>
-          <%=label_tag("url of set")%>
+          <label>
+            URL of set
+          </label>
+          <p>
+            This set has its own URL that you can use anywhere.
+          </p>
           <%=text_area_tag(:share, episode_url(*@episode.to_param), {:rows => 3, :class => "copypaste"})%>
         </li>
       <ul>

@@ -150,7 +150,12 @@ attach_to_parent_add_remote_video_buttons = function () {
       Event.stop(clicked);
       remote_id = "video_" + this.id.replace("add_video_", "");
       window.opener.add_remote_video(remote_id);
-      window.close();
+      h4 = new Element('h4');
+      h4.update('Added!');
+      div = new Element('div', {'class':'bottom_flash success'});
+      div.update(h4);
+      this.parentNode.insert(div);
+      this.remove();
     });
   });
 }

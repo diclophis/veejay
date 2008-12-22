@@ -29,7 +29,7 @@
           <%=h(@episode.description)%>
           <br/>
           <br/>
-          -<%=@episode.person.nickname%>
+          - <%=link_to(@episode.person.nickname, profile_url(@episode.person))%>
         </p>
       </div>
     </div>

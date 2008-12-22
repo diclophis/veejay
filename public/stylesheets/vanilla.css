@@ -4,8 +4,8 @@ a { outline: none; text-decoration: none; }
 form,div,li,h1,h2,h3,h4,h5,h6,p,a { font-family: sans-serif; margin: 0; padding: 0; }
 ul { list-style: none; margin: 0 0 0 0; padding: 0; }
 li { margin: 0 0 0.75em 0; }
-p, pre { font-size: 1.25em; margin: 0 0 0.5em 0; }
-pre { padding: 1em; }
+p, pre, ol li { font-size: 1.25em; margin: 0 0 0.5em 0; }
+pre { padding: 1em; overflow: auto; }
 h1 { font-size: 2.25em; }
 h2 { font-size: 2.0em; margin: 0 0 0.5em 0; }
 h3 { font-size: 1.75em; margin: 0 0 0em 0; }
@@ -21,6 +21,7 @@ input[type="submit"] { width: 22%; }
 li input[type="submit"] { margin: 0 0 0 0; }
 
 .flash { margin: 0em 0 1em 0; }
+.bottom_flash { margin: 0.5em 0 0em 0; }
 .success { background: url(/images/icon/tick.png) no-repeat 0.5em 1em; padding: 1em 1em 1em 2.5em; border: 0.25em solid green; background-color: #ccffcc; }
 .notice { background: url(/images/icon/exclamation.png) no-repeat 0.5em 1em; padding: 1em 1em 1em 2.5em; border: 0.25em solid gold; background-color: yellow; }
 #errorExplanation { margin: 1em 0 1em 0; }

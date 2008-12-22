@@ -14,6 +14,7 @@ class DashboardController < ApplicationController
         begin
           current_person.biography = params[:current_person][:biography]
           current_person.save!
+          flash.now[:success] = "Saved!"
         rescue => problem
         end
       end

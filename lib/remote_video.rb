@@ -43,6 +43,9 @@ class RemoteVideo
   end
   
   def self.find_by_id (remote_video_id)
+    yahoo_format = "http://us.music.yahooapis.com/video/v1/item/%s?appid=lbQe24DV34HOfBA1dKUdCW_UVvWU2mUjGlXI1yO_RRKiczchv2K5YyrvCcs6Bk_x"
+    yahoo_data = self.fetch(yahoo_format, remote_video_id)
+    yahoo_videos = self.extract_yahoo_videos(yahoo_data)
   end
 
   def self.fetch (format, artist_or_song)
