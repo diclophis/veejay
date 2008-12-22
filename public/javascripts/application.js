@@ -497,6 +497,16 @@ Event.observe(window, 'load', function () {
     });
   } 
 
+  $$("a.logout_link").each(function(logout_link) {
+    Event.observe(logout_link, 'click', function(clicked) {
+      Event.stop(clicked);
+      href = this.href;
+      FB.Connect.logout(function(logged_out) {
+        window.location = href;
+      });
+    });
+  });
+
   attach_to_parent_add_remote_video_buttons();
   attach_to_share_episode_buttons()
 

@@ -63,6 +63,14 @@ td { vertical-align: top; }
 #drop ul.panels textarea { width: 98%; }
 
 .rating { position: relative; width: 150px; height: 25px; margin: 1em 0 1em 0; background: url(/images/star.gif) top left repeat-x; }
+
+.rating li {
+  padding: 0px;
+  margin: 0px;
+  /*\*/
+  float: left;
+  /* */
+}
  
 .rating li a {
   position: absolute;
