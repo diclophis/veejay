@@ -83,6 +83,7 @@ class PeopleController < ApplicationController
           return authenticate(facebook_person)
         else
           logger.debug("facebook error")
+          logger.debug(session.inspect)
           logger.debug(facebook_person.inspect)
         end
       elsif params[:person] then

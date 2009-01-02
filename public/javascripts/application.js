@@ -21,8 +21,10 @@ push_to_facebook = function () {
 };
 */
 
+/*
 on_facebook_register = function () {
 };
+*/
 
 attach_to_share_episode_buttons = function () {
   $$('a.share_episode_button').each(function(share_episode_button) {
@@ -62,8 +64,8 @@ attach_to_share_episode_buttons = function () {
   });
 };
 
+/*
 on_facebook_login = function () {
-  /*
   new Ajax.Updater('facebook', "/register", {
     evalScripts: true,
     method: 'get',
@@ -71,11 +73,11 @@ on_facebook_login = function () {
       window.location.hash = "facebook";
     }
   });
-  */
   //window.location.hash = "facebook";
   //window.location.reload();
   //alert('wang');
 };
+*/
 
 attach_to_confirmable_buttons = function () {
   $$('.confirm').each(function(confirmable) {
@@ -326,18 +328,12 @@ function readCookie(name) {
 
 
 Event.observe(window, 'load', function () {
-  //$$("#person_nickname").each(function(element) {
-  //  element.focus();
-  //});
   $$("#artist_or_song").each(function(element) {
     element.focus();
   });
   if ($('pause_button')) {
     Event.observe($('pause_button'), 'click', function (pause) {
       Event.stop(pause);
-      /*
-      $('uvp_fop').vidPause();
-      */
       $('play_button').show();
       $('pause_button').hide();
     });

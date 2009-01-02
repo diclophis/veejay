@@ -2,32 +2,23 @@
 
 class FacebookController < ApplicationController
   layout "facebook"
-  #before_filter :require_facebook_login, :only => :index
-  def finish_facebook_login
-    #redirect_to(facebook_url)
-  end
+  protect_from_forgery :except => :authorize
   def index
-    #render_with_facebook_debug_panel
-=begin
-    @user = fbsession.users_getInfo(
-      :uids => fbsession.session_user_id,
-      :fields => ["first_name","last_name", "pic_square", "status"]
-    )
-    if current_facebook_person then
-      redirect_to(dashboard_url)
-    else
-      redirect_to(register_url({:anchor => "facebook"}))
-    end
-=end
+    render :text => "profile app coming soon"
   end
   
   def redirect
+    redirect_to(facebook_url)
   end
-
+#{"fb_sig_time"=>"1229996611.6353", "fb_sig_authorize"=>"1", "fb_sig_in_new_facebook"=>"1", "fb_sig"=>"321577811129a3fb25a812333a1bb9fb", "action"=>"authorize", "fb_sig_locale"=>"en_US", "fb_sig_session_key"=>"2.509zd7AWjEV0oAikQaAf3Q__.86400.1230084000-1382784910", "controller"=>"facebook", "fb_sig_expires"=>"1230084000", "fb_sig_added"=>"1", "fb_sig_api_key"=>"974a573be253946712b3d0ab6f3c5c85", "fb_sig_profile_update_time"=>"1229899526", "fb_sig_user"=>"1382784910"}
   def authorize
+    if request.post? then
+      logger.debug(params)
+    end
   end
 
   def remove
+    logger.debug(params)
   end
 
 #{\"session_key\":\"3.q8O6YtxM8F1FShOmlsVzqg__.86400.1229796000-5005911\",\"uid\":\"5005911\",\"expires\":1229796000,\"secret\":\"ymRyTEojXcDPhONIbQ_7LA__\",\"sig\":\"d8a98c693feb7770c244b0dc9fde4b77\"}", "controller"=>"facebook", "fb_login"=>nil, "fname"=>"_opener"}
@@ -37,7 +28,6 @@ class FacebookController < ApplicationController
     elsif params[:session] then
       facebook_session = ActiveSupport::JSON.decode(params[:session])
       session[:facebook_user_id] = facebook_session["uid"]
-      session[:facebook_session] = facebook_session
     end
 =begin
     if request.post? then

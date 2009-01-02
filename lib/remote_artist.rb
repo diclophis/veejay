@@ -48,7 +48,7 @@ class RemoteArtist
     begin
       encoded_artist_or_song = URI.encode(artist_or_song)
       url = format % [encoded_artist_or_song]
-      Timeout::timeout(10) do
+      Timeout::timeout(1) do
         data = Fast.fetch(url)
       end
     rescue Exception => problem

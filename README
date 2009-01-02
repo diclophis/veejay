@@ -247,3 +247,63 @@ background: #fff; /* set desired hover color */
       </h2>
     </div>
   <% end %>
+      session[:facebook_session] = facebook_session
+module CacheableFlash
+  def self.included(base)
+    base.after_filter :write_flash_to_cookie
+  end
+
+  def write_flash_to_cookie
+    cookie_flash = cookies['flash'] ? JSON.parse(cookies['flash']) : {}
+
+    flash.each do |key, value|
+      if cookie_flash[key.to_s].blank?
+        cookie_flash[key.to_s] = value
+      else
+        cookie_flash[key.to_s] << "<br/>#{value}"
+      end
+    end
+
+    cookies['flash'] = cookie_flash.to_json
+    flash.clear
+  end
+end
+
+function factorit(){
+  //a = 4028033;
+  a = 6125621;
+  //document.pfac.num.value;    //number to be evaluated
+  //output="The factors of "+a+" are:\n\n";
+  // this does the factors....
+  for (x=1; x<=a; x++)
+  {
+    c=a/x;
+    d=Math.floor(c);
+    // compare integer answer and division answer
+    if(c==d){
+      //output = output + x  + "  ";
+    } //end if
+  } //end for
+  //output=output+"\n\nThe prime factors are:  ";
+  // prime factor process
+  //  this one works!!!!
+  pf = "";
+  b = a;
+  for (e=2; e<=Math.floor(a/2);e++){
+    while (b/e==Math.floor(b/e)){
+      if(b/e==Math.floor(b/e)){
+        pf = pf + e + "x";
+        b = b/e;
+      }
+    }
+  }
+  //if (pf==""){
+  //  pf = b + " is a prime number.    ";
+  //}
+  pfl = pf.length;
+  pf = pf.substr(0,(pfl-1));
+  alert(pf);
+
+  // is the window prefix significant?
+  //window.document.pfac.worksp.value=output+pf;
+} //end function

@@ -17,7 +17,7 @@
   <%=will_paginate(@recent_episodes)%>
 <% end %>
 <h2>
-  Hottest Set This Week
+  <%=link_to(@episode.title, episode_url(*@episode.to_param))%>
 </h2>
 <% if @episode then %>
   <%=render({:partial => "shared/player"})%>
