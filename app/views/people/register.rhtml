@@ -70,7 +70,27 @@
     <p>
     <%=link_to(image_tag("facebook.gif", {:height => 16}) + "Facebook", "#facebook")%>
     </p>
-    <%=render({:partial => "facebook"})%>
+    <% form_tag({:anchor => "facebook"}, {:id => "facebook_register_form"}) do %>
+      <%=error_messages_for(:facebook_person, :header_message => "Fail")%>
+      <ul style="<%=(@facebook_person ? "" : "display: none;")%>">
+         <% fields_for(:facebook_person) { |person| %>
+          <li>
+            <%=person.hidden_field(:email, {:id => "proxied_email"})%>
+            <%=person.hidden_field(:facebook_user_id, {:id => "uid"})%>
+            <%=person.label(:nickname)%>
+            <%=person.text_field(:nickname)%>
+          </li>
+        <% } %>
+        <li>
+          <%= submit_tag("go")%>
+          or
+          <%=link_to(:login, login_url)%>
+        </li>
+      </ul>
+      <% unless @facebook_person %>
+        <fb:login-button onlogin="on_facebook_login();"></fb:login-button>
+      <% end %>
+    <% end %>
   </div>
   <div id="openid">
     <p>

@@ -50,7 +50,7 @@
   <% end %>
 </div>
 <div id="facebook" style="display: none;">
-  <%=render({:partial => "people/facebook"})%>
+  <fb:login-button></fb:login-button>
 </div>
 <div id="openid" style="display: none;">
   <% form_tag({:anchor => "openid"}) do %>

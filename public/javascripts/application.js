@@ -343,9 +343,6 @@ Event.observe(window, 'load', function () {
   if ($('play_button')) {
     Event.observe($('play_button'), 'click', function (play) {
       Event.stop(play);
-      /*
-      $('uvp_fop').vidPlay();
-      */
       $('play_button').hide();
       $('pause_button').show();
     });
@@ -359,11 +356,7 @@ Event.observe(window, 'load', function () {
         selected_video = this.parentNode.id.replace("video_", "");
         selected_video_index = videos.indexOf(selected_video);
         if (selected_video_index > 0) {
-          //left_side = videos.slice(0, selected_video_index - 1);
-          //right_side = videos.slice(selected_video_index);
-          //videos = $A(right_side.concat(left_side)).join(",");
         }
-        //$('uvp_fop').playID(videos);
         current_video = selected_video_index;
         play_video();
       });
@@ -372,37 +365,6 @@ Event.observe(window, 'load', function () {
     play_video();
   }
 
-  /*
-  if ($('uvp_fop_container')) {
-    videos = $$('li.video').collect(function(video) { return 'v' + video.id.replace("video_", ""); });
-    $$('li.video a').each(function(link_to_video) {
-      Event.observe(link_to_video, 'click', function(clicked) {
-        Event.stop(clicked);
-        selected_video = "v" + this.parentNode.id.replace("video_", "");
-        selected_video_index = videos.indexOf(selected_video);
-        if (selected_video_index > 0) {
-          left_side = videos.slice(0, selected_video_index - 1);
-          right_side = videos.slice(selected_video_index);
-          videos = $A(right_side.concat(left_side)).join(",");
-        }
-        $('uvp_fop').playID(videos);
-      });
-    });
-    so = new SWFObject('http://d.yimg.com/cosmos.bcst.yahoo.com/up/fop/embedflv/swf/fop.swf', 'uvp_fop', '580', '322', '9', '#ffffff');
-    so.addVariable('id', videos.join(','));
-    so.addVariable('eID', '1301797');    // NEEDS TO CHANGE DEPENDING ON LOCALE
-    so.addVariable('ympsc', '4195351');  // NEEDS TO CHANGE DEPENDING ON LOCALE
-    so.addVariable('lang', 'en');        // NEEDS TO CHANGE DEPENDING ON LOCALE
-    so.addVariable('shareEnable', '0');
-    so.addParam("allowFullScreen", "true");
-    so.addVariable('enableFullScreen', '1');
-    so.addVariable('autoStart', '0');
-    so.addVariable('controlsEnable', '0');
-    so.addVariable('eh', 'y_up_eventHandler');
-    so.addParam("allowScriptAccess", "always");  // for scripting access
-    so.write('uvp_fop_container');
-  }
-  */
 
   $$('form#search').each(function(search_form) {
     Event.observe(search_form, 'submit', function(submitted) {
@@ -416,8 +378,6 @@ Event.observe(window, 'load', function () {
           $('artist_or_song').enable();
           $('search_button').enable();
           $('artist_or_song').removeClassName('spinning');
-          //Sortable.destroy('results');
-          //Sortable.create('results',{containment: ['results', 'drop'], dropOnEmpty: true, constraint: false, revert: false, scroll: window});
           Sortable.destroy('drop');
           Sortable.create('drop',{handle:"handle_remote_video_button", containment: ['results', 'drop'], dropOnEmpty: true, constraint: false});
         },
@@ -468,22 +428,18 @@ Event.observe(window, 'load', function () {
 
   attach_to_confirmable_buttons();
 
-/*
-  DD_roundies.addRule("#header", 10);
-  DD_roundies.addRule("#sidebar", 10);
-  DD_roundies.addRule("#content", 10);
-*/
-
   if ($("facebook")) {
     FB.ensureInit(function() {
       FB.Facebook.get_sessionState().waitUntilReady(function(session) {
         FB.Facebook.apiClient.users_getInfo([FB.Facebook.apiClient.get_session().uid], ["first_name", "proxied_email", "pic"], function(unifoo, ex){
           if (ex == null) {
-            if ($("uid").value == "") {
+            if ($('facebook_register_form') && $("uid").value == "") {
               $("facebook_person_nickname").value = unifoo[0].first_name;
               $("uid").value = unifoo[0].uid;
               $("proxied_email").value = unifoo[0].proxied_email;
               $("facebook_register_form").submit();
+            } else {
+              alert('wangchung');
             }
           } else {
             throw("Exception :" + ex);
