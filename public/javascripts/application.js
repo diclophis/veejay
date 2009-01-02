@@ -440,6 +440,8 @@ Event.observe(window, 'load', function () {
               $("facebook_register_form").submit();
             } else {
               alert('wangchung');
+              alert(Object.toJSON(unifoo));
+              window.location.reload();
             }
           } else {
             throw("Exception :" + ex);

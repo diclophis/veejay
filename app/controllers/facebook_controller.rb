@@ -28,6 +28,8 @@ class FacebookController < ApplicationController
     elsif params[:session] then
       facebook_session = ActiveSupport::JSON.decode(params[:session])
       session[:facebook_user_id] = facebook_session["uid"]
+    elsif cookies["974a573be253946712b3d0ab6f3c5c85_user"] then
+      session[:facebook_user_id] = cookies["974a573be253946712b3d0ab6f3c5c85_user"]
     end
 =begin
     if request.post? then
