@@ -7,8 +7,10 @@
           <%=link_to(image_tag("icon/pencil.png"), edit_url(episode.id), {:title => "edit"})%>
           <%=link_to(image_tag("icon/control.png"), episode_url(*episode.to_param), {:title => "watch"})%>
           <%=link_to(image_tag("icon/mail.png"), share_url(*episode.to_param), {:title => "share"})%>
+          <% if current_person.facebook_user_id then %>
+            <%=link_to(image_tag("facebook.gif", {:height => 16}), "#", {:class => "share_episode_button", :id => "share_episode_#{episode.id}"})%>
+          <% end %>
           <%=link_to(image_tag("icon/cross_circle.png"), delete_url(episode.id), {:class => "confirm", :title => "delete"})%>
-          <%=link_to(image_tag("facebook.gif", {:height => 16}), "#", {:class => "share_episode_button", :id => "share_episode_#{episode.id}"})%>
         </td>
       <% end %>
       <td>
