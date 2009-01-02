@@ -4668,6 +4668,7 @@ var FacebookList = Class.create(TextboxList, {
               }
             }
             break;
+          case Event.KEY_RIGHT:
           case Event.KEY_RETURN:
             e.stop();
             if(! this.autocurrent) break;
@@ -4737,9 +4738,16 @@ Element.addMethods({
   },
   onInputFocus: function(el,obj) { obj.autoShow(); },    
   onInputBlur: function(el,obj) { 
+  //alert(Object.toJSON(el.attributes));
+  //alert(Object.toJSON(obj));
+  //alert(obj.curOn);
+
       obj.lastinput = el;
       if(!obj.curOn) {
           obj.blurhide = obj.autoHide.bind(obj).delay(0.1);
+      }
+      if (obj.curOn) {
+        return true;
       }
             if(obj.options.get('newValues')) {
               new_value_el = obj.current.retrieveData('input');

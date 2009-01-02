@@ -1,6 +1,10 @@
 <% content_for :tagline do %>
   Dashboard
 <% end %>
+<% content_for :instructions do %>
+  Listed below are your existing sets, you can
+  <%=link_to("create", create_url)%> a new set anytime.
+<% end %>
 <% content_for :sidebar do %>
   <h2>
     My Info

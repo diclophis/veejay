@@ -6,67 +6,66 @@
     Welcome to VeeJay.tv
   </h2>
   <p>
-    Currently, we support registration using OpenID.
-    If you aren't familiar with OpenID,
-    it's a technology that simplifies life by allowing you to login to thousands of websites using a single digital identity.
-    No more remembering a different ID and password for every single site! 
-  </p>
-  <p>
-    You probably don't know it, but most people already have an OpenID.
-    Many of the major internet services support OpenID.
-    If you have a Yahoo account, you automatically have an OpenID.
-  </p>
-  <p>
-    <%=link_to("Learn More", "http://openid.net/", {:target => :_blank})%>
+    You can login 3 ways, with your password, facebook connect or OpenID
   </p>
 <% end %>
-<%=render({:partial => "authentication_modes"})%>
-<div id="basic">
-  <% form_tag({:anchor => "basic"}) do %>
-    <%=error_messages_for(:basic_person, {:header_message => "Fail", :message => ""})%>
-    <ul>
-      <% fields_for(:basic_person) { |person| %>
+<div class="authentication_modes">
+  <div id="basic">
+    <p>
+    <%=link_to(image_tag("icon/home_plus.png") + "VeeJay", "#basic")%>
+    </p>
+    <% form_tag({:anchor => "basic"}) do %>
+      <%=error_messages_for(:basic_person, {:header_message => "Fail", :message => ""})%>
+      <ul>
+        <% fields_for(:basic_person) { |person| %>
+          <li>
+            <%=person.label(:nickname)%>
+            <%=person.text_field(:nickname)%>
+          </li>
+          <li>
+            <%=person.label(:password)%>
+            <%=person.password_field(:password)%>
+          </li>
+        <% } %>
         <li>
-          <%=person.label(:nickname)%>
-          <%=person.text_field(:nickname)%>
+          <label>
+          <%=check_box_tag("remember_me")%>
+          Remember Me
+          </label>
         </li>
         <li>
-          <%=person.label(:password)%>
-          <%=person.password_field(:password)%>
+          <%=submit_tag("go")%>
+          or
+          <%=link_to(:register, register_url)%>
         </li>
-      <% } %>
-      <li>
-        <label>
-        <%=check_box_tag("remember_me")%>
-        Remember Me
-        </label>
-      </li>
-      <li>
-        <%=submit_tag("go")%>
-        or
-        <%=link_to(:register, register_url)%>
-      </li>
-    </ul>
-  <% end %>
-</div>
-<div id="facebook" style="display: none;">
-  <fb:login-button></fb:login-button>
-</div>
-<div id="openid" style="display: none;">
-  <% form_tag({:anchor => "openid"}) do %>
-    <%=error_messages_for(:person, {:header_message => "Fail", :message => ""})%>
-    <ul>
-      <% fields_for(:person) { |person| %>
+      </ul>
+    <% end %>
+  </div>
+  <div id="facebook">
+    <p>
+    <%=link_to(image_tag("facebook.gif", {:height => 16}) + "Facebook", "#facebook")%>
+    </p>
+    <fb:login-button></fb:login-button>
+  </div>
+  <div id="openid">
+    <p>
+    <%=link_to(image_tag("openid.gif") + "OpenID", "#openid")%>
+    </p>
+    <% form_tag({:anchor => "openid"}) do %>
+      <%=error_messages_for(:person, {:header_message => "Fail", :message => ""})%>
+      <ul>
+        <% fields_for(:person) { |person| %>
+          <li>
+            <%=person.label(:nickname)%>
+            <%=person.text_field(:nickname)%>
+          </li>
+        <% } %>
         <li>
-          <%=person.label(:nickname)%>
-          <%=person.text_field(:nickname)%>
+          <%=submit_tag("go")%>
+          or
+          <%=link_to(:register, register_url)%>
         </li>
-      <% } %>
-      <li>
-        <%=submit_tag("go")%>
-        or
-        <%=link_to(:register, register_url)%>
-      </li>
-    </ul>
-  <% end %>
+      </ul>
+    <% end %>
+  </div>
 </div>

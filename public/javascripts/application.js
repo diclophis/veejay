@@ -433,11 +433,13 @@ Event.observe(window, 'load', function () {
       FB.Facebook.get_sessionState().waitUntilReady(function(session) {
         FB.Facebook.apiClient.users_getInfo([FB.Facebook.apiClient.get_session().uid], ["first_name", "proxied_email", "pic"], function(unifoo, ex){
           if (ex == null) {
-            if ($('facebook_register_form') && $("uid").value == "") {
-              $("facebook_person_nickname").value = unifoo[0].first_name;
-              $("uid").value = unifoo[0].uid;
-              $("proxied_email").value = unifoo[0].proxied_email;
-              $("facebook_register_form").submit();
+            if ($('facebook_register_form')) {
+              if ($("uid").value == "") {
+                $("facebook_person_nickname").value = prompt("Please enter a nickname (it must be unique!)", unifoo[0].first_name);
+                $("uid").value = unifoo[0].uid;
+                $("proxied_email").value = unifoo[0].proxied_email;
+                $("facebook_register_form").submit();
+              }
             } else {
               alert('wangchung');
               alert(Object.toJSON(unifoo));

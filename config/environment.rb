@@ -105,7 +105,7 @@ require 'remote_artist'
 require '/root/ruby-oembed/lib/oembed'
 
 ActiveRecord::Base.store_full_sti_class = true
-#Fast::Cache.enable!
+Fast::Cache.enable!
 TagList.delimiter = " "
 
 =begin
