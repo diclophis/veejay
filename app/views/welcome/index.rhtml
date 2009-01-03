@@ -3,7 +3,18 @@
   <%=link_to(image_tag("icon/feed.png"), rss_url)%>
 <% end %>
 <% content_for :instructions do %>
-  You can become a VeeJay too. Just <%=link_to(:register, register_url)%> to mix up your own sets!
+  <table class="stranger_only" style="display: none;">
+    <tr>
+      <td>
+        <%=link_to(image_tag("banana.png", {:width => 42}), register_url)%>
+      </td>
+      <td class="puff">
+        <h3>
+          <%=link_to(:Register, register_url)%> now for free bananas
+        </h3>
+      </td>
+    </tr>
+  </table>
 <% end %>
 <% content_for :sidebar do %>
   <h2>

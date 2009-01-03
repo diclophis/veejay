@@ -2,8 +2,18 @@
   Dashboard
 <% end %>
 <% content_for :instructions do %>
-  Listed below are your existing sets, you can
-  <%=link_to("create", create_url)%> a new set anytime.
+  <table>
+    <tr>
+      <td>
+        <%=link_to(image_tag("banana.png", {:width => 42}), create_url)%>
+      </td>
+      <td class="puff">
+        <h3>
+          <%=link_to("Create", create_url)%> a new set.
+        </h3>
+      </td>
+    </tr>
+  </table>
 <% end %>
 <% content_for :sidebar do %>
   <h2>

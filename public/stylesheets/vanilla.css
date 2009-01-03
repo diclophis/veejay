@@ -42,6 +42,7 @@ li input[type="submit"] { margin: 0 0 0 0; }
 #results { margin: 1em 0 0em 0; }
 #subscriptions { margin: 1em 0 1em 0; }
 #content { margin: 1em; padding: 0em; width: 542px; float: left; }
+#instructions { margin: 1em; }
 #drop { min-height: 7.5em; border: 1px dashed black; padding: 0.5em 1em 0 1em; }
 #player_container { width: 512px; height:322px; background-color: black; }
 #player { width: 512px; height:322px; }
@@ -58,7 +59,7 @@ ul.tabs li a { text-decoration: none; }
 ul.tabs li img { padding: 0 0.4em 0 0; vertical-align: middle; }
 
 table, tbody, tr, td { margin: 0; padding: 0.25em; border-collapse: collapse; }
-table, td.puff { width: 100%; }
+table, td.puff { width: 100%; vertical-align: middle; }
 td { vertical-align: top; }
 #drop ul.panels textarea { width: 98%; }
 

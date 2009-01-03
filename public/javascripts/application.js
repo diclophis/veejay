@@ -405,6 +405,12 @@ Event.observe(window, 'load', function () {
     edge.show();
   });
 
+  if (!readCookie("personal_header")) {
+    $$('.stranger_only').each(function(stranger_only) {
+      stranger_only.show();
+    });
+  }
+
   $$('textarea.copypaste').each(function(copypaste) {
     Event.observe(copypaste, 'focus', function(focused) {
       this.select();

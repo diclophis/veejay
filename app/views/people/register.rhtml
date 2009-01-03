@@ -28,11 +28,9 @@
     <%=link_to("About OpenID", "http://openid.net/", {:target => :_blank})%>
   </p>
 <% end %>
-<!--
-<%=render({:partial => "authentication_modes"})%>
--->
 <%=error_messages_for(:basic_person, :header_message => "Fail")%>
-<%=error_messages_for(:person)%>
+<%=error_messages_for(:person, :header_message => "Fail")%>
+<%=error_messages_for(:facebook_person, :header_message => "Fail")%>
 <div class="authentication_modes">
   <div id="basic">
     <p>
@@ -71,7 +69,6 @@
     <%=link_to(image_tag("facebook.gif", {:height => 16}) + "Facebook", "#facebook")%>
     </p>
     <% form_tag({:anchor => "facebook"}, {:id => "facebook_register_form"}) do %>
-      <%=error_messages_for(:facebook_person, :header_message => "Fail")%>
       <ul style="<%=(@facebook_person ? "" : "display: none;")%>">
          <% fields_for(:facebook_person) { |person| %>
           <li>
