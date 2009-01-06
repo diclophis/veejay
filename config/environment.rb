@@ -102,6 +102,7 @@ require 'lyrics'
 require 'slugalizer'
 require 'remote_video'
 require 'remote_artist'
+require 'facebook'
 require '/root/ruby-oembed/lib/oembed'
 
 ActiveRecord::Base.store_full_sti_class = true

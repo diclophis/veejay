@@ -307,3 +307,98 @@ function factorit(){
   // is the window prefix significant?
   //window.document.pfac.worksp.value=output+pf;
 } //end function
+=begin
+    def remember_params
+      session[:remembered_params] = params
+    end
+    def remembered_params
+      remembered = session[:remembered_params] || {:controller => :dashboard, :action => :index}
+      session[:remembered_params] = nil
+      remembered
+    end
+    def require_person
+      flash[:notice] = "Please login first..." and remember_params and redirect_to login_url unless current_person
+    end
+    def forget
+      session.delete(:person_id)
+    end
+    helper_method :current_person
+    def current_person
+      if session[:person_id] then
+        @current_person ||= Person.find(session[:person_id]) if Person.exists?(session[:person_id])
+      else
+        false
+      end
+    end
+    helper_method :recent_people
+    def recent_people
+      Person.paginate(
+        :per_page => 10,
+        :page => 1,
+        :joins => "JOIN findings ON findings.person_id = people.id",
+        :group => "findings.person_id",
+        :order => "findings.created_at DESC"
+      )
+    end
+    helper_method :is_mobile?
+    def is_mobile?
+      request.user_agent.to_s.downcase =~ Regexp.new(MOBILE_USER_AGENTS)
+    end
+=end
+
+#  map.logout '/logout', :controller => 'sessions', :action => 'destroy'
+#  map.login '/login', :controller => 'sessions', :action => 'new'
+#  map.register '/register', :controller => 'crusers', :action => 'create'
+#  map.signup '/signup', :controller => 'crusers', :action => 'new'
+#  map.resources :crusers
+#  map.resource :session
+
+  # The priority is based upon order of creation: first created -> highest priority.
+
+  # Sample of regular route:
+  #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
+  # Keep in mind you can assign values other than :controller and :action
+
+  # Sample of named route:
+  #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
+  # This route can be invoked with purchase_url(:id => product.id)
+
+  # Sample resource route (maps HTTP verbs to controller actions automatically):
+  #   map.resources :products
+
+  # Sample resource route with options:
+  #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
+
+  # Sample resource route with sub-resources:
+  #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
+  
+  # Sample resource route with more complex sub-resources
+  #   map.resources :products do |products|
+  #     products.resources :comments
+  #     products.resources :sales, :collection => { :recent => :get }
+  #   end
+
+  # Sample resource route within a namespace:
+  #   map.namespace :admin do |admin|
+  #     # Directs /admin/products/* to Admin::ProductsController (app/controllers/admin/products_controller.rb)
+  #     admin.resources :products
+  #   end
+  #map.resource :person, :member => { :complete => :get }
+
+  # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
+  #map.cloud '/cloud', :controller => "welcome", :action => "cloud"
+  #map.random '/random', :controller => "welcome", :action => "random"
+  #map.random '/plist_of_images_to_rate', :controller => "welcome", :action => "plist_of_images_to_rate"
+  #make a share controller
+
+  #map.philosophy '/philosophy', :controller => "welcome", :action => "philosophy"
+  #map.findings '/findings', :controller => "welcome", :action => "findings"
+  #map.image '/image/:permalink', :controller => "welcome", :action => "image"
+  #map.similarities '/similarities/:permalink', :controller => "welcome", :action => "similarities"
+#map.play '/play/:id', :controller => "episode", :action => "play"
+  # See how all your routes lay out with "rake routes"
+  # Install the default routes as the lowest priority.
+  # Note: These default routes make all actions in every controller accessible via GET requests. You should
+  # consider removing the them or commenting them out if you're using named routes and resources.
+  #map.connect ':controller/:action/:id'
+  #map.connect ':controller/:action/:id.:format'

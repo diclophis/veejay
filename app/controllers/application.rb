@@ -1,8 +1,13 @@
+#JonBardin
 # Filters added to this controller apply to all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
+# There is some stuff in here for title control, pagination, but most importantly
+# authentication :authenticate, :current_facebook_person, current_person
+# AuthenticatedSystem is provided by the restful_authentication plugin
 
 class ApplicationController < ActionController::Base
   include AuthenticatedSystem
+  helper_method :current_facebook_person
 
   helper :all # include all helpers, all the time
 
@@ -38,84 +43,4 @@ class ApplicationController < ActionController::Base
     def current_per_page
       6
     end
-    def authenticate (person)
-      #cookies[:personal_header] = {:expires => 1000.hours.from_now, :value => render_to_string({:partial => "shared/personal_header"})}
-      #cookies[:nickname] = {:expires => 1000.hours.from_now, :value => current_person.nickname}
-      #return redirect_to(remembered_params)
-          # Protects against session fixation attacks, causes request forgery
-          # protection if user resubmits an earlier form using back
-          # button. Uncomment if you understand the tradeoffs.
-          # reset_session
-      self.current_person = person
-      @new_cookie_flag = (params[:remember_me] == "1")
-      handle_remember_cookie!(@new_cookie_flag)
-      flash[:success] = "Logged in successfully"
-      if @new_cookie_flag then
-        cookies[:personal_header] = {:expires => 24.hours.from_now, :value => render_to_string({:partial => "shared/personal_header"})}
-      else
-        cookies[:personal_header] = {:value => render_to_string({:partial => "shared/personal_header"})}
-      end
-      redirect_back_or_default(dashboard_url)
-    end
-    helper_method :current_facebook_person
-    def current_facebook_person
-      begin
-        unless @current_facebook_person
-          if session[:facebook_user_id] then
-            if Person.exists?(:facebook_user_id => session[:facebook_user_id]) then
-              @current_facebook_person = Person.find_by_facebook_user_id(session[:facebook_user_id])
-            end
-          end
-          #@facebook_user = fbsession.users_getInfo(
-          #  :uids => fbsession.session_user_id,
-          #  :fields => ["first_name","last_name", "pic_square", "status"]
-          #)
-          #if Person.exists?(:facebook_user_id => fbsession.session_user_id) then
-          #  @current_facebook_person = Person.find_by_facebook_user_id(fbsession.session_user_id)
-          #end
-        end
-        return @current_facebook_person
-      rescue => problem
-        logger.debug(problem)
-      end
-      nil
-    end
-=begin
-    def remember_params
-      session[:remembered_params] = params
-    end
-    def remembered_params
-      remembered = session[:remembered_params] || {:controller => :dashboard, :action => :index}
-      session[:remembered_params] = nil
-      remembered
-    end
-    def require_person
-      flash[:notice] = "Please login first..." and remember_params and redirect_to login_url unless current_person
-    end
-    def forget
-      session.delete(:person_id)
-    end
-    helper_method :current_person
-    def current_person
-      if session[:person_id] then
-        @current_person ||= Person.find(session[:person_id]) if Person.exists?(session[:person_id])
-      else
-        false
-      end
-    end
-    helper_method :recent_people
-    def recent_people
-      Person.paginate(
-        :per_page => 10,
-        :page => 1,
-        :joins => "JOIN findings ON findings.person_id = people.id",
-        :group => "findings.person_id",
-        :order => "findings.created_at DESC"
-      )
-    end
-    helper_method :is_mobile?
-    def is_mobile?
-      request.user_agent.to_s.downcase =~ Regexp.new(MOBILE_USER_AGENTS)
-    end
-=end
-    end
+end

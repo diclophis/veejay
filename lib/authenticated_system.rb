@@ -1,5 +1,33 @@
 module AuthenticatedSystem
   protected
+    def authenticate (person)
+      #this is called from the PeopleController, it does the work of "logging people in"
+      #grab the person, and setup the attribute
+      self.current_person = person
+      @new_cookie_flag = (params[:remember_me] == "1")
+      handle_remember_cookie!(@new_cookie_flag)
+      flash[:success] = "Logged in successfully"
+      if @new_cookie_flag then
+        cookies[:personal_header] = {:expires => 24.hours.from_now, :value => render_to_string({:partial => "shared/personal_header"})}
+      else
+        cookies[:personal_header] = {:value => render_to_string({:partial => "shared/personal_header"})}
+      end
+      redirect_back_or_default(dashboard_url)
+    end
+
+    def current_facebook_person
+      unless @current_facebook_person
+        if session[:facebook_user_id] then
+          if Person.exists?(:facebook_user_id => session[:facebook_user_id]) then
+            @current_facebook_person = Person.find_by_facebook_user_id(session[:facebook_user_id])
+          end
+        end
+      end
+      return @current_facebook_person
+    end
+
+    #everything here on down is basic restful_authentication
+
     # Returns true or false if the cruser is logged in.
     # Preloads @current_cruser with the cruser model if they're logged in.
     def logged_in?
