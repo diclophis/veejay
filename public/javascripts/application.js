@@ -6,26 +6,7 @@ var videos;
 var list;
 var youtube_remote_id;
 
-/*
-push_to_facebook = function () {
-//626675667
-//57768276128
-//FB.FeedStorySize.oneLine
-//FB.RequireConnect.promptConnect
-  var comment_data = {"verb":'commented on the video ', "noun":'Sample Video', "body":'Here is text for the sample body.', "fullbody":'Here is the sample body text for a full story.', "images":[{'src':'http://www.somethingtoputhere.com/therunaround/images/runaround_image.jpg', 'href':'http://www.facebook.com'}]};
-  //var post_data = {"title":"wang chung"};
-  FB.Connect.showFeedDialog(57768276128, post_data, null, null, FB.FeedStorySize.oneLine, FB.RequireConnect.promptConnect, function (w) {
-    //alert(w);
-    //alert('done');
-  }); 
-};
-*/
-
-/*
-on_facebook_register = function () {
-};
-*/
-
+//this attaches the actions to the share buttons for facebook connect users
 attach_to_share_episode_buttons = function () {
   $$('a.share_episode_button').each(function(share_episode_button) {
     Event.observe(share_episode_button, 'click', function(clicked) {
@@ -59,25 +40,11 @@ attach_to_share_episode_buttons = function () {
         "profile_url": profile_link.href 
       };
       FB.Connect.showFeedDialog(58089846128, post_data, null, null, FB.FeedStorySize.full, FB.RequireConnect.promptConnect, function (w) {
+        //you can do something here when they are finished posting, but you do _not_ get if they posted or not (sorta lame)
       });
     });
   });
 };
-
-/*
-on_facebook_login = function () {
-  new Ajax.Updater('facebook', "/register", {
-    evalScripts: true,
-    method: 'get',
-    onComplete: function () {
-      window.location.hash = "facebook";
-    }
-  });
-  //window.location.hash = "facebook";
-  //window.location.reload();
-  //alert('wang');
-};
-*/
 
 attach_to_confirmable_buttons = function () {
   $$('.confirm').each(function(confirmable) {
@@ -107,30 +74,8 @@ attach_to_add_remote_video_buttons = function () {
       remote_id = "video_" + this.id.replace("add_video_", "");
       remote_video = $(remote_id).remove();
       remote_video.getElementsBySelector('.hidden_unless_added').invoke('toggle');
-      /*
-      remote_video.getElementsBySelector('a.add_remote_video_button').invoke('toggle');
-      remote_video.getElementsBySelector('a.remove_remote_video_button').invoke('toggle');
-      remote_video.getElementsBySelector('a.handle_remote_video_button').invoke('toggle');
-      */
       attach_to_remove_remote_video_buttons();
       $("drop").insert(remote_video);
-      /*
-      remote_video.getElementsBySelector('ul.tabs').each(function(tabs) {
-        tabs.toggle();
-        new Control.Tabs(tabs);  
-      });
-      */
-    /*
-    alert('wtf');
-    remote_video.getElementsBySelector('.panels').each(function(panels) {
-      alert(panels);
-      Event.observe(panels, 'mouseover', function(moused_over) {
-        Event.stop(moused_over);
-        this.getElementsBySelector('li.details').invoke('toggle');
-        this.getElementsBySelector('li.comments').invoke('toggle');
-      });
-    });
-    */
       Sortable.destroy('drop');
       Sortable.create('drop',{handle:"handle_remote_video_button", containment: ['results', 'drop'], dropOnEmpty: true, constraint: false});
     });
@@ -214,9 +159,6 @@ play_video = function () {
       var flashvars = {};
       youtube_remote_id = remote_id;
       swfobject.embedSWF("http://www.youtube.com/v/" + remote_id + "&enablejsapi=1&playerapiid=" + attributes.id + "&autoplay=" + (auto ? '1' : '0') + "&rel=0", "player", "512", "332", "9.0.0", false, flashvars, params, attributes);
-      //alert("http://www.youtube.com/v/" + remote_id + "&enablejsapi=1&playerapiid=" + attributes.id + "&autoplay=1&rel=0");
-      //alert("http://www.youtube.com/v/" + remote_id + "&enablejsapi=1&playerapiid=the_player&autoplay=1&rel=0");
-      //swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&playerapiid=" + attributes.id + "&rel=0", "player", "512", "332", "9.0.0", false, flashvars, params, attributes);
     break;
   }
   last_video = current_video;
@@ -248,9 +190,6 @@ function onYouTubePlayerReady (player_id) {
   player = swfobject.getObjectById(player_id);
   player.addEventListener("onStateChange", "youtube_state_change");
   player.addEventListener("onError", "youtube_error");
-  /*
-  player.loadVideoById(youtube_remote_id, 0);
-  */
 }
 
 mtv_state_change = function (state) {
@@ -434,12 +373,15 @@ Event.observe(window, 'load', function () {
 
   attach_to_confirmable_buttons();
 
+  //only start up the facebook stuff if its the login/register page
   if ($("facebook")) {
     FB.ensureInit(function() {
       FB.Facebook.get_sessionState().waitUntilReady(function(session) {
         FB.Facebook.apiClient.users_getInfo([FB.Facebook.apiClient.get_session().uid], ["first_name", "proxied_email", "pic"], function(unifoo, ex){
+          //once we get here, we either have an authenticated session with facebook or null
           if (ex == null) {
             if ($('facebook_register_form')) {
+              //when its the register form, fill in the user id to the form, and submit it (along with their prompted nickname)
               if ($("uid").value == "") {
                 $("facebook_person_nickname").value = prompt("Please enter a nickname (it must be unique!)", unifoo[0].first_name);
                 $("uid").value = unifoo[0].uid;
@@ -457,11 +399,13 @@ Event.observe(window, 'load', function () {
     });
   } 
 
+  //when you logout of our site, we need to tell facebook
   $$("a.logout_link").each(function(logout_link) {
     Event.observe(logout_link, 'click', function(clicked) {
       Event.stop(clicked);
       href = this.href;
       FB.Connect.logout(function(logged_out) {
+        //this happens whether or not the person was logged in
         window.location = href;
       });
     });

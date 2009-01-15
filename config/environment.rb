@@ -74,12 +74,13 @@ require 'validates_as_email'
 
   config.action_mailer.default_url_options = { :host => "veejay.tv" }
   config.action_controller.page_cache_directory = RAILS_ROOT + "/public/cache"
+  require 'facebook'
+  require 'openid'
+  require 'openid/store/filesystem'
+  require 'openid/consumer'
+  require 'openid/extensions/sreg'
 end
 
-require 'openid'
-require 'openid/store/filesystem'
-require 'openid/consumer'
-require 'openid/extensions/sreg'
 require 'right_aws'
 require 'uuidtools'
 require 'RMagick'
@@ -102,7 +103,6 @@ require 'lyrics'
 require 'slugalizer'
 require 'remote_video'
 require 'remote_artist'
-require 'facebook'
 require '/root/ruby-oembed/lib/oembed'
 
 ActiveRecord::Base.store_full_sti_class = true
