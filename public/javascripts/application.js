@@ -123,6 +123,10 @@ play_video = function () {
   swfobject.removeSWF("the_player_" + last_video);
   $("player_container").insert('<div id="player"></div>');
   remote_id = videos[current_video];
+  $$('li.video').each(function(video_li) {
+    video_li.removeClassName('current_video');
+  });
+  $('video_' + remote_id).addClassName('current_video');
   if ($('pops')) {
     $$('li.pop').invoke('hide');
     $('pop_' + remote_id).show();

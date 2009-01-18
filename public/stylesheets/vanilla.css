@@ -51,7 +51,9 @@ li input[type="submit"] { margin: 0 0 0 0; }
 
 ul.grid { margin: 0 1em 0 1em; }
 ul.grid li { display: inline; }
-ul.grid li img { margin: 2.1em; vertical-align: middle; }
+ul.grid li a { padding: 2.1em; }
+ul.grid li img { margin-top: 1.05em; margin-bottom: 1.05em; vertical-align: middle; }
+ul.grid li.current_video a { background: url(/images/icon/arrow.png) no-repeat center left; }
 
 ul.tabs { margin: 0 0 1.5em 0; }
 ul.tabs li { display: inline; margin: 0 1em 0 0; padding: 0.62em 1em 2em 0.75em; }
