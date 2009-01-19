@@ -25,9 +25,7 @@ attach_to_share_episode_buttons = function () {
       episode_duration = episode.getElementsBySelector('li.episode_duration').detect(function(episode_detail) {
         return true;
       });
-      episode_description = episode.getElementsBySelector('p.episode_description').detect(function(episode_detail) {
-        return true;
-      });
+      episode_description = episode.getElementsBySelector('div.episode_description p').pluck('innerHTML').join();
       profile_link = episode.getElementsBySelector('a.profile_url').detect(function(episode_detail) {
         return true;
       });
@@ -35,7 +33,7 @@ attach_to_share_episode_buttons = function () {
         "title": episode_link.innerHTML,
         "episode_url": episode_link.href,
         "videos": episode_videos.innerHTML,
-        "description": episode_description.innerHTML,
+        "description": episode_description,
         "duration": episode_duration.innerHTML,
         "profile_url": profile_link.href 
       };

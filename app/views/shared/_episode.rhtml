@@ -28,12 +28,13 @@
             <%=formatted_duration(episode.total_duration)%>
           </li>
           <li style="display: none;">
-            <p class="episode_description">
+            <div class="episode_description">
               <% if episode.description.blank? then %>
               <% else %>
-                <%=h(episode.description)%>
+              wang
+                <%=episode.description.textilize%>
               <% end %>
-            </p>
+            </div>
             <%=link_to(episode.title, episode_url(*episode.to_param), {:class => "episode_url"})%>
             <%=link_to(episode.person.nickname, profile_url(episode.person), {:class => "profile_url"})%>
           </li>

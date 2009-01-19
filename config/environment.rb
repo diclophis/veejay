@@ -81,6 +81,7 @@ require 'validates_as_email'
   require 'openid/extensions/sreg'
 end
 
+require 'redcloth'
 require 'right_aws'
 require 'uuidtools'
 require 'RMagick'
@@ -91,6 +92,7 @@ require 'yaml'
 require 'timeout'
 require 'soap/wsdlDriver' 
 
+require 'textilize'
 require 'validates_as_uri'
 require 'validates_as_email'
 require 'smtp_tls'

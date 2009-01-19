@@ -45,7 +45,7 @@
     <div class="quote">
       <div class="quoted">
         <p>
-          <%=h(@episode.description)%>
+          <%=@episode.description.textilize%>
           <br/>
           <br/>
           - <%=link_to(@episode.person.nickname, profile_url(@episode.person))%>
