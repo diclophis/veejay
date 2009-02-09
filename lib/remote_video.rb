@@ -18,8 +18,12 @@ class RemoteVideo
 
   def initialize (remote_id, title, duration, artist_names, image_url)
     self.remote_id = remote_id
-    self.image_url = image_url
-    self.image_url ||= "/images/bluebox.jpg"
+    begin
+      URI.parse(image_url)
+      self.image_url = image_url
+    rescue
+      self.image_url = "/images/bluebox.jpg"
+    end
     self.title = title
     self.artist_names = artist_names
     self.duration = duration.to_i
