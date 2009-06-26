@@ -2,6 +2,12 @@
 
 class Mercury < ActionMailer::Base
   delivery_method = :sendmail
+  def new_features (person)
+    recipients person.email
+    subject "VeeJay.tv Updates"
+    from "mercury@veejay.tv"
+    body({:person => person})
+  end
   def activation_code (person)
     recipients person.email
     subject "VeeJay.tv Activation"
