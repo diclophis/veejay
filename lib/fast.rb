@@ -17,7 +17,7 @@ module Fast
       res = Net::HTTP.start(uri.host, uri.port) do |http|
         http.get(uri.request_uri)
       end
-#Camping::Models::Base.logger.debug("fetched #{res.inspect}")
+ActiveRecord::Base.logger.debug("fetched #{res.inspect}")
       case res
         when Net::HTTPRedirection
           raise "Too Much Recursion" if recursed
